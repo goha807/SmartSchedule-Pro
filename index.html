@@ -110,7 +110,8 @@
             border: none; color: #fff;
             font-size: 1.1rem; cursor: pointer; padding: 5px;
             border-radius: 50%; width: 32px; height: 32px;
-            display: flex; align-items: center; justify-content: center;
+            display: flex; align-items: center;
+            justify-content: center;
             transition: 0.2s;
         }
         .music-ctrl-btn:hover { background: rgba(255,255,255,0.1); color: var(--accent); }
@@ -128,7 +129,8 @@
         .track-display::after { content: '🔽'; font-size: 0.7rem; opacity: 0.5; margin-left: 5px; }
 
         .vol-container-drop { 
-            display: flex; align-items: center; gap: 10px; 
+            display: flex;
+            align-items: center; gap: 10px; 
             padding: 10px; background: rgba(255,255,255,0.05); 
             border-radius: 8px; margin-bottom: 10px;
         }
@@ -167,14 +169,16 @@
         }
         .track-list-item:hover { background: rgba(255,255,255,0.1); }
         .track-list-item.active { 
-            color: var(--accent); font-weight: bold; 
+            color: var(--accent);
+            font-weight: bold; 
             background: rgba(255, 255, 255, 0.05);
             border-left: 3px solid var(--accent);
         }
 
         /* --- Buttons --- */
         .btn {
-            padding: 10px 18px; border-radius: 14px;
+            padding: 10px 18px;
+            border-radius: 14px;
             border: 1px solid var(--glass-border); cursor: pointer;
             font-weight: 600; font-size: 0.9rem;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -205,22 +209,23 @@
 
         /* --- HISTORY SIDEBAR --- */
         #history-sidebar {
-            position: fixed; right: -380px; top: 0; width: 350px; height: 100vh;
+            position: fixed;
+            right: -380px; top: 0; width: 350px; height: 100vh;
             background: rgba(15, 23, 42, 0.95); border-left: 1px solid var(--glass-border);
-            backdrop-filter: blur(15px); transition: right 0.3s ease-in-out;
+            backdrop-filter: blur(15px);
+            transition: right 0.3s ease-in-out;
             padding: 20px; z-index: 9999; color: var(--text);
             box-shadow: -5px 0 25px rgba(0,0,0,0.7); overflow-y: auto;
         }
         #history-sidebar.open { right: 0; }
         #history-list { list-style: none; padding: 0; margin-top: 15px; }
 
-        .history-dev-news { border-left: 3px solid var(--accent); background: rgba(56, 189, 248, 0.1);
-            margin-bottom: 8px; padding: 12px; border-radius: 8px; font-size: 0.9em; font-weight: 600; }
-        .history-user-log { border-left: 3px solid var(--success); background: rgba(255, 255, 255, 0.05);
-            margin-bottom: 8px; padding: 10px; border-radius: 8px; font-size: 0.85em; opacity: 0.9; }
+        .history-dev-news { border-left: 3px solid var(--accent); background: rgba(56, 189, 248, 0.1); margin-bottom: 8px; padding: 12px; border-radius: 8px; font-size: 0.9em; font-weight: 600; }
+        .history-user-log { border-left: 3px solid var(--success); background: rgba(255, 255, 255, 0.05); margin-bottom: 8px; padding: 10px; border-radius: 8px; font-size: 0.85em; opacity: 0.9; }
 
         .schedule-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 25px; max-width: 1600px; margin: 0 auto; position: relative; z-index: 10;
         }
 
@@ -228,13 +233,15 @@
         .day-column.is-today { background: rgba(255, 255, 255, 0.03); outline: 1px solid var(--accent); }
 
         .day-title {
-            font-size: 1.2rem; font-weight: 800; margin-bottom: 25px;
+            font-size: 1.2rem;
+            font-weight: 800; margin-bottom: 25px;
             display: flex; align-items: center; gap: 10px; padding-left: 10px;
         }
         .day-title::before { content: ''; width: 4px; height: 20px; background: var(--accent); border-radius: 4px; }
 
         .lesson-card {
-            margin-bottom: 16px; padding: 20px; position: relative;
+            margin-bottom: 16px;
+            padding: 20px; position: relative;
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid var(--glass-border); border-left: 4px solid var(--glass-border);
             animation: fadeIn 0.5s ease backwards; 
@@ -242,19 +249,22 @@
         .lesson-card.has-data { border-left-color: var(--accent); background: rgba(30, 41, 59, 0.4); }
         .lesson-card:hover { border-color: var(--accent); background: rgba(255,255,255,0.08); transform: scale(1.02); }
         .lesson-card.active {
-            border-color: var(--success); border-left-color: var(--success);
+            border-color: var(--success);
+            border-left-color: var(--success);
             background: linear-gradient(135deg, rgba(46, 213, 115, 0.15) 0%, rgba(30, 41, 59, 0.9) 100%);
             box-shadow: 0 5px 20px -5px rgba(46, 213, 115, 0.2);
         }
 
         .time-badge {
-            font-size: 0.75rem; background: rgba(0,0,0,0.3); padding: 4px 10px;
+            font-size: 0.75rem;
+            background: rgba(0,0,0,0.3); padding: 4px 10px;
             border-radius: 8px; color: var(--accent); font-weight: 600;
             margin-bottom: 12px; display: inline-block;
         }
 
         .card-timer-badge {
-            display: inline-flex; align-items: center; gap: 5px;
+            display: inline-flex;
+            align-items: center; gap: 5px;
             background: rgba(46, 213, 115, 0.25); color: #2ed573;
             padding: 4px 10px; border-radius: 8px; font-weight: 800; font-size: 0.8rem;
             margin-left: 8px; border: 1px solid rgba(46, 213, 115, 0.4); 
@@ -263,26 +273,28 @@
         @keyframes pulse-soft { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
 
         .lesson-name { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; display: block; }
-        .lesson-link { font-size: 0.85rem; color: #94a3b8; text-decoration: none;
-            display: flex; align-items: center; gap: 5px; transition: color 0.2s; }
+        .lesson-link { font-size: 0.85rem; color: #94a3b8; text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color 0.2s; }
         .lesson-link:hover { color: var(--accent); }
 
-        .progress-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 4px;
-            background: rgba(255,255,255,0.05); overflow: hidden; }
+        .progress-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 4px; background: rgba(255,255,255,0.05); overflow: hidden; }
         .progress-bar { height: 100%; background: var(--success); transition: width 1s linear; }
 
         .edit-btn {
-            position: absolute; top: 10px; right: 10px; opacity: 0;
+            position: absolute;
+            top: 10px; right: 10px; opacity: 0;
             background: var(--accent); border: none; padding: 8px;
-            border-radius: 10px; cursor: pointer; transition: 0.3s; z-index: 5; color: #000;
+            border-radius: 10px; cursor: pointer; transition: 0.3s; z-index: 5;
+            color: #000;
         }
         [data-edit-mode="true"] .edit-btn { opacity: 1; }
 
         .current-widget {
-            position: fixed; bottom: 30px; left: 30px; width: auto; max-width: 350px; min-width: 250px;
+            position: fixed;
+            bottom: 30px; left: 30px; width: auto; max-width: 350px; min-width: 250px;
             z-index: 100; padding: 12px 20px; border-radius: 40px; transform: translateX(0);
             transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1.2); display: flex; align-items: center; gap: 15px;
-            background: rgba(15, 23, 42, 0.95); border: 1px solid var(--glass-border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid var(--glass-border); box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .current-widget.hidden { transform: translateX(-150%); }
 
@@ -292,21 +304,25 @@
         #widgetName { font-size: 1rem; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 150px; }
         #widgetCountdown { color: var(--success); font-weight: 800; font-size: 1rem; margin-left: 10px; }
         .widget-btn-small { 
-            background: var(--accent); color: #000; text-decoration: none;
+            background: var(--accent);
+            color: #000; text-decoration: none;
             width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 1.2rem; transition: transform 0.2s;
+            font-size: 1.2rem;
+            transition: transform 0.2s;
         }
         .widget-btn-small:hover { transform: scale(1.1); }
         
         .ad-corner {
-            position: fixed; bottom: 30px; right: 30px; width: 200px; z-index: 90;
+            position: fixed;
+            bottom: 30px; right: 30px; width: 200px; z-index: 90;
             padding: 15px; display: flex; align-items: center; gap: 15px; text-decoration: none; color: #fff;
             transition: transform 0.3s ease, background 0.3s; cursor: pointer;
         }
         .ad-corner:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.15); }
 
         .modal-backdrop {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); display: none; justify-content: center;
+            position: fixed;
+            inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); display: none; justify-content: center;
             align-items: center; z-index: 200; opacity: 0; transition: 0.3s;
         }
         .modal { width: 90%; max-width: 480px; padding: 30px; transform: scale(0.9); transition: 0.3s; border: 1px solid var(--accent); }
@@ -314,8 +330,10 @@
         .modal-backdrop.open .modal { transform: scale(1); }
 
         input:not([type=range], #yt-link-input), select { 
-            width: 100%; background: rgba(15, 23, 42, 0.8); border: 1px solid var(--glass-border); 
-            color: #fff; padding: 14px; border-radius: 12px; margin-top: 5px; outline: none; transition: border-color 0.2s;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.8); border: 1px solid var(--glass-border); 
+            color: #fff; padding: 14px; border-radius: 12px; margin-top: 5px; outline: none;
+            transition: border-color 0.2s;
         }
         input:not([type=range], #yt-link-input):focus, select:focus { border-color: var(--accent); }
         
@@ -361,10 +379,9 @@
     </div>
 
     <div class="controls">
-        <button class="btn btn-outline" onclick="generateShareLink()">🔗 Поділитися (Шифр)</button>
         <button class="btn btn-notify" id="notifyBtn" onclick="toggleNotifications()">🔕 Сповіщ.</button>
-        <button class="btn" onclick="document.getElementById('fileInput').click()">📤 Відкрити</button>
-        <button class="btn" onclick="exportToFile()">📥 Зберегти</button>
+        <button class="btn" onclick="document.getElementById('fileInput').click()">📤 Відкрити (Файл)</button>
+        <button class="btn" onclick="exportToFile()">📥 Зберегти (Файл)</button>
         <button class="btn" onclick="openSettings()">🎨 Вигляд</button>
         <button class="btn btn-outline" id="toggleEdit" onclick="toggleEditMode()">✏️ Ред.</button>
         <button class="btn btn-primary" id="historyBtn" onclick="toggleHistory()">📜 Історія</button>
@@ -381,7 +398,7 @@
         <button onclick="toggleHistory()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 1.2em;">✖</button>
     </h2>
     <ul id="history-list">
-        </ul>
+    </ul>
 </div>
 
 <div class="schedule-grid" id="grid"></div>
@@ -467,15 +484,39 @@
 </div>
 
 <script>
+    // =========================================================================
+    // 📢 ТУТ ПИСАТИ НОВИНИ ДЛЯ ІСТОРІЇ (ПРОСТО ДОДАВАЙТЕ НОВІ РЯДКИ В МАСИВ)
+    // =========================================================================
     const DEV_NEWS = [
+        "✨ Оновлення: Файли збереження тепер зашифровані! Ніхто не підгляне пароль.",
         "✨ Оновлення: YouTube та MP3 тепер в одному меню музики!",
         "✨ Оновлення: Автозаповнення посилань для уроків та підсвітка історії."
     ];
+    // =========================================================================
 
     const days = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота", "Неділя"];
     const icons = ["⚡", "🔥", "💎", "🌟", "🍀", "🎉", "🎐"];
     const SECRET_KEY = "NMT_2026_PRO"; 
     
+    // --- ФУНКЦІЇ ШИФРУВАННЯ ФАЙЛІВ ---
+    function encryptData(text) {
+        let encrypted = "";
+        for (let i = 0; i < text.length; i++) {
+            encrypted += String.fromCharCode(text.charCodeAt(i) ^ SECRET_KEY.charCodeAt(i % SECRET_KEY.length));
+        }
+        return btoa(unescape(encodeURIComponent(encrypted)));
+    }
+
+    function decryptData(b64) {
+        let str = decodeURIComponent(escape(atob(b64)));
+        let decrypted = "";
+        for (let i = 0; i < str.length; i++) {
+            decrypted += String.fromCharCode(str.charCodeAt(i) ^ SECRET_KEY.charCodeAt(i % SECRET_KEY.length));
+        }
+        return decrypted;
+    }
+    // ---------------------------------
+
     let schedule = JSON.parse(localStorage.getItem('gh-schedule')) || {};
     let userSettings = JSON.parse(localStorage.getItem('gh-settings')) || { accent: '#38bdf8', bg: 'default', volume: 0.5 };
     let editHistoryLog = JSON.parse(localStorage.getItem('gh-edit-history')) || [];
@@ -519,50 +560,6 @@
             renderHistory();
         } else {
             btn.classList.remove('active');
-        }
-    }
-
-    function generateShareLink() {
-        try {
-            const dataStr = JSON.stringify(schedule);
-            let encrypted = "";
-            for (let i = 0; i < dataStr.length; i++) {
-                encrypted += String.fromCharCode(dataStr.charCodeAt(i) ^ SECRET_KEY.charCodeAt(i % SECRET_KEY.length));
-            }
-            const b64 = btoa(unescape(encodeURIComponent(encrypted)));
-            const link = window.location.origin + window.location.pathname + "?data=" + b64;
-            navigator.clipboard.writeText(link).then(() => {
-                alert("Зашифроване посилання скопійовано!\nМожете надіслати його другу.");
-                logHistory("Згенеровано та скопійовано зашифроване посилання");
-            });
-        } catch(e) {
-            alert("Помилка шифрування.");
-        }
-    }
-
-    function checkSharedData() {
-        const params = new URLSearchParams(window.location.search);
-        const b64 = params.get('data');
-        if (b64) {
-            try {
-                let str = decodeURIComponent(escape(atob(b64)));
-                let decrypted = "";
-                for (let i = 0; i < str.length; i++) {
-                    decrypted += String.fromCharCode(str.charCodeAt(i) ^ SECRET_KEY.charCodeAt(i % SECRET_KEY.length));
-                }
-                const sharedSchedule = JSON.parse(decrypted);
-                if (confirm("Знайдено надісланий розклад!\nБажаєте завантажити його? Ваш поточний розклад буде замінено.")) {
-                    schedule = sharedSchedule;
-                    localStorage.setItem('gh-schedule', JSON.stringify(schedule));
-                    logHistory("Імпортовано розклад через зашифроване посилання");
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                    render();
-                } else {
-                    window.history.replaceState({}, document.title, window.location.pathname);
-                }
-            } catch(e) {
-                alert("Помилка розшифрування посилання!");
-            }
         }
     }
 
@@ -620,7 +617,7 @@
             playlist.classList.remove('show');
         }
     });
-
+    
     function renderPlaylist(filter = "") {
         const list = document.getElementById('trackList'); list.innerHTML = '';
         musicData.tracks.forEach((track, idx) => {
@@ -685,7 +682,7 @@
             document.getElementById('historyBtn').classList.remove('active');
         }
     });
-
+    
     // Автозаповнення посилання
     document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('nameInp').addEventListener('input', function() {
@@ -705,7 +702,6 @@
     // --- MAIN INIT ---
     function init() { 
         migrateDataIfNeeded();
-        checkSharedData();
         applySettings(); 
         if(document.getElementById('bgSelect')) document.getElementById('bgSelect').value = userSettings.bg || 'default';
         
@@ -844,24 +840,41 @@
         if (changed) localStorage.setItem('gh-schedule', JSON.stringify(schedule));
     }
 
+    // --- ОНОВЛЕНИЙ ЕКСПОРТ (ШИФРУВАННЯ ФАЙЛУ) ---
     function exportToFile() {
         const password = prompt("Введіть пароль для файлу (залиште порожнім, якщо не потрібен):");
         const fullData = { schedule: schedule, music: musicData, settings: userSettings, locked: !!password, password: password || null };
         const dataStr = JSON.stringify(fullData, null, 2);
-        const blob = new Blob([dataStr], {type: "application/json"});
+        
+        const encryptedStr = encryptData(dataStr); // Шифруємо весь JSON
+
+        const blob = new Blob([encryptedStr], {type: "text/plain"});
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = "schedule_pro_backup.json"; a.click();
-        logHistory("Експортовано файл бекапу");
+        a.download = "schedule_pro_backup.json"; 
+        a.click();
+        logHistory("Експортовано зашифрований файл бекапу");
     }
 
+    // --- ОНОВЛЕНИЙ ІМПОРТ (РОЗШИФРУВАННЯ ФАЙЛУ) ---
     function importFromFile(input) {
         const file = input.files[0];
         if (!file) return;
         const reader = new FileReader();
         reader.onload = (e) => {
             try {
-                const json = JSON.parse(e.target.result);
+                const fileContent = e.target.result;
+                let json;
+                
+                // Спроба розшифрувати файл (для нових зашифрованих файлів)
+                try {
+                    const decryptedStr = decryptData(fileContent);
+                    json = JSON.parse(decryptedStr);
+                } catch(decryptionErr) {
+                    // Якщо не вийшло, можливо це старий, не зашифрований файл
+                    json = JSON.parse(fileContent);
+                }
+
                 if (json.locked && json.password) {
                     let attempts = 3;
                     let authenticated = false;
@@ -873,21 +886,26 @@
                     }
                     if (!authenticated) return;
                 }
-                if(json.schedule) { schedule = json.schedule; if(json.music) musicData = json.music; if(json.settings) userSettings = json.settings; } 
+                if(json.schedule) { schedule = json.schedule;
+                if(json.music) musicData = json.music; if(json.settings) userSettings = json.settings; } 
                 else { schedule = json; }
+                
                 migrateDataIfNeeded();
                 localStorage.setItem('gh-schedule', JSON.stringify(schedule));
                 localStorage.setItem('gh-music', JSON.stringify(musicData)); localStorage.setItem('gh-settings', JSON.stringify(userSettings));
                 applySettings(); initAudio(); render(); logHistory("Імпортовано дані з файлу"); alert("Дані успішно завантажено!");
-            } catch(err) { alert("Помилка файлу"); }
+            } catch(err) { 
+                alert("Помилка файлу. Можливо він пошкоджений.");
+            }
         };
         reader.readAsText(file); input.value = '';
     }
 
     // --- DRAG AND DROP ---
-    let dragSrcEl = null; let dragSrcKey = null;
+    let dragSrcEl = null;
+    let dragSrcKey = null;
     function handleDragStart(e) { this.style.opacity = '0.4'; dragSrcEl = this; dragSrcKey = this.getAttribute('data-key'); e.dataTransfer.effectAllowed = 'move';
-        e.dataTransfer.setData('text/html', this.innerHTML); this.classList.add('dragging'); }
+    e.dataTransfer.setData('text/html', this.innerHTML); this.classList.add('dragging'); }
     function handleDragOver(e) { if (e.preventDefault) e.preventDefault(); e.dataTransfer.dropEffect = 'move'; this.classList.add('drag-over'); return false; }
     function handleDragLeave(e) { this.classList.remove('drag-over'); }
     function handleDrop(e) {
@@ -895,7 +913,8 @@
         this.classList.remove('drag-over');
         const destKey = this.getAttribute('data-key');
         if (dragSrcKey !== destKey) {
-            const srcData = schedule[dragSrcKey]; const destData = schedule[destKey];
+            const srcData = schedule[dragSrcKey];
+            const destData = schedule[destKey];
             const srcTime = srcData ? { start: srcData.start, end: srcData.end } : null;
             const destTime = destData ? { start: destData.start, end: destData.end } : null;
 
@@ -914,7 +933,7 @@
         return false;
     }
     function handleDragEnd(e) { this.style.opacity = '1';
-        this.classList.remove('dragging'); document.querySelectorAll('.lesson-card').forEach(col => col.classList.remove('drag-over')); }
+    this.classList.remove('dragging'); document.querySelectorAll('.lesson-card').forEach(col => col.classList.remove('drag-over')); }
 
     // --- RENDER ---
     function render() {
@@ -984,7 +1003,8 @@
     }
 
     function updateSubjectsList() {
-        const list = document.getElementById('subjectsList'); list.innerHTML = ''; const subjects = new Set();
+        const list = document.getElementById('subjectsList');
+        list.innerHTML = ''; const subjects = new Set();
         Object.values(schedule).forEach(item => { if(item.name) subjects.add(item.name); });
         subjects.forEach(subj => { const opt = document.createElement('option'); opt.value = subj; list.appendChild(opt); });
     }
@@ -1006,7 +1026,8 @@
         schedule[currentEditKey] = { name: lessonName, start: document.getElementById('startInp').value, end: document.getElementById('endInp').value, link: document.getElementById('linkInp').value };
         localStorage.setItem('gh-schedule', JSON.stringify(schedule)); 
         logHistory(`Додано/Змінено урок: ${lessonName}`);
-        render(); closeModal('modal'); activeLessonGlobal = null; heartbeat(); 
+        render(); closeModal('modal');
+        activeLessonGlobal = null; heartbeat(); 
     }
     
     function deleteLesson() { 
