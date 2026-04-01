@@ -83,6 +83,7 @@ font-weight: 800;
 padding: 0 15px; min-width: 120px;
 text-align: center; color: var(--accent); white-space: nowrap;
 }
+/* --- MUSIC PLAYER HEADER --- */
 .music-bar {
 display: flex;
 align-items: center; gap: 10px;
@@ -156,6 +157,7 @@ font-weight: bold;
 background: rgba(255, 255, 255, 0.05);
 border-left: 3px solid var(--accent);
 }
+/* --- Buttons --- */
 .btn {
 padding: 10px 18px;
 border-radius: 14px;
@@ -171,9 +173,12 @@ color: #fff; background: rgba(255,255,255,0.05);
 .btn-outline.active { background: var(--accent); color: #000; border-color: var(--accent); }
 #historyBtn { transition: all 0.3s ease; }
 #historyBtn.active { box-shadow: 0 0 15px var(--accent); border-color: var(--accent); background: var(--accent); color: #000; }
+#statsBtn { transition: all 0.3s ease; }
+#statsBtn.active { box-shadow: 0 0 15px var(--accent); border-color: var(--accent); background: var(--accent); color: #000; }
 .btn-notify { border-color: rgba(255,255,255,0.2); }
 .btn-notify.active { background: rgba(46, 213, 115, 0.2); color: #2ed573; border-color: #2ed573; box-shadow: 0 0 15px rgba(46, 213, 115, 0.2); }
 .btn-notify.denied { background: rgba(255, 71, 87, 0.2); color: #ff4757; border-color: #ff4757; }
+/* --- Drag and Drop --- */
 [data-edit-mode="true"] .lesson-card { cursor: grab; animation: shake 2s infinite ease-in-out; }
 [data-edit-mode="true"] .lesson-card:active { cursor: grabbing; }
 .lesson-card.dragging { opacity: 0.4; transform: scale(0.95); border: 2px dashed var(--accent); }
@@ -182,6 +187,7 @@ color: #fff; background: rgba(255,255,255,0.05);
 0% { transform: rotate(0deg); } 25% { transform: rotate(0.5deg); }
 75% { transform: rotate(-0.5deg); } 100% { transform: rotate(0deg); }
 }
+/* --- HISTORY SIDEBAR --- */
 #history-sidebar {
 position: fixed;
 right: -380px; top: 0; width: 350px; height: 100vh;
@@ -195,6 +201,35 @@ box-shadow: -5px 0 25px rgba(0,0,0,0.7); overflow-y: auto;
 #history-list { list-style: none; padding: 0; margin-top: 15px; }
 .history-dev-news { border-left: 3px solid var(--accent); background: rgba(56, 189, 248, 0.1); margin-bottom: 8px; padding: 12px; border-radius: 8px; font-size: 0.9em; font-weight: 600; }
 .history-user-log { border-left: 3px solid var(--success); background: rgba(255, 255, 255, 0.05); margin-bottom: 8px; padding: 10px; border-radius: 8px; font-size: 0.85em; opacity: 0.9; }
+/* --- STATS SIDEBAR --- */
+#stats-sidebar {
+position: fixed;
+right: -450px; top: 0; width: 420px; height: 100vh;
+background: rgba(15, 23, 42, 0.95); border-left: 1px solid var(--glass-border);
+backdrop-filter: blur(15px);
+transition: right 0.3s ease-in-out;
+padding: 20px; z-index: 9999; color: var(--text);
+box-shadow: -5px 0 25px rgba(0,0,0,0.7); overflow-y: auto;
+}
+#stats-sidebar.open { right: 0; }
+.stats-section { margin-bottom: 25px; }
+.stats-section h3 { color: var(--accent); margin-bottom: 15px; font-size: 1.1rem; }
+.stat-card {
+background: rgba(255,255,255,0.05);
+border-radius: 12px; padding: 15px; margin-bottom: 10px;
+}
+.stat-bar-container {
+background: rgba(255,255,255,0.1);
+border-radius: 6px; height: 8px; margin-top: 8px; overflow: hidden;
+}
+.stat-bar {
+height: 100%; border-radius: 6px;
+transition: width 0.5s ease;
+}
+.stat-value { font-size: 1.5rem; font-weight: 800; color: var(--accent); }
+.stat-label { font-size: 0.85rem; opacity: 0.7; }
+.mood-emoji { font-size: 2rem; cursor: pointer; transition: transform 0.2s; padding: 10px; }
+.mood-emoji:hover { transform: scale(1.2); }
 .schedule-grid {
 display: grid;
 grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -223,11 +258,6 @@ border-left-color: var(--success);
 background: linear-gradient(135deg, rgba(46, 213, 115, 0.15) 0%, rgba(30, 41, 59, 0.9) 100%);
 box-shadow: 0 5px 20px -5px rgba(46, 213, 115, 0.2);
 }
-.lesson-card.attended {
-border-color: var(--success);
-border-left-color: var(--success);
-background: linear-gradient(135deg, rgba(46, 213, 115, 0.2) 0%, rgba(30, 41, 59, 0.9) 100%);
-}
 .time-badge {
 font-size: 0.75rem;
 background: rgba(0,0,0,0.3); padding: 4px 10px;
@@ -246,7 +276,6 @@ animation: pulse-soft 3s infinite;
 .lesson-name { font-weight: 700; font-size: 1.1rem; margin-bottom: 8px; display: block; }
 .lesson-link { font-size: 0.85rem; color: #94a3b8; text-decoration: none; display: flex; align-items: center; gap: 5px; transition: color 0.2s; }
 .lesson-link:hover { color: var(--accent); }
-.lesson-link.attended-link { color: var(--success); }
 .progress-container { position: absolute; bottom: 0; left: 0; width: 100%; height: 4px; background: rgba(255,255,255,0.05); overflow: hidden; }
 .progress-bar { height: 100%; background: var(--success); transition: width 1s linear; }
 .edit-btn {
@@ -257,11 +286,6 @@ border-radius: 10px; cursor: pointer; transition: 0.3s; z-index: 5;
 color: #000;
 }
 [data-edit-mode="true"] .edit-btn { opacity: 1; }
-.attend-badge {
-position: absolute;
-top: 10px; left: 10px;
-font-size: 1.2rem;
-}
 .current-widget {
 position: fixed;
 bottom: 30px; left: 30px; width: auto; max-width: 350px; min-width: 250px;
@@ -308,161 +332,53 @@ input:not([type=range], #yt-link-input):focus, select:focus { border-color: var(
 #fileInput { display: none; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-/* --- STATS STYLES --- */
-.stat-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-.stat-info { flex: 1; padding-right: 15px; }
-.stat-label { font-weight: 600; font-size: 0.95rem; margin-bottom: 5px; display: block; }
-.stat-bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
-.stat-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; width: 0%; transition: width 1s ease-out; }
-.stat-bar-fill.attended { background: var(--success); }
-.stat-time { font-size: 0.85rem; opacity: 0.8; white-space: nowrap; font-weight: 600; }
-.stats-summary { 
-    background: rgba(255,255,255,0.05); 
-    padding: 15px; 
-    border-radius: 12px; 
-    margin-bottom: 20px;
-    border: 1px solid var(--glass-border);
+/* --- MOOD POPUP --- */
+#mood-popup {
+position: fixed;
+bottom: 100px; left: 50%;
+transform: translateX(-50%) translateY(100px);
+background: rgba(15, 23, 42, 0.95);
+border: 1px solid var(--glass-border);
+border-radius: 20px;
+padding: 20px 30px;
+z-index: 10000;
+display: none;
+opacity: 0;
+transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+backdrop-filter: blur(15px);
+box-shadow: 0 10px 40px rgba(0,0,0,0.5);
 }
-.stats-summary h3 { margin: 0 0 10px 0; font-size: 1rem; color: var(--accent); }
-.attendance-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-right: 8px;
-    margin-bottom: 8px;
+#mood-popup.show {
+display: block;
+opacity: 1;
+transform: translateX(-50%) translateY(0);
 }
-.attendance-badge.yes {
-    background: rgba(46, 213, 115, 0.2);
-    color: #2ed573;
-    border: 1px solid #2ed573;
-}
-.attendance-badge.no {
-    background: rgba(255, 71, 87, 0.2);
-    color: #ff4757;
-    border: 1px solid #ff4757;
-}
-
-/* --- MOOD TRACKER STYLES --- */
-.mood-tracker-modal {
-    text-align: center;
-}
-.mood-tracker-modal h2 {
-    margin-bottom: 20px;
-    font-size: 1.3rem;
+#mood-popup h3 {
+margin: 0 0 15px 0;
+text-align: center;
+font-size: 1.1rem;
+color: var(--text);
 }
 .mood-options {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 30px 0;
+display: flex;
+justify-content: center;
+gap: 15px;
 }
-.mood-btn {
-    font-size: 3rem;
-    background: rgba(255,255,255,0.05);
-    border: 2px solid var(--glass-border);
-    border-radius: 20px;
-    padding: 20px;
-    cursor: pointer;
-    transition: all 0.3s ease;
+.mood-option {
+font-size: 2.5rem;
+cursor: pointer;
+transition: all 0.2s;
+padding: 10px;
+border-radius: 12px;
+background: rgba(255,255,255,0.05);
 }
-.mood-btn:hover {
-    transform: scale(1.1);
-    background: rgba(255,255,255,0.1);
+.mood-option:hover {
+transform: scale(1.2);
+background: rgba(255,255,255,0.15);
 }
-.mood-btn.selected {
-    border-color: var(--accent);
-    background: rgba(56, 189, 248, 0.2);
-    transform: scale(1.15);
-}
-.mood-btn[data-mood="great"]:hover, .mood-btn[data-mood="great"].selected {
-    border-color: #2ed573;
-    background: rgba(46, 213, 115, 0.2);
-}
-.mood-btn[data-mood="okay"]:hover, .mood-btn[data-mood="okay"].selected {
-    border-color: #ffa502;
-    background: rgba(255, 165, 2, 0.2);
-}
-.mood-btn[data-mood="tired"]:hover, .mood-btn[data-mood="tired"].selected {
-    border-color: #ff4757;
-    background: rgba(255, 71, 87, 0.2);
-}
-.mood-stats-row {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 12px;
-    padding: 10px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 10px;
-}
-.mood-emoji { font-size: 1.5rem; width: 40px; text-align: center; }
-.mood-name { flex: 1; font-weight: 600; }
-.mood-count { font-weight: 700; color: var(--accent); }
-.mood-bar-bg {
-    width: 100%;
-    height: 6px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 3px;
-    margin-top: 5px;
-    overflow: hidden;
-}
-.mood-bar-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 1s ease-out;
-}
-.mood-bar-fill.great { background: #2ed573; }
-.mood-bar-fill.okay { background: #ffa502; }
-.mood-bar-fill.tired { background: #ff4757; }
-.day-mood-stats {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-    margin-top: 15px;
-}
-.day-mood-box {
-    padding: 10px 5px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 8px;
-    text-align: center;
-}
-.day-mood-box .day-name {
-    font-size: 0.7rem;
-    opacity: 0.7;
-    margin-bottom: 5px;
-}
-.day-mood-box .mood-display {
-    font-size: 1.5rem;
-}
-.productivity-chart {
-    margin-top: 20px;
-}
-.productivity-bar {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-.productivity-bar .label {
-    width: 80px;
-    font-size: 0.85rem;
-    opacity: 0.8;
-}
-.productivity-bar .bar-bg {
-    flex: 1;
-    height: 10px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 5px;
-    margin: 0 10px;
-    overflow: hidden;
-}
-.productivity-bar .bar-fill {
-    height: 100%;
-    border-radius: 5px;
-    transition: width 1s ease-out;
+.mood-option.selected {
+background: var(--accent);
+transform: scale(1.1);
 }
 </style>
 </head>
@@ -501,7 +417,7 @@ input:not([type=range], #yt-link-input):focus, select:focus { border-color: var(
 <button class="btn" onclick="document.getElementById('fileInput').click()">📤 Відкрити (Файл)</button>
 <button class="btn" onclick="exportToFile()">📥 Зберегти (Файл)</button>
 <button class="btn" onclick="openSettings()">🎨 Вигляд</button>
-<button class="btn" onclick="openStats()">📊 Статистика</button>
+<button class="btn" id="statsBtn" onclick="toggleStats()">📊 Статистика</button>
 <button class="btn btn-outline" id="toggleEdit" onclick="toggleEditMode()">✏️ Ред.</button>
 <button class="btn btn-primary" id="historyBtn" onclick="toggleHistory()">📜 Історія</button>
 </div>
@@ -516,6 +432,38 @@ input:not([type=range], #yt-link-input):focus, select:focus { border-color: var(
 <ul id="history-list">
 </ul>
 </div>
+<div id="stats-sidebar">
+<h2 style="margin-top: 0; display: flex; justify-content: space-between; align-items: center;">
+📊 Аналітика тижня
+<button onclick="toggleStats()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 1.2em;">✖</button>
+</h2>
+<div class="stats-section">
+<h3>⏱️ Загальний час навчання</h3>
+<div class="stat-card">
+<div class="stat-value" id="totalHours">0 год</div>
+<div class="stat-label">Цього тижня</div>
+</div>
+</div>
+<div class="stats-section">
+<h3>🔥 Найпродуктивніші дні</h3>
+<div id="productiveDays"></div>
+</div>
+<div class="stats-section">
+<h3>😴 Предмети, що втомлюють</h3>
+<div id="tiringSubjects"></div>
+</div>
+<div class="stats-section">
+<h3>📈 Час по предметах</h3>
+<div id="subjectTimeStats"></div>
+</div>
+<div class="stats-section">
+<h3>😊 Настрій після уроків</h3>
+<div id="moodStats"></div>
+</div>
+<div style="margin-top:20px;">
+<button class="btn" style="width:100%; background:var(--danger);" onclick="clearStatsData()">🗑️ Очистити статистику</button>
+</div>
+</div>
 <div class="schedule-grid" id="grid"></div>
 <div class="current-widget" id="activeWidget">
 <div style="font-size: 1.5rem;">🔥</div>
@@ -528,6 +476,15 @@ input:not([type=range], #yt-link-input):focus, select:focus { border-color: var(
 <div style="margin-top:4px;"><div class="progress-bar" id="activeProgressBar" style="height:3px; width:0; border-radius:2px;"></div></div>
 </div>
 <a id="widgetLink" href="#" target="_blank" class="widget-btn-small" style="display:none;">🎥</a>
+</div>
+<!-- MOOD POPUP -->
+<div id="mood-popup">
+<h3>Як пройшов урок?</h3>
+<div class="mood-options">
+<div class="mood-option" onclick="submitMood(3)">🤩</div>
+<div class="mood-option" onclick="submitMood(2)">😐</div>
+<div class="mood-option" onclick="submitMood(1)">🥱</div>
+</div>
 </div>
 <a href="https://t.me/Donwloderfile_bot" target="_blank" class="ad-corner glass" style="bottom: 120px;">
 <div style="font-size: 2rem;">🎧</div>
@@ -592,38 +549,20 @@ input:not([type=range], #yt-link-input):focus, select:focus { border-color: var(
 <button class="btn btn-primary" style="width:100%; margin-top:30px;" onclick="closeModal('settingsModal')">Готово</button>
 </div>
 </div>
-<div class="modal-backdrop" id="statsModal">
-    <div class="modal glass">
-        <h2 style="margin-top:0">📊 Аналітика Тижня</h2>
-        <div id="statsContent" style="max-height: 60vh; overflow-y: auto; margin-top: 15px;">
-        </div>
-        <button class="btn btn-primary" style="width:100%; margin-top:20px;" onclick="closeModal('statsModal')">Закрити</button>
-    </div>
-</div>
-<div class="modal-backdrop" id="moodModal">
-    <div class="modal glass mood-tracker-modal">
-        <h2>Як пройшов урок?</h2>
-        <div style="font-size: 1.2rem; margin-bottom: 10px;" id="moodLessonName"></div>
-        <div class="mood-options">
-            <button class="mood-btn" data-mood="great" onclick="selectMood('great')">🤩</button>
-            <button class="mood-btn" data-mood="okay" onclick="selectMood('okay')">😐</button>
-            <button class="mood-btn" data-mood="tired" onclick="selectMood('tired')">🥱</button>
-        </div>
-        <button class="btn" onclick="closeModal('moodModal')" style="width:100%">Пропустити</button>
-    </div>
-</div>
 <script>
+// =========================================================================
+// 📢 ТУТ ПИСАТИ НОВИНИ ДЛЯ ІСТОРІЇ (ПРОСТО ДОДАВАЙТЕ НОВІ РЯДКИ В МАСИВ)
+// =========================================================================
 const DEV_NEWS = [
-"✨ Оновлення: Додано Mood Tracker! Тепер відмічай настрій після уроку!",
-"✨ Відвідуваність тепер автоматична - просто клікни на посилання!",
-"✨ Телеграм бот: https://t.me/Donwloderfile_bot"
+"✨ Оновлення: Додано Mood Tracker та Аналітику! Тепер ви можете оцінювати уроки та бачити статистику!",
+"✨ Оновлення: Файли збереження тепер зашифровані! Ніхто не підгляне пароль, виправлено систему музики та додано історію дій! Приємного використання, якщо є питанн пропозиції звертайтеся в телеграм канал.",
+"✨ Телеграм бот відновив свою роботу! https://t.me/Donwloderfile_bot  ."
 ];
+// =========================================================================
 const days = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота", "Неділя"];
 const icons = ["⚡", "🔥", "💎", "🌟", "🍀", "🎉", "🎐"];
 const SECRET_KEY = "NMT_2026_PRO";
-const moodEmojis = { great: '🤩', okay: '😐', tired: '🥱' };
-const moodColors = { great: '#2ed573', okay: '#ffa502', tired: '#ff4757' };
-
+// --- ФУНКЦІЇ ШИФРУВАННЯ ФАЙЛІВ ---
 function encryptData(text) {
 let encrypted = "";
 for (let i = 0; i < text.length; i++) {
@@ -639,10 +578,8 @@ decrypted += String.fromCharCode(str.charCodeAt(i) ^ SECRET_KEY.charCodeAt(i % S
 }
 return decrypted;
 }
-
+// ---------------------------------
 let schedule = JSON.parse(localStorage.getItem('gh-schedule')) || {};
-let lessonAttendance = JSON.parse(localStorage.getItem('gh-attendance')) || {};
-let lessonMoods = JSON.parse(localStorage.getItem('gh-moods')) || {};
 let userSettings = JSON.parse(localStorage.getItem('gh-settings')) || { accent: '#38bdf8', bg: 'default', volume: 0.5 };
 let editHistoryLog = JSON.parse(localStorage.getItem('gh-edit-history')) || [];
 let musicData = JSON.parse(localStorage.getItem('gh-music')) || {
@@ -657,7 +594,11 @@ let currentEditKey = null;
 let activeLessonGlobal = null;
 let currentWeekIndex = JSON.parse(localStorage.getItem('gh-current-week')) || 0;
 let lastNotifiedLessonId = null;
-let pendingMoodKey = null;
+// --- MOOD & STATS DATA ---
+let moodData = JSON.parse(localStorage.getItem('gh-mood-data')) || { entries: [] };
+let statsData = JSON.parse(localStorage.getItem('gh-stats-data')) || { weeklyHours: {}, subjectHours: {}, moodRatings: {} };
+let completedLessons = JSON.parse(localStorage.getItem('gh-completed-lessons')) || [];
+let pendingMoodLesson = null;
 
 function logHistory(action) {
 const time = new Date().toLocaleTimeString('uk-UA');
@@ -685,7 +626,212 @@ renderHistory();
 btn.classList.remove('active');
 }
 }
-
+// --- STATS SIDEBAR ---
+function toggleStats() {
+const sidebar = document.getElementById('stats-sidebar');
+const btn = document.getElementById('statsBtn');
+sidebar.classList.toggle('open');
+if(sidebar.classList.contains('open')) {
+btn.classList.add('active');
+renderStats();
+} else {
+btn.classList.remove('active');
+}
+}
+function renderStats() {
+renderTotalHours();
+renderProductiveDays();
+renderTiringSubjects();
+renderSubjectTimeStats();
+renderMoodStats();
+}
+function getWeekKey() {
+const now = new Date();
+const startOfWeek = new Date(now);
+startOfWeek.setDate(now.getDate() - now.getDay() + 1);
+return `${startOfWeek.getFullYear()}-W${getWeekNumber(startOfWeek)}`;
+}
+function getWeekNumber(d) {
+d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
+var yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+var weekNo = Math.ceil((((d - yearStart) / 86400000) + 1)/7);
+return weekNo;
+}
+function renderTotalHours() {
+const weekKey = getWeekKey();
+const totalMinutes = statsData.weeklyHours[weekKey] || 0;
+const hours = Math.floor(totalMinutes / 60);
+const mins = totalMinutes % 60;
+document.getElementById('totalHours').textContent = `${hours}год ${mins}хв`;
+}
+function renderProductiveDays() {
+const container = document.getElementById('productiveDays');
+const dayHours = {};
+days.forEach((day, idx) => {
+dayHours[idx] = 0;
+for(let sIdx = 0; sIdx < 8; sIdx++) {
+const key = `${currentWeekIndex}-${idx}-${sIdx}`;
+const lesson = schedule[key];
+if(lesson && lesson.start && lesson.end) {
+const duration = timeToMin(lesson.end) - timeToMin(lesson.start);
+dayHours[idx] += duration;
+}
+}
+});
+const sortedDays = Object.entries(dayHours).sort((a, b) => b[1] - a[1]).slice(0, 3);
+let html = '';
+sortedDays.forEach(([dayIdx, minutes]) => {
+const hours = (minutes / 60).toFixed(1);
+const barWidth = Math.min(100, (minutes / 480) * 100);
+html += `
+<div class="stat-card">
+<div style="display:flex; justify-content:space-between;">
+<span>${days[dayIdx]}</span>
+<span style="color:var(--accent); font-weight:600;">${hours} год</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar" style="width:${barWidth}%; background:var(--accent);"></div>
+</div>
+</div>`;
+});
+container.innerHTML = html || '<div class="stat-card">Немає даних</div>';
+}
+function renderTiringSubjects() {
+const container = document.getElementById('tiringSubjects');
+const subjectMood = {};
+moodData.entries.forEach(entry => {
+if(!subjectMood[entry.subject]) subjectMood[entry.subject] = { total: 0, count: 0 };
+subjectMood[entry.subject].total += entry.mood;
+subjectMood[entry.subject].count += 1;
+});
+const subjectAvg = Object.entries(subjectMood).map(([subj, data]) => ({
+subject: subj,
+avgMood: data.total / data.count,
+count: data.count
+})).sort((a, b) => a.avgMood - b.avgMood).slice(0, 5);
+let html = '';
+subjectAvg.forEach(item => {
+const moodEmoji = item.avgMood >= 2.5 ? '🤩' : item.avgMood >= 1.5 ? '😐' : '🥱';
+const barWidth = (item.avgMood / 3) * 100;
+const barColor = item.avgMood >= 2.5 ? 'var(--success)' : item.avgMood >= 1.5 ? '#ffa502' : 'var(--danger)';
+html += `
+<div class="stat-card">
+<div style="display:flex; justify-content:space-between;">
+<span>${item.subject}</span>
+<span>${moodEmoji}</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar" style="width:${barWidth}%; background:${barColor};"></div>
+</div>
+<div style="font-size:0.75rem; opacity:0.6; margin-top:5px;">${item.count} оцінок</div>
+</div>`;
+});
+container.innerHTML = html || '<div class="stat-card">Немає оцінок</div>';
+}
+function renderSubjectTimeStats() {
+const container = document.getElementById('subjectTimeStats');
+const subjectTime = {};
+Object.values(schedule).forEach(lesson => {
+if(lesson && lesson.name && lesson.start && lesson.end) {
+const duration = timeToMin(lesson.end) - timeToMin(lesson.start);
+if(!subjectTime[lesson.name]) subjectTime[lesson.name] = 0;
+subjectTime[lesson.name] += duration;
+}
+});
+const sorted = Object.entries(subjectTime).sort((a, b) => b[1] - a[1]);
+const maxTime = sorted.length > 0 ? sorted[0][1] : 1;
+let html = '';
+sorted.slice(0, 10).forEach(([subject, minutes]) => {
+const hours = (minutes / 60).toFixed(1);
+const barWidth = (minutes / maxTime) * 100;
+html += `
+<div class="stat-card">
+<div style="display:flex; justify-content:space-between;">
+<span>${subject}</span>
+<span style="color:var(--accent);">${hours} год/тижд</span>
+</div>
+<div class="stat-bar-container">
+<div class="stat-bar" style="width:${barWidth}%; background:var(--accent);"></div>
+</div>
+</div>`;
+});
+container.innerHTML = html || '<div class="stat-card">Немає даних</div>';
+}
+function renderMoodStats() {
+const container = document.getElementById('moodStats');
+const moodCounts = { 1: 0, 2: 0, 3: 0 };
+moodData.entries.forEach(entry => {
+moodCounts[entry.mood] = (moodCounts[entry.mood] || 0) + 1;
+});
+const total = moodCounts[1] + moodCounts[2] + moodCounts[3];
+const avgMood = total > 0 ? ((moodCounts[1] * 1 + moodCounts[2] * 2 + moodCounts[3] * 3) / total).toFixed(2) : 0;
+let html = `
+<div class="stat-card">
+<div style="display:flex; justify-content:space-around; text-align:center;">
+<div>
+<div style="font-size:2rem;">🥱</div>
+<div style="font-size:0.85rem;">${moodCounts[1]}</div>
+</div>
+<div>
+<div style="font-size:2rem;">😐</div>
+<div style="font-size:0.85rem;">${moodCounts[2]}</div>
+</div>
+<div>
+<div style="font-size:2rem;">🤩</div>
+<div style="font-size:0.85rem;">${moodCounts[3]}</div>
+</div>
+</div>
+<div style="margin-top:15px; text-align:center;">
+<div class="stat-label">Середній настрій</div>
+<div class="stat-value">${avgMood > 0 ? avgMood : '—'}/3</div>
+</div>
+</div>`;
+container.innerHTML = html;
+}
+function clearStatsData() {
+if(confirm('Ви впевнені? Це видалить всю статистику та оцінки настрою!')) {
+moodData = { entries: [] };
+statsData = { weeklyHours: {}, subjectHours: {}, moodRatings: {} };
+completedLessons = [];
+localStorage.setItem('gh-mood-data', JSON.stringify(moodData));
+localStorage.setItem('gh-stats-data', JSON.stringify(statsData));
+localStorage.setItem('gh-completed-lessons', JSON.stringify(completedLessons));
+renderStats();
+logHistory('Очищено статистику');
+}
+}
+// --- MOOD POPUP ---
+function showMoodPopup(lesson) {
+pendingMoodLesson = lesson;
+const popup = document.getElementById('mood-popup');
+popup.classList.add('show');
+setTimeout(() => {
+popup.style.display = 'block';
+}, 10);
+}
+function hideMoodPopup() {
+const popup = document.getElementById('mood-popup');
+popup.classList.remove('show');
+setTimeout(() => {
+popup.style.display = 'none';
+}, 400);
+pendingMoodLesson = null;
+}
+function submitMood(mood) {
+if(pendingMoodLesson) {
+moodData.entries.push({
+date: new Date().toISOString(),
+subject: pendingMoodLesson.name,
+mood: mood,
+lessonKey: pendingMoodLesson.uniqueId
+});
+localStorage.setItem('gh-mood-data', JSON.stringify(moodData));
+logHistory(`Оцінено настрій: ${pendingMoodLesson.name} - ${mood}/3`);
+}
+hideMoodPopup();
+}
+// --- MP3 / YOUTUBE PLAYER ---
 const audioPlayer = new Audio();
 let isPlaying = false;
 function initAudio() {
@@ -785,9 +931,13 @@ stopYT();
 const sidebar = document.getElementById('history-sidebar');
 sidebar.classList.remove('open');
 document.getElementById('historyBtn').classList.remove('active');
+const statsSidebar = document.getElementById('stats-sidebar');
+statsSidebar.classList.remove('open');
+document.getElementById('statsBtn').classList.remove('active');
+hideMoodPopup();
 }
 });
-
+// Автозаповнення посилання
 document.addEventListener('DOMContentLoaded', () => {
 document.getElementById('nameInp').addEventListener('input', function() {
 const val = this.value.trim().toLowerCase();
@@ -801,7 +951,7 @@ break;
 }
 });
 });
-
+// --- MAIN INIT ---
 function init() {
 migrateDataIfNeeded();
 applySettings();
@@ -814,7 +964,6 @@ setInterval(heartbeat, 1000);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === 'visible') heartbeat(); });
 heartbeat();
 }
-
 function heartbeat() {
 const now = new Date();
 const currentTime = now.getHours() * 60 + now.getMinutes();
@@ -841,6 +990,17 @@ if (notificationsEnabled) trySendNotification(foundLesson);
 }
 updateWidgetUI(foundLesson, currentTime); updateCardUI(foundLesson, currentTime);
 } else {
+// Check if lesson just ended - show mood popup
+if (activeLessonGlobal) {
+const justEnded = activeLessonGlobal.endMin <= currentTime && currentTime < activeLessonGlobal.endMin + 5;
+if (justEnded && !completedLessons.includes(activeLessonGlobal.uniqueId)) {
+showMoodPopup(activeLessonGlobal);
+completedLessons.push(activeLessonGlobal.uniqueId);
+localStorage.setItem('gh-completed-lessons', JSON.stringify(completedLessons));
+// Update stats
+updateStatsAfterLesson(activeLessonGlobal);
+}
+}
 document.getElementById('widgetName').textContent = "Вільний час 💤";
 document.getElementById('widgetTimes').textContent = "--:--";
 document.getElementById('widgetCountdown').textContent = "";
@@ -849,7 +1009,17 @@ document.getElementById('widgetLink').style.display = 'none';
 if (activeLessonGlobal) { activeLessonGlobal = null; render(); }
 }
 }
-
+function updateStatsAfterLesson(lesson) {
+const weekKey = getWeekKey();
+const duration = lesson.endMin - lesson.startMin;
+// Update weekly hours
+if(!statsData.weeklyHours[weekKey]) statsData.weeklyHours[weekKey] = 0;
+statsData.weeklyHours[weekKey] += duration;
+// Update subject hours
+if(!statsData.subjectHours[lesson.name]) statsData.subjectHours[lesson.name] = 0;
+statsData.subjectHours[lesson.name] += duration;
+localStorage.setItem('gh-stats-data', JSON.stringify(statsData));
+}
 function updateWidgetUI(lesson, currentTime) {
 document.getElementById('widgetName').textContent = lesson.name;
 document.getElementById('widgetTimes').textContent = `${lesson.start} - ${lesson.end}`;
@@ -864,7 +1034,6 @@ const percent = ((currentTime - lesson.startMin) / (lesson.endMin - lesson.start
 progressBar.style.width = `${percent}%`;
 }
 }
-
 function updateCardUI(lesson, currentTime) {
 const card = document.getElementById('activeCard');
 if(card) {
@@ -877,7 +1046,6 @@ bar.style.width = `${percent}%`; timer.textContent = `⏳ ${remaining} хв`;
 }
 }
 }
-
 function trySendNotification(lesson) {
 if (Notification.permission !== "granted") return;
 if (lastNotifiedLessonId === lesson.uniqueId) return;
@@ -891,14 +1059,12 @@ notification.onclick = function() { window.focus(); if(lesson.link) window.open(
 lastNotifiedLessonId = lesson.uniqueId;
 } catch (e) {}
 }
-
 function checkPermissionStatus() {
 if (!("Notification" in window)) { document.getElementById('notifyBtn').innerHTML = "❌ Не підтримується"; return; }
 if (Notification.permission === "granted" && notificationsEnabled) setBtnState(true);
 else if (Notification.permission === "denied") setBtnState(false, true);
 else setBtnState(false);
 }
-
 function toggleNotifications() {
 if (!("Notification" in window)) return;
 if (Notification.permission === "denied") { alert("Сповіщення заблоковані браузером."); return; }
@@ -913,24 +1079,20 @@ notificationsEnabled = true; localStorage.setItem('gh-notifications', 'true'); s
 });
 }
 }
-
 function setBtnState(isOn, isDenied = false) {
 const btn = document.getElementById('notifyBtn');
 if (isDenied) { btn.innerHTML = "🚫 Заблоковано"; btn.className = "btn btn-notify denied"; }
 else if (isOn) { btn.innerHTML = "🔔 Увімкнено"; btn.className = "btn btn-notify active"; }
 else { btn.innerHTML = "🔕 Вимкнено"; btn.className = "btn btn-notify"; }
 }
-
 function changeWeek(direction) {
 currentWeekIndex = (currentWeekIndex + direction + 2) % 2;
 localStorage.setItem('gh-current-week', currentWeekIndex); render();
 }
-
 function updateWeekLabel() {
 const labels = ["Тиждень А (Перший)", "Тиждень Б (Другий)"];
 document.getElementById('currentWeekLabel').textContent = labels[currentWeekIndex];
 }
-
 function migrateDataIfNeeded() {
 let changed = false;
 Object.keys(schedule).forEach(key => {
@@ -938,12 +1100,20 @@ if (/^\d+-\d+$/.test(key)) { schedule[`0-${key}`] = schedule[key]; delete schedu
 });
 if (changed) localStorage.setItem('gh-schedule', JSON.stringify(schedule));
 }
-
+// --- ОНОВЛЕНИЙ ЕКСПОРТ (ШИФРУВАННЯ ФАЙЛУ) ---
 function exportToFile() {
 const password = prompt("Введіть пароль для файлу (залиште порожнім, якщо не потрібен):");
-const fullData = { schedule: schedule, music: musicData, settings: userSettings, attendance: lessonAttendance, moods: lessonMoods, locked: !!password, password: password || null };
+const fullData = { 
+schedule: schedule, 
+music: musicData, 
+settings: userSettings, 
+moodData: moodData,
+statsData: statsData,
+locked: !!password, 
+password: password || null 
+};
 const dataStr = JSON.stringify(fullData, null, 2);
-const encryptedStr = encryptData(dataStr);
+const encryptedStr = encryptData(dataStr); // Шифруємо весь JSON
 const blob = new Blob([encryptedStr], {type: "text/plain"});
 const a = document.createElement('a');
 a.href = URL.createObjectURL(blob);
@@ -951,7 +1121,7 @@ a.download = "schedule_pro_backup.json";
 a.click();
 logHistory("Експортовано зашифрований файл бекапу");
 }
-
+// --- ОНОВЛЕНИЙ ІМПОРТ (РОЗШИФРУВАННЯ ФАЙЛУ) ---
 function importFromFile(input) {
 const file = input.files[0];
 if (!file) return;
@@ -960,10 +1130,12 @@ reader.onload = (e) => {
 try {
 const fileContent = e.target.result;
 let json;
+// Спроба розшифрувати файл (для нових зашифрованих файлів)
 try {
 const decryptedStr = decryptData(fileContent);
 json = JSON.parse(decryptedStr);
 } catch(decryptionErr) {
+// Якщо не вийшло, можливо це старий, не зашифрований файл
 json = JSON.parse(fileContent);
 }
 if (json.locked && json.password) {
@@ -978,15 +1150,17 @@ if (attempts === 0) { alert("Вичерпано спроби. Доступ за�
 if (!authenticated) return;
 }
 if(json.schedule) { schedule = json.schedule;
-if(json.music) musicData = json.music; if(json.settings) userSettings = json.settings; 
-if(json.attendance) lessonAttendance = json.attendance;
-if(json.moods) lessonMoods = json.moods; }
+if(json.music) musicData = json.music; 
+if(json.settings) userSettings = json.settings;
+if(json.moodData) moodData = json.moodData;
+if(json.statsData) statsData = json.statsData; }
 else { schedule = json; }
 migrateDataIfNeeded();
 localStorage.setItem('gh-schedule', JSON.stringify(schedule));
-localStorage.setItem('gh-music', JSON.stringify(musicData)); localStorage.setItem('gh-settings', JSON.stringify(userSettings));
-localStorage.setItem('gh-attendance', JSON.stringify(lessonAttendance));
-localStorage.setItem('gh-moods', JSON.stringify(lessonMoods));
+localStorage.setItem('gh-music', JSON.stringify(musicData)); 
+localStorage.setItem('gh-settings', JSON.stringify(userSettings));
+localStorage.setItem('gh-mood-data', JSON.stringify(moodData));
+localStorage.setItem('gh-stats-data', JSON.stringify(statsData));
 applySettings(); initAudio(); render(); logHistory("Імпортовано дані з файлу"); alert("Дані успішно завантажено!");
 } catch(err) {
 alert("Помилка файлу. Можливо він пошкоджений.");
@@ -994,7 +1168,7 @@ alert("Помилка файлу. Можливо він пошкоджений."
 };
 reader.readAsText(file); input.value = '';
 }
-
+// --- DRAG AND DROP ---
 let dragSrcEl = null;
 let dragSrcKey = null;
 function handleDragStart(e) { this.style.opacity = '0.4'; dragSrcEl = this; dragSrcKey = this.getAttribute('data-key'); e.dataTransfer.effectAllowed = 'move';
@@ -1024,7 +1198,7 @@ return false;
 }
 function handleDragEnd(e) { this.style.opacity = '1';
 this.classList.remove('dragging'); document.querySelectorAll('.lesson-card').forEach(col => col.classList.remove('drag-over')); }
-
+// --- RENDER ---
 function render() {
 updateWeekLabel();
 const grid = document.getElementById('grid'); grid.innerHTML = '';
@@ -1042,68 +1216,16 @@ dayCol.appendChild(createLessonCard(schedule[key], key, isToday, currentTime, sI
 grid.appendChild(dayCol);
 });
 }
-
-function markAttendance(key) {
-if(!lessonAttendance[key]) {
-lessonAttendance[key] = true;
-localStorage.setItem('gh-attendance', JSON.stringify(lessonAttendance));
-const lesson = schedule[key];
-if(lesson) {
-logHistory(`✅ Відвідано урок: ${lesson.name}`);
-pendingMoodKey = key;
-setTimeout(() => showMoodModal(key), 500);
-}
-render();
-}
-}
-
-function showMoodModal(key) {
-if(lessonMoods[key]) return;
-pendingMoodKey = key;
-const lesson = schedule[key];
-document.getElementById('moodLessonName').textContent = lesson ? lesson.name : 'Урок';
-const m = document.getElementById('moodModal');
-m.style.display = 'flex';
-setTimeout(() => m.classList.add('open'), 10);
-}
-
-let selectedMood = null;
-function selectMood(mood) {
-selectedMood = mood;
-document.querySelectorAll('.mood-btn').forEach(btn => {
-btn.classList.remove('selected');
-if(btn.dataset.mood === mood) btn.classList.add('selected');
-});
-setTimeout(() => {
-saveMood(pendingMoodKey, mood);
-closeModal('moodModal');
-}, 300);
-}
-
-function saveMood(key, mood) {
-lessonMoods[key] = mood;
-localStorage.setItem('gh-moods', JSON.stringify(lessonMoods));
-const lesson = schedule[key];
-if(lesson) {
-logHistory(`🎭 Настрій після ${lesson.name}: ${moodEmojis[mood]}`);
-}
-selectedMood = null;
-render();
-}
-
 function createLessonCard(data, key, isToday, currentTime, index, isEditMode) {
 const card = document.createElement('div');
 card.className = 'lesson-card glass';
 if(data) card.classList.add('has-data');
-if(lessonAttendance[key]) card.classList.add('attended');
 card.setAttribute('data-key', key); card.style.animationDelay = `${index * 0.05}s`;
 if (isEditMode) {
 card.setAttribute('draggable', 'true'); card.addEventListener('dragstart', handleDragStart); card.addEventListener('dragover', handleDragOver);
 card.addEventListener('dragleave', handleDragLeave); card.addEventListener('drop', handleDrop); card.addEventListener('dragend', handleDragEnd);
 }
 const editBtnHTML = `<button class="edit-btn" onclick="event.stopPropagation(); openEditModal('${key}')">${data ? '⚙️' : '➕'}</button>`;
-const attendBadgeHTML = lessonAttendance[key] ? `<div class="attend-badge" title="Відвідано">✅</div>` : '';
-const moodBadgeHTML = lessonMoods[key] ? `<div class="attend-badge" style="left:45px" title="Настрій">${moodEmojis[lessonMoods[key]]}</div>` : '';
 if (!data) { card.innerHTML = `<div style="opacity:0.2; text-align:center; font-size:0.8rem">порожньо</div>${editBtnHTML}`; card.onclick = () => { if(isEditMode) openEditModal(key) }; return card; }
 const start = timeToMin(data.start), end = timeToMin(data.end);
 let isActive = false;
@@ -1116,24 +1238,19 @@ const percent = ((currentTime - start) / (end - start)) * 100;
 progressHtml = `<div class="progress-container"><div class="progress-bar" style="width:${percent}%"></div></div>`;
 const remaining = end - currentTime; timerHtml = `<div id="cardTimer" class="card-timer-badge">⏳ ${remaining} хв</div>`;
 }
-const linkHtml = data.link ? `<a href="${data.link}" target="_blank" class="lesson-link ${lessonAttendance[key] ? 'attended-link' : ''}" onclick="event.stopPropagation(); markAttendance('${key}')">🔗 ${lessonAttendance[key] ? 'Відвідано' : 'Приєднатися'}</a>` : '';
 card.innerHTML = `
-${attendBadgeHTML}
-${moodBadgeHTML}
 ${editBtnHTML}
 <div style="display:flex; align-items:center;">
 <div class="time-badge">${data.start} — ${data.end}</div>
 ${timerHtml}
 </div>
 <span class="lesson-name">${data.name}</span>
-${linkHtml}
+${data.link ? `<a href="${data.link}" target="_blank" class="lesson-link" onclick="event.stopPropagation()">🔗 Приєднатися</a>` : ''}
 ${progressHtml}
 `;
 card.onclick = () => { if(isEditMode) openEditModal(key) }; return card;
 }
-
 function timeToMin(t) { if(!t) return 0; const [h, m] = t.split(':').map(Number); return h * 60 + m; }
-
 function getSuggestedTimes(slotIndex) {
 for(let d = 0; d < 7; d++) {
 const checkKey = `${currentWeekIndex}-${d}-${slotIndex}`;
@@ -1141,14 +1258,12 @@ if (schedule[checkKey] && schedule[checkKey].start) return { start: schedule[che
 }
 return { start: '08:30', end: '09:15' };
 }
-
 function updateSubjectsList() {
 const list = document.getElementById('subjectsList');
 list.innerHTML = ''; const subjects = new Set();
 Object.values(schedule).forEach(item => { if(item.name) subjects.add(item.name); });
 subjects.forEach(subj => { const opt = document.createElement('option'); opt.value = subj; list.appendChild(opt); });
 }
-
 function openEditModal(key) {
 currentEditKey = key;
 const data = schedule[key]; const slotIndex = parseInt(key.split('-')[2]); const suggested = getSuggestedTimes(slotIndex);
@@ -1158,9 +1273,7 @@ document.getElementById('startInp').value = data ? data.start : suggested.start;
 document.getElementById('endInp').value = data ? data.end : suggested.end; document.getElementById('linkInp').value = data ? data.link : '';
 const m = document.getElementById('modal'); m.style.display = 'flex'; setTimeout(() => m.classList.add('open'), 10);
 }
-
 function closeModal(id) { const m = document.getElementById(id); m.classList.remove('open'); setTimeout(() => m.style.display = 'none', 300); }
-
 function saveLesson() {
 const lessonName = document.getElementById('nameInp').value;
 schedule[currentEditKey] = { name: lessonName, start: document.getElementById('startInp').value, end: document.getElementById('endInp').value, link: document.getElementById('linkInp').value };
@@ -1169,26 +1282,19 @@ logHistory(`Додано/Змінено урок: ${lessonName}`);
 render(); closeModal('modal');
 activeLessonGlobal = null; heartbeat();
 }
-
 function deleteLesson() {
 const data = schedule[currentEditKey];
 if(data) logHistory(`Видалено урок: ${data.name}`);
 delete schedule[currentEditKey];
-delete lessonAttendance[currentEditKey];
-delete lessonMoods[currentEditKey];
 localStorage.setItem('gh-schedule', JSON.stringify(schedule));
-localStorage.setItem('gh-attendance', JSON.stringify(lessonAttendance));
-localStorage.setItem('gh-moods', JSON.stringify(lessonMoods));
 activeLessonGlobal = null; render(); closeModal('modal'); heartbeat();
 }
-
 function toggleEditMode() {
 const isEditing = document.body.getAttribute('data-edit-mode') === 'false';
 document.body.setAttribute('data-edit-mode', isEditing);
 document.getElementById('toggleEdit').classList.toggle('active', isEditing);
 render();
 }
-
 function openSettings() { const m = document.getElementById('settingsModal'); m.style.display = 'flex'; setTimeout(() => m.classList.add('open'), 10); }
 function setAccent(c) { userSettings.accent = c; saveSettings(); }
 function changeBackground(v) { userSettings.bg = v; saveSettings(); }
@@ -1201,170 +1307,6 @@ if(userSettings.bg === 'forest') bg = 'linear-gradient(135deg, #134e5e, #1e293b)
 if(userSettings.bg === 'black') bg = '#000';
 document.documentElement.style.setProperty('--bg-image', bg);
 }
-
-function openStats() {
-    const stats = calculateFullStats();
-    const container = document.getElementById('statsContent');
-    
-    let totalLessons = stats.total;
-    let attendedLessons = stats.attended;
-    let attendancePercent = totalLessons > 0 ? Math.round((attendedLessons / totalLessons) * 100) : 0;
-    
-    let html = `
-        <div class="stats-summary">
-            <h3>📈 Відвідуваність</h3>
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <div>
-                    <div style="font-size: 2rem; font-weight: 800; color: var(--success);">${attendancePercent}%</div>
-                    <div style="font-size: 0.85rem; opacity: 0.7;">Відвідано уроків</div>
-                </div>
-                <div style="text-align:right;">
-                    <div style="font-size: 1.2rem; font-weight: 700;">${attendedLessons} / ${totalLessons}</div>
-                    <div style="font-size: 0.85rem; opacity: 0.7;">Уроків</div>
-                </div>
-            </div>
-            <div class="stat-bar-bg" style="height:12px;">
-                <div class="stat-bar-fill attended" style="width: ${attendancePercent}%"></div>
-            </div>
-        </div>
-        
-        <div class="stats-summary">
-            <h3>🎭 Настрій після уроків</h3>
-            <div class="mood-stats-row">
-                <span class="mood-emoji">🤩</span>
-                <span class="mood-name">Чудово</span>
-                <span class="mood-count">${stats.moods.great}</span>
-            </div>
-            <div class="mood-bar-bg"><div class="mood-bar-fill great" style="width: ${stats.moodPercent.great}%"></div></div>
-            
-            <div class="mood-stats-row" style="margin-top:10px;">
-                <span class="mood-emoji">😐</span>
-                <span class="mood-name">Нормально</span>
-                <span class="mood-count">${stats.moods.okay}</span>
-            </div>
-            <div class="mood-bar-bg"><div class="mood-bar-fill okay" style="width: ${stats.moodPercent.okay}%"></div></div>
-            
-            <div class="mood-stats-row" style="margin-top:10px;">
-                <span class="mood-emoji">🥱</span>
-                <span class="mood-name">Втомився</span>
-                <span class="mood-count">${stats.moods.tired}</span>
-            </div>
-            <div class="mood-bar-bg"><div class="mood-bar-fill tired" style="width: ${stats.moodPercent.tired}%"></div></div>
-        </div>
-        
-        <div class="stats-summary">
-            <h3>📅 Найпродуктивніші дні</h3>
-            <div class="day-mood-stats">
-                ${days.map((day, idx) => {
-                    const dayStats = stats.byDay[idx] || { great: 0, okay: 0, tired: 0 };
-                    const total = dayStats.great + dayStats.okay + dayStats.tired;
-                    let dominantMood = '😐';
-                    if(dayStats.great >= dayStats.okay && dayStats.great >= dayStats.tired) dominantMood = '🤩';
-                    else if(dayStats.tired >= dayStats.okay) dominantMood = '🥱';
-                    return `
-                        <div class="day-mood-box">
-                            <div class="day-name">${day.slice(0,3)}</div>
-                            <div class="mood-display">${total > 0 ? dominantMood : '-'}</div>
-                            <div style="font-size:0.7rem; opacity:0.6;">${total} ур.</div>
-                        </div>
-                    `;
-                }).join('')}
-            </div>
-        </div>
-        
-        <div class="stats-summary">
-            <h3>😴 Предмети, які втомлюють</h3>
-            <div class="productivity-chart">
-                ${stats.bySubject.slice(0, 5).map(subj => {
-                    const tiredPercent = subj.tired > 0 ? Math.round((subj.tired / subj.total) * 100) : 0;
-                    return `
-                        <div class="productivity-bar">
-                            <span class="label">${subj.name.slice(0, 15)}${subj.name.length > 15 ? '...' : ''}</span>
-                            <div class="bar-bg">
-                                <div class="bar-fill tired" style="width: ${tiredPercent}%"></div>
-                            </div>
-                            <span style="font-size:0.8rem; width:40px; text-align:right;">${tiredPercent}%</span>
-                        </div>
-                    `;
-                }).join('')}
-            </div>
-        </div>
-    `;
-    
-    if (stats.lessons.length === 0) {
-        html = '<p style="text-align:center; opacity:0.6; padding: 20px;">Немає уроків для цього тижня</p>';
-    }
-    container.innerHTML = html;
-    const m = document.getElementById('statsModal');
-    m.style.display = 'flex';
-    setTimeout(() => m.classList.add('open'), 10);
-}
-
-function calculateFullStats() {
-    const lessons = [];
-    const weekPrefix = `${currentWeekIndex}-`;
-    let attended = 0;
-    const moods = { great: 0, okay: 0, tired: 0 };
-    const byDay = {};
-    const bySubject = {};
-    
-    for (let d = 0; d < 7; d++) {
-        byDay[d] = { great: 0, okay: 0, tired: 0 };
-    }
-    
-    for (const key in schedule) {
-        if (key.startsWith(weekPrefix)) {
-            const lesson = schedule[key];
-            if (lesson && lesson.name) {
-                const dayIdx = parseInt(key.split('-')[1]);
-                const isAttended = lessonAttendance[key] === true;
-                const mood = lessonMoods[key];
-                
-                if(isAttended) attended++;
-                if(mood) moods[mood]++;
-                if(mood && dayIdx >= 0 && dayIdx < 7) byDay[dayIdx][mood]++;
-                
-                if(!bySubject[lesson.name]) {
-                    bySubject[lesson.name] = { great: 0, okay: 0, tired: 0, total: 0 };
-                }
-                if(mood) {
-                    bySubject[lesson.name][mood]++;
-                    bySubject[lesson.name].total++;
-                }
-                
-                lessons.push({
-                    key: key,
-                    name: lesson.name,
-                    time: `${lesson.start} - ${lesson.end}`,
-                    attended: isAttended,
-                    mood: mood
-                });
-            }
-        }
-    }
-    
-    const subjectArray = Object.entries(bySubject).map(([name, data]) => ({
-        name,
-        ...data
-    })).sort((a, b) => b.tired - a.tired);
-    
-    const totalMoods = moods.great + moods.okay + moods.tired;
-    
-    return {
-        total: lessons.length,
-        attended: attended,
-        lessons: lessons,
-        moods: moods,
-        moodPercent: {
-            great: totalMoods > 0 ? (moods.great / totalMoods) * 100 : 0,
-            okay: totalMoods > 0 ? (moods.okay / totalMoods) * 100 : 0,
-            tired: totalMoods > 0 ? (moods.tired / totalMoods) * 100 : 0
-        },
-        byDay: byDay,
-        bySubject: subjectArray
-    };
-}
-
 init();
 </script>
 </body>
