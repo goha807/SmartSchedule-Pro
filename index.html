@@ -227,6 +227,11 @@ border-left-color: var(--success);
 background: linear-gradient(135deg, rgba(46, 213, 115, 0.15) 0%, rgba(30, 41, 59, 0.9) 100%);
 box-shadow: 0 5px 20px -5px rgba(46, 213, 115, 0.2);
 }
+.lesson-card.attended {
+border-color: var(--success);
+border-left-color: var(--success);
+background: linear-gradient(135deg, rgba(46, 213, 115, 0.2) 0%, rgba(30, 41, 59, 0.9) 100%);
+}
 .time-badge {
 font-size: 0.75rem;
 background: rgba(0,0,0,0.3); padding: 4px 10px;
@@ -255,6 +260,21 @@ border-radius: 10px; cursor: pointer; transition: 0.3s; z-index: 5;
 color: #000;
 }
 [data-edit-mode="true"] .edit-btn { opacity: 1; }
+.attend-btn {
+position: absolute;
+top: 10px; left: 10px;
+background: rgba(255,255,255,0.1); border: 2px solid var(--glass-border);
+width: 28px; height: 28px; border-radius: 8px;
+cursor: pointer; transition: 0.3s;
+display: flex; align-items: center; justify-content: center;
+font-size: 1rem;
+}
+.attend-btn:hover { background: rgba(46, 213, 115, 0.3); border-color: var(--success); }
+.attend-btn.attended {
+background: var(--success);
+border-color: var(--success);
+color: #000;
+}
 .current-widget {
 position: fixed;
 bottom: 30px; left: 30px; width: auto; max-width: 350px; min-width: 250px;
@@ -307,6 +327,7 @@ input:not([type=range], #yt-link-input):focus, select:focus { border-color: var(
 .stat-label { font-weight: 600; font-size: 0.95rem; margin-bottom: 5px; display: block; }
 .stat-bar-bg { width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px; overflow: hidden; }
 .stat-bar-fill { height: 100%; background: var(--accent); border-radius: 4px; width: 0%; transition: width 1s ease-out; }
+.stat-bar-fill.attended { background: var(--success); }
 .stat-time { font-size: 0.85rem; opacity: 0.8; white-space: nowrap; font-weight: 600; }
 .stats-summary { 
     background: rgba(255,255,255,0.05); 
@@ -316,20 +337,26 @@ input:not([type=range], #yt-link-input):focus, select:focus { border-color: var(
     border: 1px solid var(--glass-border);
 }
 .stats-summary h3 { margin: 0 0 10px 0; font-size: 1rem; color: var(--accent); }
-.week-visit-badge {
-    display: inline-block;
+.attendance-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.8rem;
     font-weight: 600;
     margin-right: 8px;
     margin-bottom: 8px;
-    background: rgba(255,255,255,0.1);
 }
-.week-visit-badge.visited {
+.attendance-badge.yes {
     background: rgba(46, 213, 115, 0.2);
     color: #2ed573;
     border: 1px solid #2ed573;
+}
+.attendance-badge.no {
+    background: rgba(255, 71, 87, 0.2);
+    color: #ff4757;
+    border: 1px solid #ff4757;
 }
 </style>
 </head>
@@ -461,27 +488,24 @@ input:not([type=range], #yt-link-input):focus, select:focus { border-color: var(
 </div>
 <div class="modal-backdrop" id="statsModal">
     <div class="modal glass">
-        <h2 style="margin-top:0">📊 Аналітика Тижня</h2>
+        <h2 style="margin-top:0">📊 Відвідуваність Уроків</h2>
         <div id="statsContent" style="max-height: 60vh; overflow-y: auto; margin-top: 15px;">
-            <!-- Stats will be injected here -->
         </div>
         <button class="btn btn-primary" style="width:100%; margin-top:20px;" onclick="closeModal('statsModal')">Закрити</button>
     </div>
 </div>
 <script>
 // =========================================================================
-// 📢 ТУТ ПИСАТИ НОВИНИ ДЛЯ ІСТОРІЇ (ПРОСТО ДОДАВАЙТЕ НОВІ РЯДКИ В МАСИВ)
-// =========================================================================
 const DEV_NEWS = [
-"✨ Оновлення: Виправлено статистику (тепер показує точно в хвилинах) + додано лічильник відвіданих тижнів!",
-"✨ Оновлення: Файли збереження тепер зашифровані! Ніхто не підгляне пароль, виправлено систему музики та додано історію дій! Приємного використання, якщо є питанн пропозиції звертайтеся в телеграм канал.",
-"✨ Телеграм бот відновив свою роботу! https://t.me/Donwloderfile_bot  ."
+"✨ Оновлення: Тепер можна відмічати кожен урок як відвіданий! ✅",
+"✨ Оновлення: Файли збереження тепер зашифровані!",
+"✨ Телеграм бот: https://t.me/Donwloderfile_bot"
 ];
 // =========================================================================
 const days = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота", "Неділя"];
 const icons = ["⚡", "🔥", "💎", "🌟", "🍀", "🎉", "🎐"];
 const SECRET_KEY = "NMT_2026_PRO";
-// --- ФУНКЦІЇ ШИФРУВАННЯ ФАЙЛІВ ---
+
 function encryptData(text) {
 let encrypted = "";
 for (let i = 0; i < text.length; i++) {
@@ -497,11 +521,11 @@ decrypted += String.fromCharCode(str.charCodeAt(i) ^ SECRET_KEY.charCodeAt(i % S
 }
 return decrypted;
 }
-// ---------------------------------
+
 let schedule = JSON.parse(localStorage.getItem('gh-schedule')) || {};
+let lessonAttendance = JSON.parse(localStorage.getItem('gh-attendance')) || {};
 let userSettings = JSON.parse(localStorage.getItem('gh-settings')) || { accent: '#38bdf8', bg: 'default', volume: 0.5 };
 let editHistoryLog = JSON.parse(localStorage.getItem('gh-edit-history')) || [];
-let weekVisitLog = JSON.parse(localStorage.getItem('gh-week-visits')) || { 0: false, 1: false };
 let musicData = JSON.parse(localStorage.getItem('gh-music')) || {
 tracks: [
 { title: "Lofi Study Beats 1", src: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" },
@@ -514,6 +538,7 @@ let currentEditKey = null;
 let activeLessonGlobal = null;
 let currentWeekIndex = JSON.parse(localStorage.getItem('gh-current-week')) || 0;
 let lastNotifiedLessonId = null;
+
 function logHistory(action) {
 const time = new Date().toLocaleTimeString('uk-UA');
 editHistoryLog.unshift(`[${time}] ${action}`);
@@ -540,7 +565,7 @@ renderHistory();
 btn.classList.remove('active');
 }
 }
-// --- MP3 / YOUTUBE PLAYER ---
+
 const audioPlayer = new Audio();
 let isPlaying = false;
 function initAudio() {
@@ -642,7 +667,7 @@ sidebar.classList.remove('open');
 document.getElementById('historyBtn').classList.remove('active');
 }
 });
-// Автозаповнення посилання
+
 document.addEventListener('DOMContentLoaded', () => {
 document.getElementById('nameInp').addEventListener('input', function() {
 const val = this.value.trim().toLowerCase();
@@ -656,7 +681,7 @@ break;
 }
 });
 });
-// --- MAIN INIT ---
+
 function init() {
 migrateDataIfNeeded();
 applySettings();
@@ -669,6 +694,7 @@ setInterval(heartbeat, 1000);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === 'visible') heartbeat(); });
 heartbeat();
 }
+
 function heartbeat() {
 const now = new Date();
 const currentTime = now.getHours() * 60 + now.getMinutes();
@@ -703,6 +729,7 @@ document.getElementById('widgetLink').style.display = 'none';
 if (activeLessonGlobal) { activeLessonGlobal = null; render(); }
 }
 }
+
 function updateWidgetUI(lesson, currentTime) {
 document.getElementById('widgetName').textContent = lesson.name;
 document.getElementById('widgetTimes').textContent = `${lesson.start} - ${lesson.end}`;
@@ -717,6 +744,7 @@ const percent = ((currentTime - lesson.startMin) / (lesson.endMin - lesson.start
 progressBar.style.width = `${percent}%`;
 }
 }
+
 function updateCardUI(lesson, currentTime) {
 const card = document.getElementById('activeCard');
 if(card) {
@@ -729,6 +757,7 @@ bar.style.width = `${percent}%`; timer.textContent = `⏳ ${remaining} хв`;
 }
 }
 }
+
 function trySendNotification(lesson) {
 if (Notification.permission !== "granted") return;
 if (lastNotifiedLessonId === lesson.uniqueId) return;
@@ -742,12 +771,14 @@ notification.onclick = function() { window.focus(); if(lesson.link) window.open(
 lastNotifiedLessonId = lesson.uniqueId;
 } catch (e) {}
 }
+
 function checkPermissionStatus() {
 if (!("Notification" in window)) { document.getElementById('notifyBtn').innerHTML = "❌ Не підтримується"; return; }
 if (Notification.permission === "granted" && notificationsEnabled) setBtnState(true);
 else if (Notification.permission === "denied") setBtnState(false, true);
 else setBtnState(false);
 }
+
 function toggleNotifications() {
 if (!("Notification" in window)) return;
 if (Notification.permission === "denied") { alert("Сповіщення заблоковані браузером."); return; }
@@ -762,27 +793,24 @@ notificationsEnabled = true; localStorage.setItem('gh-notifications', 'true'); s
 });
 }
 }
+
 function setBtnState(isOn, isDenied = false) {
 const btn = document.getElementById('notifyBtn');
 if (isDenied) { btn.innerHTML = "🚫 Заблоковано"; btn.className = "btn btn-notify denied"; }
 else if (isOn) { btn.innerHTML = "🔔 Увімкнено"; btn.className = "btn btn-notify active"; }
 else { btn.innerHTML = "🔕 Вимкнено"; btn.className = "btn btn-notify"; }
 }
+
 function changeWeek(direction) {
 currentWeekIndex = (currentWeekIndex + direction + 2) % 2;
-localStorage.setItem('gh-current-week', currentWeekIndex);
-// Log week visit
-logWeekVisit(currentWeekIndex);
-render();
+localStorage.setItem('gh-current-week', currentWeekIndex); render();
 }
-function logWeekVisit(weekIdx) {
-weekVisitLog[weekIdx] = true;
-localStorage.setItem('gh-week-visits', JSON.stringify(weekVisitLog));
-}
+
 function updateWeekLabel() {
 const labels = ["Тиждень А (Перший)", "Тиждень Б (Другий)"];
 document.getElementById('currentWeekLabel').textContent = labels[currentWeekIndex];
 }
+
 function migrateDataIfNeeded() {
 let changed = false;
 Object.keys(schedule).forEach(key => {
@@ -790,12 +818,12 @@ if (/^\d+-\d+$/.test(key)) { schedule[`0-${key}`] = schedule[key]; delete schedu
 });
 if (changed) localStorage.setItem('gh-schedule', JSON.stringify(schedule));
 }
-// --- ОНОВЛЕНИЙ ЕКСПОРТ (ШИФРУВАННЯ ФАЙЛУ) ---
+
 function exportToFile() {
 const password = prompt("Введіть пароль для файлу (залиште порожнім, якщо не потрібен):");
-const fullData = { schedule: schedule, music: musicData, settings: userSettings, locked: !!password, password: password || null, weekVisits: weekVisitLog };
+const fullData = { schedule: schedule, music: musicData, settings: userSettings, attendance: lessonAttendance, locked: !!password, password: password || null };
 const dataStr = JSON.stringify(fullData, null, 2);
-const encryptedStr = encryptData(dataStr); // Шифруємо весь JSON
+const encryptedStr = encryptData(dataStr);
 const blob = new Blob([encryptedStr], {type: "text/plain"});
 const a = document.createElement('a');
 a.href = URL.createObjectURL(blob);
@@ -803,7 +831,7 @@ a.download = "schedule_pro_backup.json";
 a.click();
 logHistory("Експортовано зашифрований файл бекапу");
 }
-// --- ОНОВЛЕНИЙ ІМПОРТ (РОЗШИФРУВАННЯ ФАЙЛУ) ---
+
 function importFromFile(input) {
 const file = input.files[0];
 if (!file) return;
@@ -812,12 +840,10 @@ reader.onload = (e) => {
 try {
 const fileContent = e.target.result;
 let json;
-// Спроба розшифрувати файл (для нових зашифрованих файлів)
 try {
 const decryptedStr = decryptData(fileContent);
 json = JSON.parse(decryptedStr);
 } catch(decryptionErr) {
-// Якщо не вийшло, можливо це старий, не зашифрований файл
 json = JSON.parse(fileContent);
 }
 if (json.locked && json.password) {
@@ -833,12 +859,12 @@ if (!authenticated) return;
 }
 if(json.schedule) { schedule = json.schedule;
 if(json.music) musicData = json.music; if(json.settings) userSettings = json.settings; 
-if(json.weekVisits) weekVisitLog = json.weekVisits; }
+if(json.attendance) lessonAttendance = json.attendance; }
 else { schedule = json; }
 migrateDataIfNeeded();
 localStorage.setItem('gh-schedule', JSON.stringify(schedule));
 localStorage.setItem('gh-music', JSON.stringify(musicData)); localStorage.setItem('gh-settings', JSON.stringify(userSettings));
-localStorage.setItem('gh-week-visits', JSON.stringify(weekVisitLog));
+localStorage.setItem('gh-attendance', JSON.stringify(lessonAttendance));
 applySettings(); initAudio(); render(); logHistory("Імпортовано дані з файлу"); alert("Дані успішно завантажено!");
 } catch(err) {
 alert("Помилка файлу. Можливо він пошкоджений.");
@@ -846,7 +872,7 @@ alert("Помилка файлу. Можливо він пошкоджений."
 };
 reader.readAsText(file); input.value = '';
 }
-// --- DRAG AND DROP ---
+
 let dragSrcEl = null;
 let dragSrcKey = null;
 function handleDragStart(e) { this.style.opacity = '0.4'; dragSrcEl = this; dragSrcKey = this.getAttribute('data-key'); e.dataTransfer.effectAllowed = 'move';
@@ -876,7 +902,7 @@ return false;
 }
 function handleDragEnd(e) { this.style.opacity = '1';
 this.classList.remove('dragging'); document.querySelectorAll('.lesson-card').forEach(col => col.classList.remove('drag-over')); }
-// --- RENDER ---
+
 function render() {
 updateWeekLabel();
 const grid = document.getElementById('grid'); grid.innerHTML = '';
@@ -894,16 +920,31 @@ dayCol.appendChild(createLessonCard(schedule[key], key, isToday, currentTime, sI
 grid.appendChild(dayCol);
 });
 }
+
+function toggleAttendance(key) {
+lessonAttendance[key] = !lessonAttendance[key];
+localStorage.setItem('gh-attendance', JSON.stringify(lessonAttendance));
+const lesson = schedule[key];
+if(lessonAttendance[key]) {
+logHistory(`✅ Відвідано урок: ${lesson ? lesson.name : 'Невідомо'}`);
+} else {
+logHistory(`❌ Скасовано відмітку: ${lesson ? lesson.name : 'Невідомо'}`);
+}
+render();
+}
+
 function createLessonCard(data, key, isToday, currentTime, index, isEditMode) {
 const card = document.createElement('div');
 card.className = 'lesson-card glass';
 if(data) card.classList.add('has-data');
+if(lessonAttendance[key]) card.classList.add('attended');
 card.setAttribute('data-key', key); card.style.animationDelay = `${index * 0.05}s`;
 if (isEditMode) {
 card.setAttribute('draggable', 'true'); card.addEventListener('dragstart', handleDragStart); card.addEventListener('dragover', handleDragOver);
 card.addEventListener('dragleave', handleDragLeave); card.addEventListener('drop', handleDrop); card.addEventListener('dragend', handleDragEnd);
 }
 const editBtnHTML = `<button class="edit-btn" onclick="event.stopPropagation(); openEditModal('${key}')">${data ? '⚙️' : '➕'}</button>`;
+const attendBtnHTML = data ? `<button class="attend-btn ${lessonAttendance[key] ? 'attended' : ''}" onclick="event.stopPropagation(); toggleAttendance('${key}')" title="Відмітити відвідування">${lessonAttendance[key] ? '✅' : '⬜'}</button>` : '';
 if (!data) { card.innerHTML = `<div style="opacity:0.2; text-align:center; font-size:0.8rem">порожньо</div>${editBtnHTML}`; card.onclick = () => { if(isEditMode) openEditModal(key) }; return card; }
 const start = timeToMin(data.start), end = timeToMin(data.end);
 let isActive = false;
@@ -917,6 +958,7 @@ progressHtml = `<div class="progress-container"><div class="progress-bar" style=
 const remaining = end - currentTime; timerHtml = `<div id="cardTimer" class="card-timer-badge">⏳ ${remaining} хв</div>`;
 }
 card.innerHTML = `
+${attendBtnHTML}
 ${editBtnHTML}
 <div style="display:flex; align-items:center;">
 <div class="time-badge">${data.start} — ${data.end}</div>
@@ -928,7 +970,9 @@ ${progressHtml}
 `;
 card.onclick = () => { if(isEditMode) openEditModal(key) }; return card;
 }
+
 function timeToMin(t) { if(!t) return 0; const [h, m] = t.split(':').map(Number); return h * 60 + m; }
+
 function getSuggestedTimes(slotIndex) {
 for(let d = 0; d < 7; d++) {
 const checkKey = `${currentWeekIndex}-${d}-${slotIndex}`;
@@ -936,12 +980,14 @@ if (schedule[checkKey] && schedule[checkKey].start) return { start: schedule[che
 }
 return { start: '08:30', end: '09:15' };
 }
+
 function updateSubjectsList() {
 const list = document.getElementById('subjectsList');
 list.innerHTML = ''; const subjects = new Set();
 Object.values(schedule).forEach(item => { if(item.name) subjects.add(item.name); });
 subjects.forEach(subj => { const opt = document.createElement('option'); opt.value = subj; list.appendChild(opt); });
 }
+
 function openEditModal(key) {
 currentEditKey = key;
 const data = schedule[key]; const slotIndex = parseInt(key.split('-')[2]); const suggested = getSuggestedTimes(slotIndex);
@@ -951,7 +997,9 @@ document.getElementById('startInp').value = data ? data.start : suggested.start;
 document.getElementById('endInp').value = data ? data.end : suggested.end; document.getElementById('linkInp').value = data ? data.link : '';
 const m = document.getElementById('modal'); m.style.display = 'flex'; setTimeout(() => m.classList.add('open'), 10);
 }
+
 function closeModal(id) { const m = document.getElementById(id); m.classList.remove('open'); setTimeout(() => m.style.display = 'none', 300); }
+
 function saveLesson() {
 const lessonName = document.getElementById('nameInp').value;
 schedule[currentEditKey] = { name: lessonName, start: document.getElementById('startInp').value, end: document.getElementById('endInp').value, link: document.getElementById('linkInp').value };
@@ -960,19 +1008,24 @@ logHistory(`Додано/Змінено урок: ${lessonName}`);
 render(); closeModal('modal');
 activeLessonGlobal = null; heartbeat();
 }
+
 function deleteLesson() {
 const data = schedule[currentEditKey];
 if(data) logHistory(`Видалено урок: ${data.name}`);
 delete schedule[currentEditKey];
+delete lessonAttendance[currentEditKey];
 localStorage.setItem('gh-schedule', JSON.stringify(schedule));
+localStorage.setItem('gh-attendance', JSON.stringify(lessonAttendance));
 activeLessonGlobal = null; render(); closeModal('modal'); heartbeat();
 }
+
 function toggleEditMode() {
 const isEditing = document.body.getAttribute('data-edit-mode') === 'false';
 document.body.setAttribute('data-edit-mode', isEditing);
 document.getElementById('toggleEdit').classList.toggle('active', isEditing);
 render();
 }
+
 function openSettings() { const m = document.getElementById('settingsModal'); m.style.display = 'flex'; setTimeout(() => m.classList.add('open'), 10); }
 function setAccent(c) { userSettings.accent = c; saveSettings(); }
 function changeBackground(v) { userSettings.bg = v; saveSettings(); }
@@ -985,53 +1038,48 @@ if(userSettings.bg === 'forest') bg = 'linear-gradient(135deg, #134e5e, #1e293b)
 if(userSettings.bg === 'black') bg = '#000';
 document.documentElement.style.setProperty('--bg-image', bg);
 }
-// --- STATISTICS FUNCTIONS (FIXED) ---
+
 function openStats() {
-    // Log current week visit when opening stats
-    logWeekVisit(currentWeekIndex);
-    
-    const stats = calculateStats();
+    const stats = calculateAttendanceStats();
     const container = document.getElementById('statsContent');
     
-    // Calculate total time
-    let totalMinutes = 0;
-    stats.forEach(([name, minutes]) => { totalMinutes += minutes; });
-    const totalHours = Math.floor(totalMinutes / 60);
-    const totalMins = totalMinutes % 60;
+    let totalLessons = stats.total;
+    let attendedLessons = stats.attended;
+    let attendancePercent = totalLessons > 0 ? Math.round((attendedLessons / totalLessons) * 100) : 0;
     
     let html = `
         <div class="stats-summary">
-            <h3>📈 Загальна статистика</h3>
-            <div style="font-size: 1.5rem; font-weight: 800; color: var(--accent);">
-                ${totalHours}г ${totalMins}хв <span style="font-size:0.9rem; opacity:0.7;">на цього тижня</span>
-            </div>
-            <div style="margin-top: 15px;">
-                <span style="font-size: 0.85rem; opacity: 0.7;">Відвідані тижні:</span><br>
-                <div style="margin-top: 8px;">
-                    <span class="week-visit-badge ${weekVisitLog[0] ? 'visited' : ''}">Тиждень А ${weekVisitLog[0] ? '✅' : '⬜'}</span>
-                    <span class="week-visit-badge ${weekVisitLog[1] ? 'visited' : ''}">Тиждень Б ${weekVisitLog[1] ? '✅' : '⬜'}</span>
+            <h3>📈 Загальна відвідуваність</h3>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <div>
+                    <div style="font-size: 2rem; font-weight: 800; color: var(--success);">${attendancePercent}%</div>
+                    <div style="font-size: 0.85rem; opacity: 0.7;">Відвідано уроків</div>
                 </div>
+                <div style="text-align:right;">
+                    <div style="font-size: 1.2rem; font-weight: 700;">${attendedLessons} / ${totalLessons}</div>
+                    <div style="font-size: 0.85rem; opacity: 0.7;">Уроків</div>
+                </div>
+            </div>
+            <div class="stat-bar-bg" style="height:12px;">
+                <div class="stat-bar-fill attended" style="width: ${attendancePercent}%"></div>
             </div>
         </div>
     `;
     
-    if (stats.length === 0) {
-        html += '<p style="text-align:center; opacity:0.6; padding: 20px;">Немає даних для цього тижня</p>';
+    if (stats.lessons.length === 0) {
+        html += '<p style="text-align:center; opacity:0.6; padding: 20px;">Немає уроків для цього тижня</p>';
     } else {
-        const maxVal = stats[0][1];
-        stats.forEach(([name, minutes]) => {
-            const percent = (minutes / maxVal) * 100;
-            const hours = Math.floor(minutes / 60);
-            const mins = minutes % 60;
-            const timeStr = hours > 0 ? `${hours}г ${mins}хв` : `${mins} хв`;
-            const lessonCount = countLessonsByName(name);
+        stats.lessons.forEach(lesson => {
             html += `
                 <div class="stat-row">
                     <div class="stat-info">
-                        <span class="stat-label">${name} <span style="opacity:0.5; font-weight:400;">(${lessonCount} ур.)</span></span>
-                        <div class="stat-bar-bg"><div class="stat-bar-fill" style="width: ${percent}%"></div></div>
+                        <span class="stat-label">${lesson.name}</span>
+                        <div style="font-size:0.75rem; opacity:0.6; margin-bottom:5px;">${lesson.time}</div>
+                        <div class="stat-bar-bg"><div class="stat-bar-fill ${lesson.attended ? 'attended' : ''}" style="width: ${lesson.attended ? 100 : 0}%"></div></div>
                     </div>
-                    <div class="stat-time">${timeStr}</div>
+                    <div class="attendance-badge ${lesson.attended ? 'yes' : 'no'}">
+                        ${lesson.attended ? '✅ Так' : '❌ Ні'}
+                    </div>
                 </div>
             `;
         });
@@ -1042,43 +1090,40 @@ function openStats() {
     setTimeout(() => m.classList.add('open'), 10);
 }
 
-function countLessonsByName(name) {
-    let count = 0;
+function calculateAttendanceStats() {
+    const lessons = [];
     const weekPrefix = `${currentWeekIndex}-`;
+    let attended = 0;
+    
     for (const key in schedule) {
         if (key.startsWith(weekPrefix)) {
             const lesson = schedule[key];
-            if (lesson && lesson.name === name) {
-                count++;
+            if (lesson && lesson.name) {
+                const isAttended = lessonAttendance[key] === true;
+                if(isAttended) attended++;
+                lessons.push({
+                    key: key,
+                    name: lesson.name,
+                    time: `${lesson.start} - ${lesson.end}`,
+                    attended: isAttended
+                });
             }
         }
     }
-    return count;
-}
-
-function calculateStats() {
-    const stats = {};
-    const weekPrefix = `${currentWeekIndex}-`;
-    for (const key in schedule) {
-        if (key.startsWith(weekPrefix)) {
-            const lesson = schedule[key];
-            if (lesson && lesson.start && lesson.end) {
-                const startMin = timeToMin(lesson.start);
-                const endMin = timeToMin(lesson.end);
-                const duration = endMin - startMin;
-                if (duration > 0) {
-                    const name = lesson.name || "Інше";
-                    stats[name] = (stats[name] || 0) + duration;
-                }
-            }
+    
+    lessons.sort((a, b) => {
+        if (a.attended === b.attended) {
+            return a.time.localeCompare(b.time);
         }
-    }
-    // Convert to array and sort by duration descending
-    return Object.entries(stats).sort((a, b) => b[1] - a[1]);
+        return b.attended - a.attended;
+    });
+    
+    return {
+        total: lessons.length,
+        attended: attended,
+        lessons: lessons
+    };
 }
-
-// Log initial week visit on page load
-logWeekVisit(currentWeekIndex);
 
 init();
 </script>
