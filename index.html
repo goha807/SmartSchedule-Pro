@@ -665,6 +665,10 @@ let currentEditKey = null;
 let activeLessonGlobal = null;
 let currentWeekIndex = JSON.parse(localStorage.getItem('gh-current-week')) || 0;
 let lastNotifiedLessonId = null;
+
+// --- ДОДАНО ЗМІННУ ДЛЯ ПРИХОВУВАННЯ ---
+let hiddenActiveLessonId = null; 
+
 // --- MOOD & STATS DATA ---
 let moodData = JSON.parse(localStorage.getItem('gh-mood-data')) || { entries: [] };
 let statsData = JSON.parse(localStorage.getItem('gh-stats-data')) || { weeklyHours: {}, subjectHours: {}, moodRatings: {} };
@@ -1061,10 +1065,24 @@ foundLesson.uniqueId = key + '_' + lesson.start; break;
 if (foundLesson) {
 if (!activeLessonGlobal || activeLessonGlobal.uniqueId !== foundLesson.uniqueId) {
 activeLessonGlobal = foundLesson;
+// Якщо почався новий урок, скидаємо приховування від попереднього
+if (hiddenActiveLessonId !== foundLesson.uniqueId) hiddenActiveLessonId = null; 
 render();
 if (notificationsEnabled) trySendNotification(foundLesson);
 }
-updateWidgetUI(foundLesson, currentTime); updateCardUI(foundLesson, currentTime);
+
+// ПЕРЕВІРКА НА ПРИХОВУВАННЯ
+if (hiddenActiveLessonId === foundLesson.uniqueId) {
+document.getElementById('widgetName').textContent = "Вільний час 💤";
+document.getElementById('widgetTimes').textContent = "--:--";
+document.getElementById('widgetCountdown').textContent = "";
+document.getElementById('activeProgressBar').style.width = '0';
+document.getElementById('widgetLink').style.display = 'none';
+} else {
+updateWidgetUI(foundLesson, currentTime); 
+updateCardUI(foundLesson, currentTime);
+}
+
 } else {
 // Check if lesson just ended - show mood popup
 if (activeLessonGlobal) {
@@ -1315,26 +1333,15 @@ card.setAttribute('draggable', 'true'); card.addEventListener('dragstart', handl
 card.addEventListener('dragleave', handleDragLeave); card.addEventListener('drop', handleDrop); card.addEventListener('dragend', handleDragEnd);
 }
 const editBtnHTML = `<button class="edit-btn" onclick="event.stopPropagation(); openEditModal('${key}')">${data ? '⚙️' : '➕'}</button>`;
-
-// --- НОВА ФУНКЦІЯ: Подвійний клік для видалення ---
-card.ondblclick = (e) => {
-    e.stopPropagation();
-    if (data && confirm(`Видалити урок "${data.name}"?`)) {
-        logHistory(`Видалено урок: ${data.name} (Подвійний клік)`);
-        delete schedule[key];
-        localStorage.setItem('gh-schedule', JSON.stringify(schedule));
-        activeLessonGlobal = null;
-        render();
-        heartbeat();
-    }
-};
-// --------------------------------------------------
-
 if (!data) { card.innerHTML = `<div style="opacity:0.2; text-align:center; font-size:0.8rem">порожньо</div>${editBtnHTML}`;
 card.onclick = () => { if(isEditMode) openEditModal(key) }; return card; }
+
 const start = timeToMin(data.start), end = timeToMin(data.end);
-let isActive = false;
-if (activeLessonGlobal && activeLessonGlobal.uniqueId === (key + '_' + data.start)) isActive = true;
+
+// ПЕРЕВІРКА АКТИВНОСТІ ТА ПРИХОВУВАННЯ
+let isActuallyActive = (activeLessonGlobal && activeLessonGlobal.uniqueId === (key + '_' + data.start));
+let isActive = isActuallyActive && (hiddenActiveLessonId !== (key + '_' + data.start));
+
 let progressHtml = ''; let timerHtml = '';
 if (isActive) {
 card.classList.add('active');
@@ -1353,7 +1360,23 @@ ${timerHtml}
 ${data.link ? `<a href="${data.link}" target="_blank" class="lesson-link" onclick="event.stopPropagation()">🔗 Приєднатися</a>` : ''}
 ${progressHtml}
 `;
-card.onclick = () => { if(isEditMode) openEditModal(key) }; return card;
+card.onclick = () => { if(isEditMode) openEditModal(key) };
+
+// ДОДАНО ПОДВІЙНИЙ КЛІК ТУТ
+card.ondblclick = (e) => {
+if(isEditMode) return; // в режимі редагування не працює
+const currentUniqueId = key + '_' + data.start;
+
+if (hiddenActiveLessonId === currentUniqueId) {
+hiddenActiveLessonId = null; // Повертаємо як було
+} else if (isActuallyActive) {
+hiddenActiveLessonId = currentUniqueId; // Приховуємо (тільки якщо він зараз активний)
+}
+render();
+heartbeat(); // Одразу оновлюємо інтерфейс
+};
+
+return card;
 }
 function timeToMin(t) { if(!t) return 0;
 const [h, m] = t.split(':').map(Number); return h * 60 + m;
