@@ -46,39 +46,6 @@ transition: background 0.5s ease, color 0.5s ease;
 50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.6; filter: blur(60px); }
 }
 
-/* 👑 Елітний Квантовий фон (після 100 уроків) */
-@keyframes quantumVibe {
-0% { background-position: 0% 50%; filter: hue-rotate(0deg) brightness(1); }
-50% { background-position: 100% 50%; filter: hue-rotate(25deg) brightness(1.2); }
-100% { background-position: 0% 50%; filter: hue-rotate(0deg) brightness(1); }
-}
-.bg-quantum-gold {
-background: linear-gradient(45deg, #0f172a, #2a1100, #d4af37, #0f172a, #3a005c) !important;
-background-size: 400% 400% !important;
-animation: quantumVibe 12s ease-in-out infinite !important;
-}
-.bg-quantum-gold::before {
-content: '';
-position: fixed;
-top: 0; left: 0; width: 100%; height: 100%;
-background: radial-gradient(circle at 30% 70%, rgba(255, 215, 0, 0.15) 0%, transparent 60%),
-            radial-gradient(circle at 70% 30%, rgba(138, 43, 226, 0.15) 0%, transparent 60%);
-pointer-events: none;
-z-index: -1;
-animation: gradientShift 15s ease infinite reverse;
-}
-.bg-quantum-gold::after {
-content: ''; position: fixed; top: 50%; left: 50%;
-transform: translate(-50%, -50%);
-width: 100vw; height: 100vh;
-background-image: 
-    radial-gradient(circle, rgba(212, 175, 55, 0.2) 1px, transparent 1px),
-    radial-gradient(circle, rgba(212, 175, 55, 0.1) 1px, transparent 1px);
-background-size: 40px 40px, 20px 20px;
-pointer-events: none; z-index: -1;
-animation: gridMove 20s linear infinite;
-}
-
 /* ✨ Анімований градієнт - покращений */
 .bg-animated-gradient {
 background: linear-gradient(-45deg, #0f172a, #1e293b, #38bdf8, #1e293b, #0f172a) !important;
@@ -190,80 +157,6 @@ border-radius: 10px; transition: 0.2s;
 font-weight: 800;
 padding: 0 15px; min-width: 120px;
 text-align: center; color: var(--accent); white-space: nowrap;
-}
-/* --- MUSIC PLAYER HEADER --- */
-.music-bar {
-display: flex;
-align-items: center; gap: 10px;
-padding: 6px 12px; border-radius: 14px;
-background: rgba(15, 23, 42, 0.8); border: 1px solid var(--glass-border);
-position: relative;
-transition: border-color 0.3s ease;
-}
-.music-ctrl-btn {
-background: transparent;
-border: none; color: #fff;
-font-size: 1.1rem; cursor: pointer; padding: 5px;
-border-radius: 50%; width: 32px; height: 32px;
-display: flex; align-items: center;
-justify-content: center;
-transition: 0.2s;
-}
-.music-ctrl-btn:hover { background: rgba(255,255,255,0.1); color: var(--accent); }
-.track-display {
-font-size: 0.85rem;
-max-width: 200px; overflow: hidden;
-white-space: nowrap; text-overflow: ellipsis; cursor: pointer;
-padding: 0 15px; border-left: 1px solid rgba(255,255,255,0.1);
-border-right: 1px solid rgba(255,255,255,0.1);
-transition: color 0.2s;
-display: flex; align-items: center; gap: 5px;
-}
-.track-display:hover { color: var(--accent); }
-.track-display::after { content: '🔽'; font-size: 0.7rem; opacity: 0.5; margin-left: 5px; }
-.vol-container-drop {
-display: flex;
-align-items: center; gap: 10px;
-padding: 10px; background: rgba(255,255,255,0.05);
-border-radius: 8px; margin-bottom: 10px;
-}
-input[type=range] {
--webkit-appearance: none;
-width: 100%; height: 4px;
-background: rgba(255,255,255,0.2); border-radius: 2px;
-outline: none; padding: 0; margin: 0; border: none;
-}
-input[type=range]::-webkit-slider-thumb {
--webkit-appearance: none;
-width: 14px; height: 14px;
-border-radius: 50%; background: var(--accent); cursor: pointer;
-transition: transform 0.1s;
-}
-input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
-.playlist-dropdown {
-position: absolute;
-top: 120%; left: 0; width: 100%; min-width: 280px;
-background: #0f172a;
-border: 1px solid var(--glass-border); border-radius: 12px;
-padding: 10px; display: none;
-z-index: 1000;
-box-shadow: 0 15px 40px rgba(0,0,0,0.8);
-animation: fadeIn 0.2s ease;
-}
-.playlist-dropdown.show { display: block; }
-.track-list-item {
-padding: 10px;
-border-radius: 8px; cursor: pointer; font-size: 0.85rem;
-display: flex; justify-content: space-between; align-items: center;
-border-bottom: 1px solid rgba(255,255,255,0.03);
-transition: background 0.2s;
-}
-.track-list-item:hover { background: rgba(255,255,255,0.1); }
-.track-list-item.active {
-color: var(--accent);
-font-weight: bold;
-background: rgba(255, 255, 255, 0.05);
-border-left: 3px solid var(--accent);
 }
 /* --- Buttons --- */
 .btn {
@@ -487,6 +380,32 @@ background: rgba(255,255,255,0.15);
 background: var(--accent);
 transform: scale(1.1);
 }
+
+/* --- NEON DRAWER MENU --- */
+.menu-toggle{width:54px;height:54px;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:6px;border:1px solid rgba(56,189,248,.45);border-radius:17px;background:rgba(8,18,38,.78);box-shadow:0 0 22px rgba(56,189,248,.16),inset 0 0 18px rgba(56,189,248,.06);cursor:pointer;transition:.25s;position:relative;z-index:60}
+.menu-toggle:hover{transform:translateY(-2px);box-shadow:0 0 28px rgba(56,189,248,.35)}
+.menu-toggle span{width:23px;height:2px;border-radius:3px;background:#dff8ff;box-shadow:0 0 8px var(--accent);transition:.28s}
+.menu-toggle.active span:first-child{transform:translateY(8px) rotate(45deg)}.menu-toggle.active span:nth-child(2){opacity:0;transform:translateX(-8px)}.menu-toggle.active span:last-child{transform:translateY(-8px) rotate(-45deg)}
+.menu-scrim{position:fixed;inset:0;background:rgba(1,5,18,.66);backdrop-filter:blur(5px);z-index:9997;opacity:0;visibility:hidden;transition:opacity .38s,visibility .38s}
+.menu-scrim.open{opacity:1;visibility:visible}
+.side-menu{position:fixed;left:0;top:0;height:100dvh;width:min(360px,88vw);padding:28px 22px 20px;background:linear-gradient(155deg,rgba(10,22,46,.98),rgba(5,10,25,.98));border-right:1px solid rgba(56,189,248,.38);box-shadow:18px 0 65px rgba(0,0,0,.55),inset -1px 0 25px rgba(56,189,248,.07);backdrop-filter:blur(24px);z-index:9998;transform:translateX(-105%);transition:transform .48s cubic-bezier(.2,.85,.25,1);display:flex;flex-direction:column;overflow-y:auto}
+.side-menu.open{transform:translateX(0)}
+.menu-heading{display:flex;align-items:center;justify-content:space-between;padding-bottom:24px;border-bottom:1px solid rgba(148,220,255,.15)}.menu-heading small,.menu-caption{font-size:.68rem;letter-spacing:2px;color:#7dd3fc;font-weight:800}.menu-heading h2{font-size:1.8rem;margin:3px 0 0;letter-spacing:-1px}.menu-close{border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.06);color:white;border-radius:12px;width:40px;height:40px;font-size:1.1rem;cursor:pointer}
+.menu-group{padding:22px 0 8px}.menu-caption{padding:0 10px 10px;color:#7b9bb8}.menu-item{width:100%;display:flex;align-items:center;gap:13px;padding:13px 14px;margin:4px 0;color:#eaf7ff;background:rgba(255,255,255,.035);border:1px solid transparent;border-radius:13px;text-align:left;font:600 .92rem 'Plus Jakarta Sans',sans-serif;cursor:pointer;transition:.22s}.menu-item>span:first-child{font-size:1.15rem;width:25px;text-align:center}.menu-item:hover{background:rgba(56,189,248,.12);border-color:rgba(56,189,248,.35);transform:translateX(4px);box-shadow:0 0 18px rgba(56,189,248,.09)}.menu-item.active{background:rgba(56,189,248,.17);border-color:var(--accent);color:#fff}
+.menu-footer{margin-top:auto;padding:18px 8px 4px;color:#91a9c1;font-size:.8rem;border-top:1px solid rgba(148,220,255,.12);display:flex;justify-content:space-between}.menu-footer span{font-size:.62rem;letter-spacing:1.5px;color:#38bdf8}
+/* richer neon atmosphere and cards */
+body{background-color:#070d1c;background-image:radial-gradient(ellipse at 12% 8%,rgba(14,165,233,.17),transparent 36%),radial-gradient(ellipse at 88% 78%,rgba(139,92,246,.13),transparent 38%),var(--bg-image);}
+body:after{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;opacity:.16;background-image:linear-gradient(rgba(56,189,248,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(56,189,248,.13) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 85%)}
+header,.schedule-grid{position:relative;z-index:2}
+header{align-items:center}header h1{filter:drop-shadow(0 0 15px rgba(56,189,248,.24))}
+.glass{border-color:rgba(125,211,252,.17);box-shadow:0 12px 38px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.04)}
+.lesson-card{background:linear-gradient(145deg,rgba(19,34,61,.78),rgba(8,17,35,.76));box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.lesson-card.has-data{border-left-color:var(--accent);box-shadow:0 8px 26px rgba(0,0,0,.22),inset 0 0 22px rgba(56,189,248,.035)}
+.lesson-card:hover{box-shadow:0 12px 32px rgba(0,0,0,.3),0 0 22px color-mix(in srgb,var(--accent) 22%,transparent)}
+.lesson-reactions{display:flex;align-items:center;gap:8px;margin-top:13px;padding-top:11px;border-top:1px solid rgba(148,220,255,.12)}.lesson-reactions-label{font-size:.68rem;color:#91a9c1;margin-right:auto}.lesson-reaction{border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.045);border-radius:10px;padding:5px 10px;font-size:1.05rem;cursor:pointer;transition:.2s}.lesson-reaction:hover{transform:translateY(-2px) scale(1.08);border-color:var(--accent);background:rgba(56,189,248,.12)}.lesson-reaction.selected{background:rgba(56,189,248,.22);border-color:var(--accent);box-shadow:0 0 13px rgba(56,189,248,.22)}
+@media(max-width:700px){body{padding:12px;padding-bottom:120px}header{align-items:flex-start;padding:8px 2px}header h1{font-size:1.45rem}.menu-toggle{position:fixed;top:14px;right:14px;z-index:90}.week-switcher{margin-top:6px}.schedule-grid{grid-template-columns:1fr;gap:16px}.day-column{padding:8px}.ad-corner{display:none}#stats-sidebar,#history-sidebar{width:min(92vw,420px)}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
+
 </style>
 </head>
 <body data-edit-mode="false">
@@ -497,40 +416,25 @@ transform: scale(1.1);
 <div class="week-label" id="currentWeekLabel">Тиждень А</div>
 <button class="week-btn" onclick="changeWeek(1)">▶</button>
 </div>
-<div class="music-bar glass">
-<button class="music-ctrl-btn" onclick="changeTrack(-1)">⏮</button>
-<button class="music-ctrl-btn" id="playHeaderBtn" onclick="togglePlay()">▶</button>
-<button class="music-ctrl-btn" onclick="changeTrack(1)">⏭</button>
-<div class="track-display" id="headerTrackName" onclick="toggleHeaderPlaylist()">Вибери музику 🎵</div>
-<div class="playlist-dropdown" id="headerPlaylist">
-<div class="vol-container-drop">
-<span style="font-size:0.9rem">🔊</span>
-<input type="range" id="volSlider" min="0" max="1" step="0.05" oninput="setVolume(this.value)">
-<span id="volValue" style="font-size:0.8rem; width:30px; text-align:right">50%</span>
-</div>
-<input type="text" style="width:100%; padding:8px; margin-bottom:10px; font-size:0.85rem; border-radius:8px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.3); color:white; outline:none;" placeholder="🔍 Пошук по списку..." oninput="filterMusic(this.value)">
-<div id="trackList" style="max-height:200px; overflow-y:auto;"></div>
-<div style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">
-<input type="text" id="customUrl" placeholder="Посилання на mp3 або YouTube..." style="width:100%; padding:8px; border-radius:8px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.3); color:white; font-size:0.75rem; outline:none;">
-<div style="display:flex; gap:5px; margin-top:5px;">
-<button class="btn btn-primary" style="flex:1; font-size:0.8rem; padding:6px; justify-content:center;" onclick="addCustomTrack()">➕ Додати / Увімкнути</button>
-<button class="btn" style="background: var(--danger); font-size:0.8rem; padding:6px; justify-content:center; display:none;" id="stopYtBtn" onclick="stopYT()">⏹</button>
-</div>
-</div>
-</div>
-</div>
-<div class="controls">
-<button class="btn btn-notify" id="notifyBtn" onclick="toggleNotifications()">🔕 Сповіщ.</button>
-<button class="btn" onclick="document.getElementById('fileInput').click()">📤 Відкрити (Файл)</button>
-<button class="btn" onclick="exportToFile()">📥 Зберегти (Файл)</button>
-<button class="btn" onclick="openSettings()">🎨 Вигляд</button>
-<button class="btn" id="statsBtn" onclick="toggleStats()">📊 Статистика</button>
-<button class="btn btn-outline" id="toggleEdit" onclick="toggleEditMode()">✏️ Ред.</button>
-<button class="btn btn-primary" id="historyBtn" onclick="toggleHistory()">📜 Історія</button>
-</div>
+<button class="menu-toggle" id="menuToggle" aria-label="Відкрити меню" aria-expanded="false" onclick="toggleMenu()"><span></span><span></span><span></span></button>
 <input type="file" id="fileInput" accept=".json" onchange="importFromFile(this)">
 </header>
-<div id="yt-container" style="display: none;"></div>
+<div class="menu-scrim" id="menuScrim" onclick="closeMenu()"></div>
+<aside class="side-menu" id="sideMenu" aria-hidden="true">
+  <div class="menu-heading"><div><small>WORKSPACE</small><h2>Меню</h2></div><button class="menu-close" onclick="closeMenu()" aria-label="Закрити">✕</button></div>
+  <div class="menu-group"><div class="menu-caption">ОСНОВНЕ</div>
+    <button class="menu-item" id="notifyBtn" onclick="toggleNotifications()"><span>🔔</span><span>Сповіщення</span></button>
+    <button class="menu-item" onclick="openSettings(); closeMenu()"><span>🎨</span><span>Вигляд і теми</span></button>
+    <button class="menu-item" id="statsBtn" onclick="toggleStats(); closeMenu()"><span>📊</span><span>Статистика</span></button>
+    <button class="menu-item" id="toggleEdit" onclick="toggleEditMode(); closeMenu()"><span>✏️</span><span>Режим редагування</span></button>
+    <button class="menu-item" id="historyBtn" onclick="toggleHistory(); closeMenu()"><span>📜</span><span>Історія</span></button>
+  </div>
+  <div class="menu-group"><div class="menu-caption">ДАНІ РОЗКЛАДУ</div>
+    <button class="menu-item" onclick="document.getElementById('fileInput').click(); closeMenu()"><span>📤</span><span>Відкрити файл</span></button>
+    <button class="menu-item" onclick="exportToFile(); closeMenu()"><span>📥</span><span>Зберегти файл</span></button>
+  </div>
+  <div class="menu-footer">SchedulePro <span>NEON EDITION</span></div>
+</aside>
 <div id="history-sidebar">
 <h2 style="margin-top: 0; display: flex; justify-content: space-between; align-items: center;">
 Історія змін
@@ -593,13 +497,6 @@ transform: scale(1.1);
 <div class="mood-option" onclick="submitMood(1)">🥱</div>
 </div>
 </div>
-<a href="https://t.me/Donwloderfile_bot" target="_blank" class="ad-corner glass" style="bottom: 120px;">
-<div style="font-size: 2rem;">🎧</div>
-<div style="display:flex; flex-direction: column;">
-<span style="font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; font-weight: 700;">Telegram Bot</span>
-<span style="font-size: 1.1rem; font-weight: 800; color: #38bdf8;">Music Downloader</span>
-</div>
-</a>
 <a href="https://sites.google.com/view/grivnacoin/%D0%B3%D0%BB%D0%B0%D0%B2%D0%B8%D0%B0-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0" target="_blank" class="ad-corner glass">
 <div style="font-size: 2rem;">🪙</div>
 <div style="display:flex; flex-direction: column;">
@@ -629,6 +526,7 @@ transform: scale(1.1);
 </div>
 </div>
 </div>
+</div>
 <div class="modal-backdrop" id="settingsModal">
 <div class="modal glass">
 <h2>Стилізація</h2>
@@ -653,7 +551,6 @@ transform: scale(1.1);
 <option value="gradient">✨ Анімований градієнт</option>
 <option value="grid">🌐 Кібер-сітка</option>
 <option value="neon">🔮 Неоновий пульс</option>
-<option value="quantum">👑 Квантове Золото (100 уроків)</option>
 </select>
 </div>
 </div>
@@ -666,9 +563,8 @@ transform: scale(1.1);
 // =========================================================================
 const DEV_NEWS = [
 "✨ Оновлення: Додано Mood Tracker та Аналітику! Тепер ви можете оцінювати уроки та бачити статистику!",
-"✨ Оновлення: Файли збереження тепер зашифровані! Ніхто не підгляне пароль, виправлено систему музики та додано історію дій! Приємного використання, якщо є питанн пропозиції звертайтеся в телеграм канал.",
-"✨ Оновлення: Додано 3 анімовані фони: Анімований градієнт, Кібер-сітка та Неоновий пульс! Обирай у налаштуваннях вигляду та кастомізуй свій робочий простір.",
-"👑 Ексклюзив: Додано новий фон 'Quantum Gold', який можна розблокувати тільки після 100 пройдених уроків!"
+"✨ Оновлення: Файли збереження тепер зашифровані! Ніхто не підгляне пароль, покращено історію дій та стабільність розкладу! Приємного використання, якщо є питанн пропозиції звертайтеся в телеграм канал.",
+"✨ Оновлення: Додано 3 анімовані фони: Анімований градієнт, Кібер-сітка та Неоновий пульс! Обирай у налаштуваннях вигляду та кастомізуй свій робочий простір."
 ];
 // =========================================================================
 const days = ["Понеділок", "Вівторок", "Середа", "Четвер", "П'ятниця", "Субота", "Неділя"];
@@ -694,13 +590,6 @@ return decrypted;
 let schedule = JSON.parse(localStorage.getItem('gh-schedule')) || {};
 let userSettings = JSON.parse(localStorage.getItem('gh-settings')) || { accent: '#38bdf8', bg: 'default', volume: 0.5 };
 let editHistoryLog = JSON.parse(localStorage.getItem('gh-edit-history')) || [];
-let musicData = JSON.parse(localStorage.getItem('gh-music')) || {
-tracks: [
-{ title: "Lofi Study Beats 1", src: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" },
-{ title: "Chill Vibes", src: "https://cdn.pixabay.com/download/audio/2022/03/24/audio_349d443209.mp3" }
-],
-currentIndex: 0
-};
 let notificationsEnabled = JSON.parse(localStorage.getItem('gh-notifications')) || false;
 let currentEditKey = null;
 let activeLessonGlobal = null;
@@ -711,6 +600,8 @@ let moodData = JSON.parse(localStorage.getItem('gh-mood-data')) || { entries: []
 let statsData = JSON.parse(localStorage.getItem('gh-stats-data')) || { weeklyHours: {}, subjectHours: {}, moodRatings: {} };
 let completedLessons = JSON.parse(localStorage.getItem('gh-completed-lessons')) || [];
 let pendingMoodLesson = null;
+function toggleMenu(){const menu=document.getElementById('sideMenu');const opening=!menu.classList.contains('open');menu.classList.toggle('open',opening);document.getElementById('menuScrim').classList.toggle('open',opening);const btn=document.getElementById('menuToggle');btn.classList.toggle('active',opening);btn.setAttribute('aria-expanded',String(opening));menu.setAttribute('aria-hidden',String(!opening));}
+function closeMenu(){const menu=document.getElementById('sideMenu');if(!menu)return;menu.classList.remove('open');document.getElementById('menuScrim').classList.remove('open');const btn=document.getElementById('menuToggle');btn.classList.remove('active');btn.setAttribute('aria-expanded','false');menu.setAttribute('aria-hidden','true');}
 function logHistory(action) {
 const time = new Date().toLocaleTimeString('uk-UA');
 editHistoryLog.unshift(`[${time}] ${action}`);
@@ -942,106 +833,12 @@ logHistory(`Оцінено настрій: ${pendingMoodLesson.name} - ${mood}/3
 }
 hideMoodPopup();
 }
-// --- MP3 / YOUTUBE PLAYER ---
-const audioPlayer = new Audio();
-let isPlaying = false;
-function initAudio() {
-if(musicData.tracks.length > 0) {
-audioPlayer.src = musicData.tracks[musicData.currentIndex].src;
-updatePlayerUI();
-}
-audioPlayer.volume = userSettings.volume !== undefined ? userSettings.volume : 0.5;
-document.getElementById('volSlider').value = audioPlayer.volume;
-updateVolText(audioPlayer.volume);
-audioPlayer.onended = () => changeTrack(1);
-renderPlaylist();
-}
-function togglePlay() {
-if(musicData.tracks.length === 0) return;
-if (isPlaying) audioPlayer.pause();
-else audioPlayer.play().catch(e => alert("Спочатку клікніть будь-де на сторінці"));
-isPlaying = !isPlaying;
-updatePlayerUI();
-}
-function changeTrack(dir) {
-musicData.currentIndex = (musicData.currentIndex + dir + musicData.tracks.length) % musicData.tracks.length;
-audioPlayer.src = musicData.tracks[musicData.currentIndex].src;
-if(isPlaying) audioPlayer.play();
-updatePlayerUI(); saveMusicData(); renderPlaylist();
-}
-function playTrack(index) {
-musicData.currentIndex = index;
-audioPlayer.src = musicData.tracks[index].src;
-isPlaying = true; audioPlayer.play(); updatePlayerUI(); saveMusicData(); renderPlaylist();
-}
-function setVolume(val) { audioPlayer.volume = val; userSettings.volume = val; updateVolText(val); saveSettings(); }
-function updateVolText(val) { document.getElementById('volValue').textContent = Math.round(val * 100) + '%'; }
-function updatePlayerUI() {
-document.getElementById('playHeaderBtn').textContent = isPlaying ? '⏸' : '▶';
-document.getElementById('headerTrackName').textContent = musicData.tracks[musicData.currentIndex] ? musicData.tracks[musicData.currentIndex].title : "Плейлист порожній";
-}
-function toggleHeaderPlaylist() { document.getElementById('headerPlaylist').classList.toggle('show'); }
-document.addEventListener('click', function(event) {
-const playlist = document.getElementById('headerPlaylist');
-const headerName = document.getElementById('headerTrackName');
-if (!playlist.contains(event.target) && !headerName.contains(event.target)) {
-playlist.classList.remove('show');
-}
-});
-function renderPlaylist(filter = "") {
-const list = document.getElementById('trackList'); list.innerHTML = '';
-musicData.tracks.forEach((track, idx) => {
-if(track.title.toLowerCase().includes(filter.toLowerCase())) {
-const item = document.createElement('div');
-item.className = `track-list-item ${idx === musicData.currentIndex ? 'active' : ''}`;
-item.innerHTML = `<span>${track.title}</span> <span style="font-size:0.7rem; color: #ff4757; margin-left:10px;" onclick="event.stopPropagation(); removeTrack(${idx})">🗑️</span>`;
-item.onclick = (e) => { playTrack(idx); };
-list.appendChild(item);
-}
-});
-}
-function filterMusic(val) { renderPlaylist(val); }
-function addCustomTrack() {
-const url = document.getElementById('customUrl').value.trim();
-if(!url) return;
-const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-if (ytMatch) {
-const videoId = ytMatch[1];
-document.getElementById('yt-container').innerHTML = `<iframe width="10" height="10" src="https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1" allow="autoplay"></iframe>`;
-logHistory("Увімкнено YouTube відео з плеєра");
-if (typeof isPlaying !== 'undefined' && isPlaying) togglePlay();
-document.getElementById('customUrl').value = '';
-document.getElementById('stopYtBtn').style.display = 'block';
-document.getElementById('headerTrackName').textContent = "▶ YouTube Аудіо";
-return;
-}
-musicData.tracks.push({ title: `Власний трек ${musicData.tracks.length + 1}`, src: url });
-document.getElementById('customUrl').value = '';
-saveMusicData();
-renderPlaylist();
-logHistory("Додано новий MP3 трек");
-}
-function stopYT() {
-document.getElementById('yt-container').innerHTML = '';
-document.getElementById('stopYtBtn').style.display = 'none';
-updatePlayerUI();
-logHistory("YouTube зупинено");
-}
-function removeTrack(index) {
-if(confirm("Видалити трек?")) {
-musicData.tracks.splice(index, 1);
-if(musicData.currentIndex >= index) musicData.currentIndex = Math.max(0, musicData.currentIndex - 1);
-saveMusicData(); renderPlaylist(); updatePlayerUI();
-logHistory("Видалено MP3 трек");
-}
-}
-function saveMusicData() { localStorage.setItem('gh-music', JSON.stringify(musicData)); }
 document.addEventListener('keydown', function(event) {
 if (event.key === 'Escape') {
-stopYT();
 const sidebar = document.getElementById('history-sidebar');
 sidebar.classList.remove('open');
 document.getElementById('historyBtn').classList.remove('active');
+closeMenu();
 const statsSidebar = document.getElementById('stats-sidebar');
 statsSidebar.classList.remove('open');
 document.getElementById('statsBtn').classList.remove('active');
@@ -1069,7 +866,6 @@ applySettings();
 if(document.getElementById('bgSelect')) document.getElementById('bgSelect').value = userSettings.bg || 'default';
 checkPermissionStatus();
 render();
-initAudio();
 renderHistory();
 setInterval(heartbeat, 1000);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === 'visible') heartbeat(); });
@@ -1171,7 +967,7 @@ lastNotifiedLessonId = lesson.uniqueId;
 } catch (e) {}
 }
 function checkPermissionStatus() {
-if (!("Notification" in window)) { document.getElementById('notifyBtn').innerHTML = "❌ Не підтримується"; return; }
+if (!("Notification" in window)) { const b=document.getElementById('notifyBtn'); if(b) b.querySelectorAll('span')[1].textContent="Не підтримується"; return; }
 if (Notification.permission === "granted" && notificationsEnabled) setBtnState(true);
 else if (Notification.permission === "denied") setBtnState(false, true);
 else setBtnState(false);
@@ -1192,9 +988,11 @@ notificationsEnabled = true; localStorage.setItem('gh-notifications', 'true'); s
 }
 function setBtnState(isOn, isDenied = false) {
 const btn = document.getElementById('notifyBtn');
-if (isDenied) { btn.innerHTML = "🚫 Заблоковано"; btn.className = "btn btn-notify denied"; }
-else if (isOn) { btn.innerHTML = "🔔 Увімкнено"; btn.className = "btn btn-notify active"; }
-else { btn.innerHTML = "🔕 Вимкнено"; btn.className = "btn btn-notify"; }
+if (!btn) return;
+const label = btn.querySelectorAll('span')[1];
+if (label) label.textContent = isDenied ? 'Сповіщення заблоковані' : (isOn ? 'Сповіщення увімкнені' : 'Сповіщення вимкнені');
+btn.classList.toggle('active', !!isOn);
+btn.classList.toggle('denied', !!isDenied);
 }
 function changeWeek(direction) {
 currentWeekIndex = (currentWeekIndex + direction + 2) % 2;
@@ -1216,7 +1014,6 @@ function exportToFile() {
 const password = prompt("Введіть пароль для файлу (залиште порожнім, якщо не потрібен):");
 const fullData = {
 schedule: schedule,
-music: musicData,
 settings: userSettings,
 moodData: moodData,
 statsData: statsData,
@@ -1261,18 +1058,16 @@ if (attempts === 0) { alert("Вичерпано спроби. Доступ за�
 if (!authenticated) return;
 }
 if(json.schedule) { schedule = json.schedule;
-if(json.music) musicData = json.music;
 if(json.settings) userSettings = json.settings;
 if(json.moodData) moodData = json.moodData;
 if(json.statsData) statsData = json.statsData; }
 else { schedule = json; }
 migrateDataIfNeeded();
 localStorage.setItem('gh-schedule', JSON.stringify(schedule));
-localStorage.setItem('gh-music', JSON.stringify(musicData));
 localStorage.setItem('gh-settings', JSON.stringify(userSettings));
 localStorage.setItem('gh-mood-data', JSON.stringify(moodData));
 localStorage.setItem('gh-stats-data', JSON.stringify(statsData));
-applySettings(); initAudio(); render(); logHistory("Імпортовано дані з файлу"); alert("Дані успішно завантажено!");
+applySettings(); render(); logHistory("Імпортовано дані з файлу"); alert("Дані успішно завантажено!");
 } catch(err) {
 alert("Помилка файлу. Можливо він пошкоджений.");
 }
@@ -1327,6 +1122,21 @@ dayCol.appendChild(createLessonCard(schedule[key], key, isToday, currentTime, sI
 grid.appendChild(dayCol);
 });
 }
+function renderLessonReactions(key, lesson){
+const id = key + '_' + (lesson.start || '');
+const latest = [...(moodData.entries || [])].reverse().find(entry => entry.lessonKey === id);
+return [{value:3,emoji:'🤩',label:'Класно'},{value:2,emoji:'😐',label:'Нормально'},{value:1,emoji:'🥱',label:'Важко'}].map(item => `<button type="button" class="lesson-reaction ${latest && latest.mood === item.value ? 'selected' : ''}" title="${item.label}" aria-label="${item.label}" onclick="event.stopPropagation(); submitLessonMood('${key}',${item.value})">${item.emoji}</button>`).join('');
+}
+function submitLessonMood(key, mood){
+const lesson=schedule[key]; if(!lesson)return;
+const lessonId=key+'_'+(lesson.start || '');
+const existing=moodData.entries.findIndex(entry=>entry.lessonKey===lessonId);
+const entry={date:new Date().toISOString(),subject:lesson.name,mood,lessonKey:lessonId};
+if(existing>=0)moodData.entries[existing]=entry;else moodData.entries.push(entry);
+localStorage.setItem('gh-mood-data',JSON.stringify(moodData));
+logHistory(`Реакція до уроку ${lesson.name}: ${mood}/3`);
+render();
+}
 function createLessonCard(data, key, isToday, currentTime, index, isEditMode) {
 const card = document.createElement('div');
 card.className = 'lesson-card glass';
@@ -1357,6 +1167,7 @@ ${timerHtml}
 </div>
 <span class="lesson-name">${data.name}</span>
 ${data.link ? `<a href="${data.link}" target="_blank" class="lesson-link" onclick="event.stopPropagation()">🔗 Приєднатися</a>` : ''}
+<div class="lesson-reactions"><span class="lesson-reactions-label">Реакція</span>${renderLessonReactions(key, data)}</div>
 ${progressHtml}
 `;
 card.onclick = () => { if(isEditMode) openEditModal(key) }; return card;
@@ -1408,22 +1219,11 @@ render();
 }
 function openSettings() { const m = document.getElementById('settingsModal'); m.style.display = 'flex'; setTimeout(() => m.classList.add('open'), 10); }
 function setAccent(c) { userSettings.accent = c; saveSettings(); }
-
-function changeBackground(v) { 
-  // Перевірка на 100 уроків!
-  if (v === 'quantum' && completedLessons.length < 100) {
-    alert(`🔒 Елітний фон "Квантове Золото" відкривається тільки після 100 пройдених уроків! \n(Зараз пройдено: ${completedLessons.length})`);
-    document.getElementById('bgSelect').value = userSettings.bg || 'default';
-    return;
-  }
-  userSettings.bg = v; 
-  saveSettings(); 
-}
-
+function changeBackground(v) { userSettings.bg = v; saveSettings(); }
 function saveSettings() { localStorage.setItem('gh-settings', JSON.stringify(userSettings)); applySettings(); }
 function applySettings() {
 // Видаляємо класи анімованих фонів
-document.body.classList.remove('bg-animated-gradient', 'bg-cyber-grid', 'bg-neon-pulse', 'bg-quantum-gold');
+document.body.classList.remove('bg-animated-gradient', 'bg-cyber-grid', 'bg-neon-pulse');
 document.documentElement.style.setProperty('--accent', userSettings.accent);
 if(userSettings.bg === 'gradient') {
 document.body.classList.add('bg-animated-gradient');
@@ -1431,8 +1231,6 @@ document.body.classList.add('bg-animated-gradient');
 document.body.classList.add('bg-cyber-grid');
 } else if(userSettings.bg === 'neon') {
 document.body.classList.add('bg-neon-pulse');
-} else if(userSettings.bg === 'quantum') {
-document.body.classList.add('bg-quantum-gold');
 } else {
 let bg = 'radial-gradient(circle at top right, #1e293b, #0f172a)';
 if(userSettings.bg === 'sunset') bg = 'linear-gradient(135deg, #2c3e50, #000000)';
