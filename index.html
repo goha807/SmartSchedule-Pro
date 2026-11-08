@@ -206,16 +206,22 @@ transition: opacity .35s ease, visibility .35s ease;
 }
 #burger-overlay.show { opacity: 1; visibility: visible; pointer-events: auto; }
 #burger-sidebar {
-position: fixed; top: 0; right: 0; width: min(390px, calc(100vw - 22px));
-height: 100vh; height: 100dvh; background: rgba(15,23,42,.985);
-border-left: 1px solid var(--glass-border); backdrop-filter: blur(25px);
--webkit-backdrop-filter: blur(25px); transform: translateX(105%);
-transition: transform .42s cubic-bezier(.16,1,.3,1); padding: 25px;
-padding-bottom: max(25px, env(safe-area-inset-bottom)); z-index: 10000;
-color: var(--text); box-shadow: -15px 0 50px rgba(0,0,0,.8);
-overflow-y: auto; overscroll-behavior: contain;
+position:absolute; top:calc(100% + 12px); right:0;
+width:min(360px, calc(100vw - 24px)); max-height:calc(100dvh - 110px);
+overflow:auto; overscroll-behavior:contain;
+padding:20px; border-radius:20px;
+background:rgba(15,23,42,.98); border:1px solid var(--glass-border);
+backdrop-filter:blur(24px); -webkit-backdrop-filter:blur(24px);
+box-shadow:0 24px 70px rgba(0,0,0,.62);
+transform:translateY(-12px) scale(.97); transform-origin:top right;
+opacity:0; visibility:hidden; pointer-events:none;
+transition:opacity .25s ease, transform .38s cubic-bezier(.16,1,.3,1), visibility .38s;
+z-index:10005; color:var(--text);
 }
-#burger-sidebar.open { transform: translateX(0); }
+#burger-sidebar.open { transform:translateY(0) scale(1); opacity:1; visibility:visible; pointer-events:auto; }
+@media(max-width:600px) {
+  #burger-sidebar { padding:16px; width:min(360px, calc(100vw - 20px)); }
+}
 @media (max-width: 600px) {
 .header-menu-track { height: 42px; margin-left: 0; }
 .burger-btn { width: 34px; height: 34px; }
@@ -525,6 +531,66 @@ background: rgba(255,255,255,0.15);
 background: var(--accent);
 transform: scale(1.1);
 }
+
+/* --- EXPANDING HORIZONTAL CONTROL BAR --- */
+.header-menu-track {
+  position:relative; flex:1; min-width:46px; height:48px;
+  display:flex; align-items:center; justify-content:flex-end; gap:5px;
+  padding:3px; margin-left:8px; overflow:visible;
+  border:1px solid rgba(255,255,255,.28); border-radius:999px;
+  background:linear-gradient(135deg,rgba(8,15,25,.72),rgba(30,41,59,.42));
+  box-shadow:inset 0 1px 8px rgba(255,255,255,.035),0 5px 18px rgba(0,0,0,.16);
+  transition:border-color .3s ease, box-shadow .3s ease;
+}
+.header-menu-track.expanded {
+  border-color:var(--accent);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--accent) 35%,transparent),0 0 25px color-mix(in srgb,var(--accent) 22%,transparent),inset 0 1px 8px rgba(255,255,255,.05);
+}
+.menu-actions {
+  display:flex; align-items:center; justify-content:flex-end; gap:5px;
+  flex:0 1 auto; min-width:0; max-width:0; opacity:0; overflow:hidden;
+  transform:translateX(24px); pointer-events:none;
+  transition:max-width .58s cubic-bezier(.16,1,.3,1),opacity .25s ease,transform .48s cubic-bezier(.16,1,.3,1);
+}
+.header-menu-track.expanded .menu-actions {
+  max-width:1400px; opacity:1; transform:translateX(0); pointer-events:auto;
+}
+.toolbar-btn {
+  flex:0 0 auto; display:inline-flex; align-items:center; justify-content:center; gap:5px;
+  min-height:34px; padding:7px 10px; border-radius:11px;
+  border:1px solid rgba(255,255,255,.09);
+  background:rgba(255,255,255,.045); color:#f8fafc;
+  font:700 .72rem 'Plus Jakarta Sans',sans-serif; white-space:nowrap; cursor:pointer;
+  opacity:0; transform:translateY(9px) scale(.94);
+  transition:background .22s ease,border-color .22s ease,color .22s ease,transform .28s ease,box-shadow .22s ease,opacity .25s ease;
+}
+.header-menu-track.expanded .toolbar-btn { opacity:1; transform:translateY(0) scale(1); }
+.header-menu-track.expanded .toolbar-btn:nth-child(1) { transition-delay:.04s; }
+.header-menu-track.expanded .toolbar-btn:nth-child(2) { transition-delay:.08s; }
+.header-menu-track.expanded .toolbar-btn:nth-child(3) { transition-delay:.12s; }
+.header-menu-track.expanded .toolbar-btn:nth-child(4) { transition-delay:.16s; }
+.header-menu-track.expanded .toolbar-btn:nth-child(5) { transition-delay:.20s; }
+.header-menu-track.expanded .toolbar-btn:nth-child(6) { transition-delay:.24s; }
+.header-menu-track.expanded .toolbar-btn:nth-child(7) { transition-delay:.28s; }
+.header-menu-track.expanded .toolbar-btn:nth-child(8) { transition-delay:.32s; }
+.toolbar-btn:hover { color:var(--accent); background:rgba(255,255,255,.12); border-color:var(--accent); transform:translateY(-2px) scale(1.035); box-shadow:0 5px 16px rgba(0,0,0,.22),0 0 12px color-mix(in srgb,var(--accent) 18%,transparent); }
+.toolbar-btn.active { color:#07111e; background:var(--accent); border-color:var(--accent); }
+.toolbar-btn.btn-notify.active, .toolbar-btn.active#notifyBtn { color:#2ed573; background:rgba(46,213,115,.14); border-color:#2ed573; }
+.burger-btn { flex:0 0 38px; z-index:2; }
+.header-menu-track.expanded .burger-btn { border-color:var(--accent); background:rgba(255,255,255,.1); box-shadow:0 0 16px color-mix(in srgb,var(--accent) 25%,transparent); }
+@media(max-width:1100px) {
+  .header-menu-track { width:100%; flex:1 1 100%; margin:8px 0 0; min-width:0; }
+  .menu-actions { justify-content:flex-start; overflow-x:auto; scrollbar-width:none; }
+  .menu-actions::-webkit-scrollbar { display:none; }
+  .header-menu-track.expanded .menu-actions { max-width:calc(100% - 45px); }
+  .toolbar-btn { padding:7px 8px; font-size:.68rem; }
+}
+@media(max-width:520px) {
+  .toolbar-btn span { display:none; }
+  .toolbar-btn { width:34px; padding:6px; font-size:.95rem; }
+  .header-menu-track { height:44px; }
+}
+
 </style>
 </head>
 <body data-edit-mode="false">
@@ -538,19 +604,57 @@ transform: scale(1.1);
 <button class="week-btn" onclick="changeWeek(1)">▶</button>
 </div>
 </div>
-<div class="header-menu-track">
-<button class="burger-btn" id="burgerBtn" type="button" aria-label="Відкрити меню" aria-controls="burger-sidebar" aria-expanded="false" onclick="toggleBurgerMenu()">
-<div class="burger-line"></div>
-<div class="burger-line"></div>
-<div class="burger-line"></div>
+<div class="header-menu-track" id="headerMenuTrack">
+<nav class="menu-actions" id="menuActions" aria-label="Керування розкладом">
+<button class="toolbar-btn" id="historyBtn" onclick="toggleHistory(); toggleBurgerMenu(false)" title="Історія">📜 <span>Історія</span></button>
+<button class="toolbar-btn" id="toggleEdit" onclick="toggleEditMode(); toggleBurgerMenu(false)" title="Редагування">✏️ <span>Ред.</span></button>
+<button class="toolbar-btn" id="statsBtn" onclick="toggleStats(); toggleBurgerMenu(false)" title="Статистика">📊 <span>Статистика</span></button>
+<button class="toolbar-btn" onclick="openSettings(); toggleBurgerMenu(false)" title="Вигляд">🎨 <span>Вигляд</span></button>
+<button class="toolbar-btn" onclick="exportToFile(); toggleBurgerMenu(false)" title="Зберегти файл">📥 <span>Зберегти</span></button>
+<button class="toolbar-btn" onclick="document.getElementById('fileInput').click(); toggleBurgerMenu(false)" title="Відкрити файл">📤 <span>Відкрити</span></button>
+<button class="toolbar-btn notify-toolbar" id="notifyBtn" onclick="toggleNotifications(); toggleBurgerMenu(false)" title="Сповіщення">🔔 <span>Сповіщення</span></button>
+<button class="toolbar-btn music-toolbar" type="button" onclick="toggleMusicPanel()" title="Музичний плеєр">🎵 <span>Музика</span></button>
+</nav>
+<button class="burger-btn" id="burgerBtn" type="button" aria-label="Відкрити меню" aria-controls="menuActions" aria-expanded="false" onclick="toggleBurgerMenu()">
+<div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div>
 </button>
+<div id="burger-sidebar" aria-hidden="true">
+<h2 style="margin-top:0; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--glass-border); padding-bottom:12px;">
+<span>🎵 Музичний плеєр</span>
+<button type="button" onclick="toggleMusicPanel(false)" aria-label="Закрити плеєр" style="background:transparent;border:0;color:white;cursor:pointer;font-size:1.2rem;">✕</button>
+</h2>
+<div style="margin-bottom: 25px;">
+<div class="music-bar glass" style="width: 100%; margin-bottom: 15px;">
+<button class="music-ctrl-btn" onclick="changeTrack(-1)">⏮</button>
+<button class="music-ctrl-btn" id="playHeaderBtn" onclick="togglePlay()">▶</button>
+<button class="music-ctrl-btn" onclick="changeTrack(1)">⏭</button>
+<div class="track-display" id="headerTrackName" onclick="toggleHeaderPlaylist()" style="max-width: 150px;">Вибери музику 🎵</div>
+<div class="playlist-dropdown" id="headerPlaylist">
+<div class="vol-container-drop">
+<span style="font-size:0.9rem">🔊</span>
+<input type="range" id="volSlider" min="0" max="1" step="0.05" oninput="setVolume(this.value)">
+<span id="volValue" style="font-size:0.8rem; width:30px; text-align:right">50%</span>
+</div>
+<input type="text" style="width:100%; padding:8px; margin-bottom:10px; font-size:0.85rem; border-radius:8px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.3); color:white; outline:none;" placeholder="🔍 Пошук по списку..." oninput="filterMusic(this.value)">
+<div id="trackList" style="max-height:200px; overflow-y:auto;"></div>
+<div style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">
+<input type="text" id="customUrl" placeholder="Посилання на mp3 або YouTube..." style="width:100%; padding:8px; border-radius:8px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.3); color:white; font-size:0.75rem; outline:none;">
+<div style="display:flex; gap:5px; margin-top:5px;">
+<button class="btn btn-primary" style="flex:1; font-size:0.8rem; padding:6px; justify-content:center;" onclick="addCustomTrack()">➕ Додати / Увімкнути</button>
+<button class="btn" style="background: var(--danger); font-size:0.8rem; padding:6px; justify-content:center; display:none;" id="stopYtBtn" onclick="stopYT()">⏹</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 </div>
 </div>
 <input type="file" id="fileInput" accept=".json" onchange="importFromFile(this)">
 </header>
 
 <!-- Затемнення фону при відкритому меню -->
-<div id="burger-overlay" onclick="closeBurgerMenu()" aria-hidden="true"></div>
 
 <!-- BURGER MENU SIDEBAR -->
 <div id="burger-sidebar" aria-hidden="true">
@@ -790,21 +894,33 @@ let completedLessons = JSON.parse(localStorage.getItem('gh-completed-lessons')) 
 let pendingMoodLesson = null;
 
 function toggleBurgerMenu(force) {
-const sidebar = document.getElementById('burger-sidebar');
+const track = document.getElementById('headerMenuTrack');
 const btn = document.getElementById('burgerBtn');
-const overlay = document.getElementById('burger-overlay');
-const shouldOpen = typeof force === 'boolean' ? force : !sidebar.classList.contains('open');
-sidebar.classList.toggle('open', shouldOpen);
-overlay.classList.toggle('show', shouldOpen);
+const shouldOpen = typeof force === 'boolean' ? force : !track.classList.contains('expanded');
+track.classList.toggle('expanded', shouldOpen);
 btn.classList.toggle('active', shouldOpen);
 btn.setAttribute('aria-expanded', String(shouldOpen));
-btn.setAttribute('aria-label', shouldOpen ? 'Закрити меню' : 'Відкрити меню');
-sidebar.setAttribute('aria-hidden', String(!shouldOpen));
-document.body.style.overflow = shouldOpen ? 'hidden' : '';
+btn.setAttribute('aria-label', shouldOpen ? 'Згорнути меню' : 'Відкрити меню');
 }
 function closeBurgerMenu() { toggleBurgerMenu(false); }
+function toggleMusicPanel(force) {
+const panel = document.getElementById('burger-sidebar');
+const shouldOpen = typeof force === 'boolean' ? force : !panel.classList.contains('open');
+panel.classList.toggle('open', shouldOpen);
+panel.setAttribute('aria-hidden', String(!shouldOpen));
+}
 document.addEventListener('keydown', function(event) {
-if(event.key === 'Escape') closeBurgerMenu();
+if(event.key === 'Escape') {
+closeBurgerMenu();
+toggleMusicPanel(false);
+}
+});
+document.addEventListener('click', function(event) {
+const track = document.getElementById('headerMenuTrack');
+const panel = document.getElementById('burger-sidebar');
+if(panel && !panel.contains(event.target) && !event.target.closest('.music-toolbar')) {
+  toggleMusicPanel(false);
+}
 });
 
 function logHistory(action) {
