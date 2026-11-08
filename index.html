@@ -828,6 +828,61 @@ input:not([type=range], #yt-link-input):focus,select:focus,textarea:focus {
   *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; }
 }
 
+
+/* UNIFIED GREEN CONTROL PILLS — same visual language as "Увімкнено" */
+#menuActions .toolbar-btn,
+#menuActions .toolbar-btn:visited {
+  min-height:40px !important;
+  padding:8px 14px !important;
+  border-radius:13px !important;
+  border:1px solid rgba(52,211,153,.58) !important;
+  color:#c9ffe7 !important;
+  background:linear-gradient(180deg,rgba(16,185,129,.22),rgba(5,150,105,.13)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 0 12px rgba(16,185,129,.07) !important;
+  font-size:.76rem !important;
+  font-weight:800 !important;
+  letter-spacing:.1px;
+}
+#menuActions .toolbar-btn:hover {
+  color:#ecfff6 !important;
+  border-color:#6ee7b7 !important;
+  background:linear-gradient(180deg,rgba(16,185,129,.38),rgba(5,150,105,.25)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 0 0 2px rgba(52,211,153,.10),0 0 22px rgba(16,185,129,.2) !important;
+  transform:translateY(-2px) scale(1.025) !important;
+}
+#menuActions .toolbar-btn:active {
+  transform:translateY(0) scale(.98) !important;
+}
+#menuActions .toolbar-btn.active,
+#menuActions .toolbar-btn.btn-notify.active,
+#menuActions .toolbar-btn.active#notifyBtn {
+  color:#d1fae5 !important;
+  border-color:#34d399 !important;
+  background:linear-gradient(180deg,rgba(16,185,129,.42),rgba(5,150,105,.25)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 0 18px rgba(52,211,153,.18) !important;
+}
+#menuActions .toolbar-btn span { color:inherit !important; }
+#menuActions .toolbar-btn.notify-toolbar:not(.active) {
+  color:#bbf7d0 !important;
+}
+#menuActions .toolbar-btn.music-toolbar {
+  border-color:rgba(167,139,250,.62) !important;
+  color:#e9ddff !important;
+  background:linear-gradient(180deg,rgba(139,92,246,.22),rgba(109,40,217,.13)) !important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 12px rgba(139,92,246,.07) !important;
+}
+#menuActions .toolbar-btn.music-toolbar:hover {
+  border-color:#c4b5fd !important;
+  background:linear-gradient(180deg,rgba(139,92,246,.38),rgba(109,40,217,.24)) !important;
+  box-shadow:0 0 22px rgba(139,92,246,.2) !important;
+}
+@media(max-width:1100px) {
+  #menuActions .toolbar-btn { min-height:38px !important; padding:7px 11px !important; }
+}
+@media(max-width:520px) {
+  #menuActions .toolbar-btn { min-height:36px !important; width:36px; padding:6px !important; }
+}
+
 </style>
 </head>
 <body data-edit-mode="false">
@@ -1601,9 +1656,10 @@ notificationsEnabled = true; localStorage.setItem('gh-notifications', 'true'); s
 }
 function setBtnState(isOn, isDenied = false) {
 const btn = document.getElementById('notifyBtn');
-if (isDenied) { btn.innerHTML = "🚫 Заблоковано"; btn.className = "btn btn-notify denied"; }
-else if (isOn) { btn.innerHTML = "🔔 Увімкнено"; btn.className = "btn btn-notify active"; }
-else { btn.innerHTML = "🔕 Вимкнено"; btn.className = "btn btn-notify"; }
+btn.className = "toolbar-btn notify-toolbar btn-notify" + (isOn ? " active" : "") + (isDenied ? " denied" : "");
+if (isDenied) btn.innerHTML = "🚫 <span>Заблоковано</span>";
+else if (isOn) btn.innerHTML = "🔔 <span>Увімкнено</span>";
+else btn.innerHTML = "🔕 <span>Вимкнено</span>";
 }
 function changeWeek(direction) {
 currentWeekIndex = (currentWeekIndex + direction + 2) % 2;
