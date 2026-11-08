@@ -592,295 +592,54 @@ transform: scale(1.1);
 }
 
 
-/* =========================================================
-   SCHEDULEPRO — PREMIUM VISUAL REFINEMENT
-   ========================================================= */
-:root {
-  --bg-image: radial-gradient(ellipse at 15% 0%, #1c3150 0%, #101827 42%, #090f1a 100%);
-  --card-bg: rgba(20, 32, 50, .76);
-  --glass-border: rgba(148, 184, 224, .16);
-  --accent: #38bdf8;
-  --success: #34d399;
-  --text: #edf5ff;
+/* Top toolbar: uniform button sizing only */
+#menuActions {
+  display:flex;
+  align-items:center;
+  gap:6px;
 }
-html { scroll-behavior:smooth; }
-body {
-  padding: clamp(12px, 2vw, 28px);
-  padding-bottom: 150px;
-  background-color:#0a111d;
-  background-image:
-    radial-gradient(ellipse at 12% 5%, rgba(14,165,233,.13), transparent 34%),
-    radial-gradient(ellipse at 88% 22%, rgba(124,58,237,.10), transparent 32%),
-    linear-gradient(145deg,#0c1422 0%,#101b2b 48%,#090f19 100%);
-  background-attachment:fixed;
+#menuActions .toolbar-btn {
+  box-sizing:border-box !important;
+  height:38px !important;
+  min-height:38px !important;
+  min-width:86px !important;
+  padding:0 12px !important;
+  display:inline-flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  gap:6px !important;
+  border-radius:11px !important;
+  white-space:nowrap !important;
+  line-height:1 !important;
+  font-size:12px !important;
 }
-body::before {
-  content:""; position:fixed; inset:0; pointer-events:none; z-index:-1;
-  background-image:linear-gradient(rgba(148,163,184,.025) 1px,transparent 1px),
-                   linear-gradient(90deg,rgba(148,163,184,.025) 1px,transparent 1px);
-  background-size:42px 42px;
-  mask-image:linear-gradient(to bottom,rgba(0,0,0,.6),transparent 85%);
-}
-header {
-  max-width:1680px; margin:0 auto 24px; padding:12px 14px;
-  border:1px solid rgba(148,184,224,.13); border-radius:24px;
-  background:linear-gradient(135deg,rgba(18,30,48,.88),rgba(12,20,33,.72));
-  box-shadow:0 18px 55px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.055);
-  backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
-}
-header > div:first-child { gap:18px !important; }
-h1 {
-  font-size:clamp(1.35rem,2vw,1.9rem);
-  letter-spacing:-1.2px;
-  filter:drop-shadow(0 4px 16px rgba(56,189,248,.18));
-}
-.week-switcher {
-  background:rgba(5,12,22,.56); border:1px solid rgba(148,184,224,.16);
-  border-radius:15px; padding:4px; box-shadow:inset 0 1px 5px rgba(0,0,0,.25);
-}
-.week-btn { width:38px; height:36px; padding:0; border-radius:11px; }
-.week-btn:hover { color:var(--accent); background:rgba(56,189,248,.12); }
-.week-label { min-width:130px; font-size:.88rem; letter-spacing:.2px; }
-
-.header-menu-track {
-  min-width:48px; height:54px; padding:5px; gap:7px;
-  border:1px solid rgba(148,184,224,.22);
-  background:linear-gradient(120deg,rgba(7,15,27,.86),rgba(22,36,55,.72));
-  box-shadow:0 8px 26px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.06);
-}
-.header-menu-track.expanded {
-  border-color:rgba(56,189,248,.72);
-  box-shadow:0 0 0 1px rgba(56,189,248,.16),0 0 30px rgba(56,189,248,.14),0 12px 32px rgba(0,0,0,.28);
-}
-.menu-actions { gap:7px; }
-.toolbar-btn {
-  min-height:38px; padding:8px 12px; border-radius:12px;
-  border:1px solid rgba(148,184,224,.13);
-  background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.035));
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.045);
-  font-size:.74rem; letter-spacing:.1px;
-}
-.toolbar-btn:hover {
-  color:#eaf8ff; background:rgba(56,189,248,.14);
-  border-color:rgba(56,189,248,.65); transform:translateY(-2px);
-  box-shadow:0 8px 20px rgba(0,0,0,.22),0 0 16px rgba(56,189,248,.12);
-}
-.toolbar-btn.active {
-  color:#04131d; background:linear-gradient(135deg,#7dd3fc,#38bdf8);
-  border-color:#7dd3fc; box-shadow:0 0 20px rgba(56,189,248,.2);
-}
-.toolbar-btn.active#notifyBtn {
-  color:#bbf7d0; background:linear-gradient(135deg,rgba(16,185,129,.25),rgba(5,150,105,.16));
-  border-color:rgba(52,211,153,.75); box-shadow:0 0 18px rgba(52,211,153,.13);
-}
-.burger-btn {
-  width:40px;height:40px;border-radius:50%;
-  background:linear-gradient(145deg,rgba(255,255,255,.11),rgba(255,255,255,.035));
-  border:1px solid rgba(148,184,224,.2);
-}
-.burger-btn:hover { background:rgba(56,189,248,.15); box-shadow:0 0 22px rgba(56,189,248,.2); }
-.burger-line { width:18px; }
-.header-menu-track.expanded .burger-btn {
-  border-color:rgba(56,189,248,.7); background:rgba(56,189,248,.13);
-}
-
-.schedule-grid {
-  max-width:1680px; gap:clamp(12px,1.6vw,24px);
-  align-items:start;
-}
-.day-column {
-  padding:14px; border-radius:22px;
-  background:linear-gradient(160deg,rgba(21,35,54,.48),rgba(13,23,37,.22));
-  border:1px solid rgba(148,184,224,.075);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.025);
-  transition:background .3s ease,border-color .3s ease,transform .3s ease;
-}
-.day-column:hover {
-  background:linear-gradient(160deg,rgba(24,42,65,.62),rgba(13,23,37,.34));
-  border-color:rgba(148,184,224,.15);
-}
-.day-column.is-today {
-  background:linear-gradient(160deg,rgba(14,165,233,.10),rgba(13,23,37,.34));
-  border:1px solid rgba(56,189,248,.32);
-  outline:none; box-shadow:0 0 28px rgba(56,189,248,.07),inset 0 1px 0 rgba(255,255,255,.05);
-}
-.day-title {
-  min-height:42px; margin:0 0 16px; padding:0 10px;
-  font-size:1rem; letter-spacing:.15px;
-}
-.day-title::before { width:4px;height:22px; box-shadow:0 0 12px var(--accent); }
-.lesson-card {
-  min-height:64px; margin-bottom:11px; padding:16px;
-  border:1px solid rgba(148,184,224,.13);
-  border-left:3px solid rgba(148,184,224,.2);
-  border-radius:16px;
-  background:linear-gradient(145deg,rgba(28,43,64,.76),rgba(17,29,46,.72));
-  box-shadow:0 7px 20px rgba(0,0,0,.13),inset 0 1px 0 rgba(255,255,255,.035);
-}
-.lesson-card.has-data {
-  border-left-color:var(--accent);
-  background:linear-gradient(145deg,rgba(24,51,75,.88),rgba(17,31,49,.82));
-}
-.lesson-card:hover {
-  border-color:rgba(56,189,248,.55);
-  background:linear-gradient(145deg,rgba(34,61,87,.92),rgba(18,36,57,.9));
-  transform:translateY(-3px);
-  box-shadow:0 14px 28px rgba(0,0,0,.24),0 0 18px rgba(56,189,248,.07);
-}
-.lesson-card.active {
-  border-color:rgba(52,211,153,.7); border-left-color:var(--success);
-  background:linear-gradient(135deg,rgba(6,95,70,.3),rgba(17,37,49,.92));
-  box-shadow:0 0 0 1px rgba(52,211,153,.12),0 10px 28px rgba(0,0,0,.2);
-}
-.lesson-name { font-weight:800; letter-spacing:.1px; }
-.lesson-link { color:#7dd3fc; text-decoration:none; }
-.lesson-link:hover { color:#e0f2fe; text-decoration:underline; }
-.time-badge,.card-timer-badge {
-  border-radius:999px; padding:5px 9px;
-  background:rgba(2,8,18,.35); border:1px solid rgba(148,184,224,.12);
-}
-.progress-container { background:rgba(148,163,184,.15); border-radius:999px; overflow:hidden; }
-.progress-bar { border-radius:999px; box-shadow:0 0 12px currentColor; }
-
-.glass {
-  background:linear-gradient(145deg,rgba(25,41,62,.82),rgba(13,23,38,.78));
-  border:1px solid rgba(148,184,224,.16); border-radius:20px;
-  box-shadow:0 16px 42px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.045);
-}
-.btn {
-  border-radius:13px; border-color:rgba(148,184,224,.18);
-  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.035));
-}
-.btn:hover { border-color:rgba(56,189,248,.6); box-shadow:0 8px 22px rgba(0,0,0,.2); }
-.btn-primary { background:linear-gradient(135deg,#7dd3fc,#38bdf8); color:#062033; }
-input:not([type=range], #yt-link-input),select,textarea {
-  border:1px solid rgba(148,184,224,.2); background:rgba(5,13,24,.68);
-  border-radius:13px; color:#edf5ff;
-}
-input:not([type=range], #yt-link-input):focus,select:focus,textarea:focus {
-  border-color:var(--accent); box-shadow:0 0 0 3px rgba(56,189,248,.12);
-}
-#history-sidebar,#stats-sidebar {
-  background:linear-gradient(160deg,rgba(17,30,48,.98),rgba(8,15,27,.98));
-  border-left:1px solid rgba(148,184,224,.18);
-  box-shadow:-24px 0 70px rgba(0,0,0,.48);
-  backdrop-filter:blur(24px);
-}
-.stats-section h3 { letter-spacing:.2px; }
-.stat-card {
-  border:1px solid rgba(148,184,224,.12);
-  background:linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
-  border-radius:16px;
-}
-.current-widget {
-  background:linear-gradient(135deg,rgba(16,33,51,.96),rgba(8,18,31,.94));
-  border:1px solid rgba(56,189,248,.24);
-  box-shadow:0 16px 42px rgba(0,0,0,.36),0 0 24px rgba(56,189,248,.08);
-  backdrop-filter:blur(18px);
-}
-.widget-btn-small { border-radius:10px; }
-.modal-backdrop { background:rgba(2,6,14,.76); backdrop-filter:blur(12px); }
-.modal {
-  background:linear-gradient(150deg,rgba(22,39,60,.98),rgba(9,17,30,.98));
-  border:1px solid rgba(56,189,248,.36); border-radius:24px;
-  box-shadow:0 28px 90px rgba(0,0,0,.55),0 0 35px rgba(56,189,248,.08);
-}
-.ad-corner {
-  border-radius:17px; border-color:rgba(148,184,224,.14);
-  transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
-}
-.ad-corner:hover { transform:translateY(-4px); border-color:rgba(56,189,248,.4); box-shadow:0 15px 35px rgba(0,0,0,.3); }
-#mood-popup {
-  background:linear-gradient(145deg,rgba(24,42,64,.98),rgba(9,17,30,.98));
-  border:1px solid rgba(148,184,224,.2); border-radius:22px;
-  box-shadow:0 25px 70px rgba(0,0,0,.5);
-}
-#burger-sidebar {
-  background:linear-gradient(145deg,rgba(21,37,57,.99),rgba(8,16,29,.99));
-  border-color:rgba(56,189,248,.22); border-radius:22px;
-}
-.music-bar { border-color:rgba(148,184,224,.2); }
-.playlist-dropdown {
-  background:linear-gradient(145deg,#172940,#0b1525);
-  border-color:rgba(148,184,224,.2); border-radius:15px;
-}
-::selection { background:rgba(56,189,248,.32); color:#fff; }
-:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
-@media(max-width:1100px) {
-  header { gap:12px; }
-  header > div:first-child { flex-wrap:wrap; }
-  .header-menu-track { border-radius:18px; }
-  .schedule-grid { grid-template-columns:repeat(auto-fit,minmax(245px,1fr)); }
-}
-@media(max-width:600px) {
-  body { padding:10px; padding-bottom:170px; }
-  header { padding:12px; border-radius:19px; }
-  header > div:first-child > div:first-child { flex-wrap:wrap; gap:9px !important; }
-  h1 { font-size:1.35rem; }
-  .week-label { min-width:100px; padding:0 8px; font-size:.78rem; }
-  .schedule-grid { grid-template-columns:1fr; gap:12px; }
-  .day-column { padding:12px; }
-  .lesson-card { padding:14px; }
-  #history-sidebar,#stats-sidebar { width:min(100vw,390px); }
-  .current-widget { left:12px; right:12px; bottom:12px; max-width:none; min-width:0; }
-}
-@media(prefers-reduced-motion:reduce) {
-  *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; }
-}
-
-
-/* UNIFIED GREEN CONTROL PILLS — same visual language as "Увімкнено" */
-#menuActions .toolbar-btn,
-#menuActions .toolbar-btn:visited {
-  min-height:40px !important;
-  padding:8px 14px !important;
-  border-radius:13px !important;
-  border:1px solid rgba(52,211,153,.58) !important;
-  color:#c9ffe7 !important;
-  background:linear-gradient(180deg,rgba(16,185,129,.22),rgba(5,150,105,.13)) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 0 12px rgba(16,185,129,.07) !important;
-  font-size:.76rem !important;
-  font-weight:800 !important;
-  letter-spacing:.1px;
-}
-#menuActions .toolbar-btn:hover {
-  color:#ecfff6 !important;
-  border-color:#6ee7b7 !important;
-  background:linear-gradient(180deg,rgba(16,185,129,.38),rgba(5,150,105,.25)) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.13),0 0 0 2px rgba(52,211,153,.10),0 0 22px rgba(16,185,129,.2) !important;
-  transform:translateY(-2px) scale(1.025) !important;
-}
-#menuActions .toolbar-btn:active {
-  transform:translateY(0) scale(.98) !important;
-}
-#menuActions .toolbar-btn.active,
-#menuActions .toolbar-btn.btn-notify.active,
-#menuActions .toolbar-btn.active#notifyBtn {
-  color:#d1fae5 !important;
-  border-color:#34d399 !important;
-  background:linear-gradient(180deg,rgba(16,185,129,.42),rgba(5,150,105,.25)) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 0 18px rgba(52,211,153,.18) !important;
-}
-#menuActions .toolbar-btn span { color:inherit !important; }
-#menuActions .toolbar-btn.notify-toolbar:not(.active) {
-  color:#bbf7d0 !important;
+#menuActions .toolbar-btn.notify-toolbar {
+  min-width:132px !important;
 }
 #menuActions .toolbar-btn.music-toolbar {
-  border-color:rgba(167,139,250,.62) !important;
-  color:#e9ddff !important;
-  background:linear-gradient(180deg,rgba(139,92,246,.22),rgba(109,40,217,.13)) !important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 0 12px rgba(139,92,246,.07) !important;
+  min-width:86px !important;
 }
-#menuActions .toolbar-btn.music-toolbar:hover {
-  border-color:#c4b5fd !important;
-  background:linear-gradient(180deg,rgba(139,92,246,.38),rgba(109,40,217,.24)) !important;
-  box-shadow:0 0 22px rgba(139,92,246,.2) !important;
+#menuActions .toolbar-btn span {
+  display:inline !important;
 }
 @media(max-width:1100px) {
-  #menuActions .toolbar-btn { min-height:38px !important; padding:7px 11px !important; }
+  #menuActions .toolbar-btn {
+    height:36px !important;
+    min-height:36px !important;
+    min-width:82px !important;
+    padding:0 10px !important;
+  }
+  #menuActions .toolbar-btn.notify-toolbar { min-width:124px !important; }
 }
 @media(max-width:520px) {
-  #menuActions .toolbar-btn { min-height:36px !important; width:36px; padding:6px !important; }
+  #menuActions .toolbar-btn {
+    height:36px !important;
+    min-height:36px !important;
+    min-width:36px !important;
+    width:36px !important;
+    padding:0 !important;
+  }
+  #menuActions .toolbar-btn span { display:none !important; }
 }
 
 </style>
@@ -947,6 +706,51 @@ input:not([type=range], #yt-link-input):focus,select:focus,textarea:focus {
 </header>
 
 <!-- Затемнення фону при відкритому меню -->
+
+<!-- BURGER MENU SIDEBAR -->
+<div id="burger-sidebar" aria-hidden="true">
+<h2 style="margin-top: 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px;">
+<span>Меню керування</span>
+<button onclick="toggleBurgerMenu()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 1.2em; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">✖</button>
+</h2>
+
+<div style="margin-bottom: 25px;">
+<h3 style="color: var(--accent); font-size: 1rem; margin-bottom: 12px;">🎵 Музичний плеєр</h3>
+<div class="music-bar glass" style="width: 100%; margin-bottom: 15px;">
+<button class="music-ctrl-btn" onclick="changeTrack(-1)">⏮</button>
+<button class="music-ctrl-btn" id="playHeaderBtn" onclick="togglePlay()">▶</button>
+<button class="music-ctrl-btn" onclick="changeTrack(1)">⏭</button>
+<div class="track-display" id="headerTrackName" onclick="toggleHeaderPlaylist()" style="max-width: 150px;">Вибери музику 🎵</div>
+<div class="playlist-dropdown" id="headerPlaylist">
+<div class="vol-container-drop">
+<span style="font-size:0.9rem">🔊</span>
+<input type="range" id="volSlider" min="0" max="1" step="0.05" oninput="setVolume(this.value)">
+<span id="volValue" style="font-size:0.8rem; width:30px; text-align:right">50%</span>
+</div>
+<input type="text" style="width:100%; padding:8px; margin-bottom:10px; font-size:0.85rem; border-radius:8px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.3); color:white; outline:none;" placeholder="🔍 Пошук по списку..." oninput="filterMusic(this.value)">
+<div id="trackList" style="max-height:200px; overflow-y:auto;"></div>
+<div style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">
+<input type="text" id="customUrl" placeholder="Посилання на mp3 або YouTube..." style="width:100%; padding:8px; border-radius:8px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.3); color:white; font-size:0.75rem; outline:none;">
+<div style="display:flex; gap:5px; margin-top:5px;">
+<button class="btn btn-primary" style="flex:1; font-size:0.8rem; padding:6px; justify-content:center;" onclick="addCustomTrack()">➕ Додати / Увімкнути</button>
+<button class="btn" style="background: var(--danger); font-size:0.8rem; padding:6px; justify-content:center; display:none;" id="stopYtBtn" onclick="stopYT()">⏹</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<h3 style="color: var(--accent); font-size: 1rem; margin-bottom: 12px;">⚙️ Керування та інструменти</h3>
+<div style="display: flex; flex-direction: column; gap: 10px;">
+<button class="btn btn-notify" id="notifyBtn" onclick="toggleNotifications()" style="width: 100%; justify-content: center;">🔕 Сповіщ.</button>
+<button class="btn" onclick="document.getElementById('fileInput').click(); toggleBurgerMenu();" style="width: 100%; justify-content: center;">📤 Відкрити (Файл)</button>
+<button class="btn" onclick="exportToFile(); toggleBurgerMenu();" style="width: 100%; justify-content: center;">📥 Зберегти (Файл)</button>
+<button class="btn" onclick="openSettings(); toggleBurgerMenu();" style="width: 100%; justify-content: center;">🎨 Вигляд</button>
+<button class="btn" id="statsBtn" onclick="toggleStats(); toggleBurgerMenu();" style="width: 100%; justify-content: center;">📊 Статистика</button>
+<button class="btn btn-outline" id="toggleEdit" onclick="toggleEditMode(); toggleBurgerMenu();" style="width: 100%; justify-content: center;">✏️ Ред.</button>
+<button class="btn btn-primary" id="historyBtn" onclick="toggleHistory(); toggleBurgerMenu();" style="width: 100%; justify-content: center;">📜 Історія</button>
+</div>
+</div>
 
 <div id="yt-container" style="display: none;"></div>
 
