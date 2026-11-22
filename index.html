@@ -228,80 +228,6 @@ z-index:10005; color:var(--text);
 #burger-sidebar { padding: 20px; }
 }
 
-/* --- MUSIC PLAYER IN BURGER --- */
-.music-bar {
-display: flex;
-align-items: center; gap: 10px;
-padding: 8px 12px; border-radius: 14px;
-background: rgba(15, 23, 42, 0.8); border: 1px solid var(--glass-border);
-position: relative;
-transition: border-color 0.3s ease;
-}
-.music-ctrl-btn {
-background: transparent;
-border: none; color: #fff;
-font-size: 1.1rem; cursor: pointer; padding: 5px;
-border-radius: 50%; width: 32px; height: 32px;
-display: flex; align-items: center;
-justify-content: center;
-transition: 0.2s;
-}
-.music-ctrl-btn:hover { background: rgba(255,255,255,0.1); color: var(--accent); }
-.track-display {
-font-size: 0.85rem;
-max-width: 160px; overflow: hidden;
-white-space: nowrap; text-overflow: ellipsis; cursor: pointer;
-padding: 0 10px; border-left: 1px solid rgba(255,255,255,0.1);
-border-right: 1px solid rgba(255,255,255,0.1);
-transition: color 0.2s;
-display: flex; align-items: center; gap: 5px;
-}
-.track-display:hover { color: var(--accent); }
-.track-display::after { content: '🔽'; font-size: 0.7rem; opacity: 0.5; margin-left: 5px; }
-.vol-container-drop {
-display: flex;
-align-items: center; gap: 10px;
-padding: 10px; background: rgba(255,255,255,0.05);
-border-radius: 8px; margin-bottom: 10px;
-}
-input[type=range] {
--webkit-appearance: none;
-width: 100%; height: 4px;
-background: rgba(255,255,255,0.2); border-radius: 2px;
-outline: none; padding: 0; margin: 0; border: none;
-}
-input[type=range]::-webkit-slider-thumb {
--webkit-appearance: none;
-width: 14px; height: 14px;
-border-radius: 50%; background: var(--accent); cursor: pointer;
-transition: transform 0.1s;
-}
-input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
-.playlist-dropdown {
-position: absolute;
-top: 120%; left: 0; width: 100%; min-width: 280px;
-background: #0f172a;
-border: 1px solid var(--glass-border); border-radius: 12px;
-padding: 10px; display: none;
-z-index: 1000;
-box-shadow: 0 15px 40px rgba(0,0,0,0.8);
-animation: fadeIn 0.2s ease;
-}
-.playlist-dropdown.show { display: block; }
-.track-list-item {
-padding: 10px;
-border-radius: 8px; cursor: pointer; font-size: 0.85rem;
-display: flex; justify-content: space-between; align-items: center;
-border-bottom: 1px solid rgba(255,255,255,0.03);
-transition: background 0.2s;
-}
-.track-list-item:hover { background: rgba(255,255,255,0.1); }
-.track-list-item.active {
-color: var(--accent);
-font-weight: bold;
-background: rgba(255, 255, 255, 0.05);
-border-left: 3px solid var(--accent);
-}
 /* --- Buttons --- */
 .btn {
 padding: 10px 18px;
@@ -616,9 +542,6 @@ transform: scale(1.1);
 #menuActions .toolbar-btn.notify-toolbar {
   min-width:132px !important;
 }
-#menuActions .toolbar-btn.music-toolbar {
-  min-width:86px !important;
-}
 #menuActions .toolbar-btn span {
   display:inline !important;
 }
@@ -642,6 +565,38 @@ transform: scale(1.1);
   #menuActions .toolbar-btn span { display:none !important; }
 }
 
+
+/* Refined top controls: no long outline, richer depth */
+.header-menu-track { border:0 !important; background:transparent !important; box-shadow:none !important; padding:3px 0 !important; }
+.header-menu-track.expanded { border:0 !important; box-shadow:none !important; }
+.menu-actions { gap:9px !important; }
+#menuActions .toolbar-btn { height:46px !important; min-height:46px !important; min-width:104px !important; padding:0 16px !important; border-radius:15px !important; background:linear-gradient(145deg,rgba(64,86,112,.72),rgba(17,29,47,.94)) !important; border:1px solid rgba(148,190,220,.20) !important; box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 5px 0 rgba(3,9,18,.55),0 9px 18px rgba(0,0,0,.24) !important; font-size:12px !important; }
+#menuActions .toolbar-btn:hover { transform:translateY(-3px) !important; box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 7px 0 rgba(3,9,18,.48),0 14px 24px rgba(0,0,0,.3) !important; }
+#menuActions .toolbar-btn.active { background:linear-gradient(145deg,var(--accent),color-mix(in srgb,var(--accent) 65%,#102033)) !important; color:#07111e !important; }
+.burger-btn { width:46px !important; height:46px !important; flex-basis:46px !important; border-radius:15px !important; background:linear-gradient(145deg,#314963,#142337) !important; border:1px solid rgba(148,190,220,.25) !important; box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 5px 0 #080f1a,0 9px 18px rgba(0,0,0,.3) !important; }
+.streak-chip { flex:0 0 auto; display:flex; align-items:center; gap:10px; padding:8px 15px 8px 10px; margin:0 10px; color:#fff; cursor:pointer; border:1px solid rgba(255,178,74,.28); border-radius:16px; background:linear-gradient(145deg,rgba(91,55,31,.78),rgba(35,28,34,.96)); box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 5px 0 rgba(10,12,20,.55),0 10px 20px rgba(0,0,0,.24); transition:transform .25s,box-shadow .25s; }
+.streak-chip:hover { transform:translateY(-3px); box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 7px 0 rgba(10,12,20,.5),0 14px 25px rgba(0,0,0,.3); }
+.streak-flame { font-size:1.8rem; filter:drop-shadow(0 0 8px rgba(255,123,38,.6)); animation:flameBob 2s ease-in-out infinite; }
+@keyframes flameBob { 50% { transform:translateY(-2px) scale(1.08); } }
+.streak-chip-copy { display:flex; flex-direction:column; text-align:left; line-height:1.25; }
+.streak-chip-copy strong { font-size:.78rem; max-width:125px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.streak-chip-copy small { color:#ffc27c; font-size:.68rem; }
+.streak-modal { max-width:430px; }
+.streak-hero { display:flex; align-items:center; gap:18px; padding:15px; border-radius:18px; background:radial-gradient(circle at 20% 50%,rgba(255,133,44,.22),transparent 55%),rgba(255,255,255,.04); margin-bottom:18px; }
+.streak-big-flame { font-size:3.4rem; filter:drop-shadow(0 0 16px rgba(255,119,35,.55)); }
+.streak-eyebrow { color:#ffbd78; font-size:.65rem; font-weight:800; letter-spacing:1.5px; }
+.streak-hero h2 { margin:2px 0; } .streak-hero p { margin:0; opacity:.8; }
+.streak-hero p strong { color:#ffb45f; font-size:1.35rem; }
+.streak-stats { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; }
+.streak-stats div { padding:13px; border-radius:13px; background:rgba(255,255,255,.055); display:flex; flex-direction:column; }
+.streak-stats strong { font-size:1.5rem; color:#ffbd78; } .streak-stats span { font-size:.72rem; opacity:.7; }
+.streak-hint { font-size:.76rem; opacity:.65; line-height:1.5; margin:10px 0 15px; }
+.streak-week { display:grid; grid-template-columns:repeat(7,1fr); gap:7px; }
+.streak-day { display:flex; flex-direction:column; align-items:center; gap:5px; padding:8px 2px; border-radius:11px; background:rgba(255,255,255,.045); font-size:.72rem; }
+.streak-day span { opacity:.6; } .streak-day b { font-size:.9rem; } .streak-day.done { background:rgba(255,145,55,.14); color:#ffc27c; } .streak-day.today { outline:1px solid rgba(255,178,74,.55); }
+@media(max-width:1100px) { .streak-chip { margin:8px 0 0; } #menuActions .toolbar-btn { height:43px !important; min-height:43px !important; min-width:92px !important; } }
+@media(max-width:600px) { .streak-chip { padding:6px 10px; } .streak-flame { font-size:1.5rem; } .streak-chip-copy strong { max-width:90px; } #menuActions .toolbar-btn { min-width:40px !important; width:40px !important; height:40px !important; min-height:40px !important; } #menuActions .toolbar-btn span { display:none !important; } .burger-btn { width:42px !important; height:42px !important; flex-basis:42px !important; } }
+
 </style>
 </head>
 <body data-edit-mode="false">
@@ -655,6 +610,9 @@ transform: scale(1.1);
 <button class="week-btn" onclick="changeWeek(1)">▶</button>
 </div>
 </div>
+<button class="streak-chip" id="streakChip" type="button" onclick="openStreakModal()" title="Налаштувати навчальну серію">
+  <span class="streak-flame">🔥</span><span class="streak-chip-copy"><strong id="streakChipName">Мій вогник</strong><small><b id="streakChipDays">0</b> днів поспіль</small></span>
+</button>
 <div class="header-menu-track" id="headerMenuTrack">
 <nav class="menu-actions" id="menuActions" aria-label="Керування розкладом">
 <button class="toolbar-btn" id="historyBtn" onclick="toggleHistory(); toggleBurgerMenu(false)" title="Історія">📜 <span>Історія</span></button>
@@ -664,41 +622,11 @@ transform: scale(1.1);
 <button class="toolbar-btn" onclick="exportToFile(); toggleBurgerMenu(false)" title="Зберегти файл">📥 <span>Зберегти</span></button>
 <button class="toolbar-btn" onclick="document.getElementById('fileInput').click(); toggleBurgerMenu(false)" title="Відкрити файл">📤 <span>Відкрити</span></button>
 <button class="toolbar-btn notify-toolbar" id="notifyBtn" onclick="toggleNotifications(); toggleBurgerMenu(false)" title="Сповіщення">🔔 <span>Сповіщення</span></button>
-<button class="toolbar-btn music-toolbar" type="button" onclick="toggleMusicPanel()" title="Музичний плеєр">🎵 <span>Музика</span></button>
 </nav>
 <button class="burger-btn" id="burgerBtn" type="button" aria-label="Відкрити меню" aria-controls="menuActions" aria-expanded="false" onclick="toggleBurgerMenu()">
 <div class="burger-line"></div><div class="burger-line"></div><div class="burger-line"></div>
 </button>
-<div id="burger-sidebar" aria-hidden="true">
-<h2 style="margin-top:0; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--glass-border); padding-bottom:12px;">
-<span>🎵 Музичний плеєр</span>
-<button type="button" onclick="toggleMusicPanel(false)" aria-label="Закрити плеєр" style="background:transparent;border:0;color:white;cursor:pointer;font-size:1.2rem;">✕</button>
-</h2>
-<div style="margin-bottom: 25px;">
-<div class="music-bar glass" style="width: 100%; margin-bottom: 15px;">
-<button class="music-ctrl-btn" onclick="changeTrack(-1)">⏮</button>
-<button class="music-ctrl-btn" id="playHeaderBtn" onclick="togglePlay()">▶</button>
-<button class="music-ctrl-btn" onclick="changeTrack(1)">⏭</button>
-<div class="track-display" id="headerTrackName" onclick="toggleHeaderPlaylist()" style="max-width: 150px;">Вибери музику 🎵</div>
-<div class="playlist-dropdown" id="headerPlaylist">
-<div class="vol-container-drop">
-<span style="font-size:0.9rem">🔊</span>
-<input type="range" id="volSlider" min="0" max="1" step="0.05" oninput="setVolume(this.value)">
-<span id="volValue" style="font-size:0.8rem; width:30px; text-align:right">50%</span>
-</div>
-<input type="text" style="width:100%; padding:8px; margin-bottom:10px; font-size:0.85rem; border-radius:8px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.3); color:white; outline:none;" placeholder="🔍 Пошук по списку..." oninput="filterMusic(this.value)">
-<div id="trackList" style="max-height:200px; overflow-y:auto;"></div>
-<div style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">
-<input type="text" id="customUrl" placeholder="Посилання на mp3 або YouTube..." style="width:100%; padding:8px; border-radius:8px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.3); color:white; font-size:0.75rem; outline:none;">
-<div style="display:flex; gap:5px; margin-top:5px;">
-<button class="btn btn-primary" style="flex:1; font-size:0.8rem; padding:6px; justify-content:center;" onclick="addCustomTrack()">➕ Додати / Увімкнути</button>
-<button class="btn" style="background: var(--danger); font-size:0.8rem; padding:6px; justify-content:center; display:none;" id="stopYtBtn" onclick="stopYT()">⏹</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
+
 
 </div>
 </div>
@@ -714,32 +642,6 @@ transform: scale(1.1);
 <button onclick="toggleBurgerMenu()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 1.2em; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'">✖</button>
 </h2>
 
-<div style="margin-bottom: 25px;">
-<h3 style="color: var(--accent); font-size: 1rem; margin-bottom: 12px;">🎵 Музичний плеєр</h3>
-<div class="music-bar glass" style="width: 100%; margin-bottom: 15px;">
-<button class="music-ctrl-btn" onclick="changeTrack(-1)">⏮</button>
-<button class="music-ctrl-btn" id="playHeaderBtn" onclick="togglePlay()">▶</button>
-<button class="music-ctrl-btn" onclick="changeTrack(1)">⏭</button>
-<div class="track-display" id="headerTrackName" onclick="toggleHeaderPlaylist()" style="max-width: 150px;">Вибери музику 🎵</div>
-<div class="playlist-dropdown" id="headerPlaylist">
-<div class="vol-container-drop">
-<span style="font-size:0.9rem">🔊</span>
-<input type="range" id="volSlider" min="0" max="1" step="0.05" oninput="setVolume(this.value)">
-<span id="volValue" style="font-size:0.8rem; width:30px; text-align:right">50%</span>
-</div>
-<input type="text" style="width:100%; padding:8px; margin-bottom:10px; font-size:0.85rem; border-radius:8px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.3); color:white; outline:none;" placeholder="🔍 Пошук по списку..." oninput="filterMusic(this.value)">
-<div id="trackList" style="max-height:200px; overflow-y:auto;"></div>
-<div style="margin-top:10px; border-top:1px solid rgba(255,255,255,0.1); padding-top:10px;">
-<input type="text" id="customUrl" placeholder="Посилання на mp3 або YouTube..." style="width:100%; padding:8px; border-radius:8px; border:1px solid var(--glass-border); background:rgba(0,0,0,0.3); color:white; font-size:0.75rem; outline:none;">
-<div style="display:flex; gap:5px; margin-top:5px;">
-<button class="btn btn-primary" style="flex:1; font-size:0.8rem; padding:6px; justify-content:center;" onclick="addCustomTrack()">➕ Додати / Увімкнути</button>
-<button class="btn" style="background: var(--danger); font-size:0.8rem; padding:6px; justify-content:center; display:none;" id="stopYtBtn" onclick="stopYT()">⏹</button>
-</div>
-</div>
-</div>
-</div>
-</div>
-
 <h3 style="color: var(--accent); font-size: 1rem; margin-bottom: 12px;">⚙️ Керування та інструменти</h3>
 <div style="display: flex; flex-direction: column; gap: 10px;">
 <button class="btn btn-notify" id="notifyBtn" onclick="toggleNotifications()" style="width: 100%; justify-content: center;">🔕 Сповіщ.</button>
@@ -752,7 +654,7 @@ transform: scale(1.1);
 </div>
 </div>
 
-<div id="yt-container" style="display: none;"></div>
+
 
 <div id="history-sidebar">
 <h2 style="margin-top: 0; display: flex; justify-content: space-between; align-items: center;">
@@ -821,14 +723,6 @@ transform: scale(1.1);
 </div>
 </div>
 
-<a href="https://t.me/Donwloderfile_bot" target="_blank" class="ad-corner glass" style="bottom: 120px;">
-<div style="font-size: 2rem;">🎧</div>
-<div style="display:flex; flex-direction: column;">
-<span style="font-size: 0.7rem; opacity: 0.6; text-transform: uppercase; font-weight: 700;">Telegram Bot</span>
-<span style="font-size: 1.1rem; font-weight: 800; color: #38bdf8;">Music Downloader</span>
-</div>
-</a>
-
 <a href="https://sites.google.com/view/grivnacoin/%D0%B3%D0%BB%D0%B0%D0%B2%D0%B8%D0%B0-%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0" target="_blank" class="ad-corner glass">
 <div style="font-size: 2rem;">🪙</div>
 <div style="display:flex; flex-direction: column;">
@@ -891,13 +785,24 @@ transform: scale(1.1);
 </div>
 </div>
 
+<div class="modal-backdrop" id="streakModal">
+  <div class="modal glass streak-modal">
+    <div class="streak-hero"><div class="streak-big-flame">🔥</div><div><div class="streak-eyebrow">ТВОЯ НАВЧАЛЬНА СЕРІЯ</div><h2 id="streakModalName">Мій вогник</h2><p><strong id="streakModalDays">0</strong> днів поспіль</p></div></div>
+    <div class="streak-stats"><div><strong id="streakBest">0</strong><span>Найкраща серія</span></div><div><strong id="streakTotal">0</strong><span>Активних днів</span></div></div>
+    <label for="streakNameInput">Ім'я твого вогника</label><input id="streakNameInput" maxlength="24" placeholder="Наприклад: Факел знань">
+    <p class="streak-hint">Серія зростає, коли ти завершуєш хоча б один урок за день. Якщо пропустити день — поточна серія почнеться знову.</p>
+    <div class="streak-week" id="streakWeek"></div>
+    <div style="display:flex;gap:10px;margin-top:22px"><button class="btn btn-primary" style="flex:2;justify-content:center" onclick="saveStreakName()">Зберегти ім'я</button><button class="btn" style="flex:1;justify-content:center" onclick="closeModal('streakModal')">Готово</button></div>
+  </div>
+</div>
+
 <script>
 // =========================================================================
 // 📢 ТУТ ПИСАТИ НОВИНИ ДЛЯ ІСТОРІЇ (ПРОСТО ДОДАВАЙТЕ НОВІ РЯДКИ В МАСИВ)
 // =========================================================================
 const DEV_NEWS = [
 "✨ Оновлення: Додано Mood Tracker та Аналітику! Тепер ви можете оцінювати уроки та бачити статистику!",
-"✨ Оновлення: Файли збереження тепер зашифровані! Ніхто не підгляне пароль, виправлено систему музики та додано історію дій! Приємного використання, якщо є питанн пропозиції звертайтеся в телеграм канал.",
+"✨ Оновлення: Файли збереження тепер зашифровані! Ніхто не підгляне пароль, додано історію дій! Приємного використання, якщо є питання чи пропозиції — звертайтеся в телеграм канал.",
 "✨ Оновлення: Додано 3 анімовані фони: Анімований градієнт, Кібер-сітка та Неоновий пульс! Обирай у налаштуваннях вигляду та кастомізуй свій робочий простір."
 ];
 // =========================================================================
@@ -923,15 +828,8 @@ return decrypted;
 }
 
 let schedule = JSON.parse(localStorage.getItem('gh-schedule')) || {};
-let userSettings = JSON.parse(localStorage.getItem('gh-settings')) || { accent: '#38bdf8', bg: 'default', volume: 0.5 };
+let userSettings = JSON.parse(localStorage.getItem('gh-settings')) || { accent: '#38bdf8', bg: 'default' };
 let editHistoryLog = JSON.parse(localStorage.getItem('gh-edit-history')) || [];
-let musicData = JSON.parse(localStorage.getItem('gh-music')) || {
-tracks: [
-{ title: "Lofi Study Beats 1", src: "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3" },
-{ title: "Chill Vibes", src: "https://cdn.pixabay.com/download/audio/2022/03/24/audio_349d443209.mp3" }
-],
-currentIndex: 0
-};
 let notificationsEnabled = JSON.parse(localStorage.getItem('gh-notifications')) || false;
 let currentEditKey = null;
 let activeLessonGlobal = null;
@@ -942,6 +840,7 @@ let lastNotifiedLessonId = null;
 let moodData = JSON.parse(localStorage.getItem('gh-mood-data')) || { entries: [] };
 let statsData = JSON.parse(localStorage.getItem('gh-stats-data')) || { weeklyHours: {}, subjectHours: {}, moodRatings: {} };
 let completedLessons = JSON.parse(localStorage.getItem('gh-completed-lessons')) || [];
+let streakData = JSON.parse(localStorage.getItem('gh-streak')) || { name: 'Мій вогник', days: [], best: 0 };
 let pendingMoodLesson = null;
 
 function toggleBurgerMenu(force) {
@@ -954,25 +853,44 @@ btn.setAttribute('aria-expanded', String(shouldOpen));
 btn.setAttribute('aria-label', shouldOpen ? 'Згорнути меню' : 'Відкрити меню');
 }
 function closeBurgerMenu() { toggleBurgerMenu(false); }
-function toggleMusicPanel(force) {
-const panel = document.getElementById('burger-sidebar');
-const shouldOpen = typeof force === 'boolean' ? force : !panel.classList.contains('open');
-panel.classList.toggle('open', shouldOpen);
-panel.setAttribute('aria-hidden', String(!shouldOpen));
-}
+
 document.addEventListener('keydown', function(event) {
 if(event.key === 'Escape') {
 closeBurgerMenu();
-toggleMusicPanel(false);
 }
 });
-document.addEventListener('click', function(event) {
-const track = document.getElementById('headerMenuTrack');
-const panel = document.getElementById('burger-sidebar');
-if(panel && !panel.contains(event.target) && !event.target.closest('.music-toolbar')) {
-  toggleMusicPanel(false);
+
+function localDateKey(date = new Date()) {
+  const y = date.getFullYear(), m = String(date.getMonth()+1).padStart(2,'0'), d = String(date.getDate()).padStart(2,'0');
+  return `${y}-${m}-${d}`;
 }
-});
+function dateFromKey(key) { const [y,m,d] = key.split('-').map(Number); return new Date(y,m-1,d); }
+function getStreakCount() {
+  const set = new Set(streakData.days || []); let count = 0; const cursor = new Date(); cursor.setHours(0,0,0,0);
+  if (!set.has(localDateKey(cursor))) cursor.setDate(cursor.getDate()-1);
+  while (set.has(localDateKey(cursor))) { count++; cursor.setDate(cursor.getDate()-1); }
+  return count;
+}
+function recordStreakDay() {
+  const today = localDateKey(); if (!streakData.days.includes(today)) streakData.days.push(today);
+  streakData.days.sort(); let run = 0, best = Number(streakData.best)||0, previous = null;
+  streakData.days.forEach(key => { const current = dateFromKey(key); current.setHours(0,0,0,0);
+    if (previous) { const diff = Math.round((current-previous)/86400000); run = diff === 1 ? run+1 : 1; } else run = 1;
+    best = Math.max(best, run); previous = current;
+  });
+  streakData.best = best; localStorage.setItem('gh-streak', JSON.stringify(streakData)); renderStreak();
+}
+function renderStreak() {
+  const count = getStreakCount(); const name = streakData.name || 'Мій вогник';
+  document.getElementById('streakChipName').textContent = name; document.getElementById('streakChipDays').textContent = count;
+  document.getElementById('streakModalName').textContent = name; document.getElementById('streakModalDays').textContent = count;
+  document.getElementById('streakBest').textContent = streakData.best || 0; document.getElementById('streakTotal').textContent = streakData.days.length;
+  const week = document.getElementById('streakWeek'); const today = new Date(); const labels = ['Н','П','В','С','Ч','П','С']; let html='';
+  for(let i=6;i>=0;i--){ const d=new Date(today); d.setDate(today.getDate()-i); const key=localDateKey(d); html += `<div class="streak-day ${streakData.days.includes(key)?'done':''} ${i===0?'today':''}"><span>${labels[(d.getDay()+6)%7]}</span><b>${streakData.days.includes(key)?'🔥':d.getDate()}</b></div>`; }
+  week.innerHTML=html;
+}
+function openStreakModal() { document.getElementById('streakNameInput').value = streakData.name || 'Мій вогник'; renderStreak(); const m=document.getElementById('streakModal'); m.style.display='flex'; setTimeout(()=>m.classList.add('open'),10); }
+function saveStreakName() { const value=document.getElementById('streakNameInput').value.trim(); if(!value){ alert("Введи ім'я для вогника"); return; } streakData.name=value; localStorage.setItem('gh-streak',JSON.stringify(streakData)); renderStreak(); closeModal('streakModal'); }
 
 function logHistory(action) {
 const time = new Date().toLocaleTimeString('uk-UA');
@@ -1208,113 +1126,15 @@ logHistory(`Оцінено настрій: ${pendingMoodLesson.name} - ${mood}/3
 hideMoodPopup();
 }
 
-// --- MP3 / YOUTUBE PLAYER ---
-const audioPlayer = new Audio();
-let isPlaying = false;
-function initAudio() {
-if(musicData.tracks.length > 0) {
-audioPlayer.src = musicData.tracks[musicData.currentIndex].src;
-updatePlayerUI();
-}
-audioPlayer.volume = userSettings.volume !== undefined ? userSettings.volume : 0.5;
-document.getElementById('volSlider').value = audioPlayer.volume;
-updateVolText(audioPlayer.volume);
-audioPlayer.onended = () => changeTrack(1);
-renderPlaylist();
-}
-function togglePlay() {
-if(musicData.tracks.length === 0) return;
-if (isPlaying) audioPlayer.pause();
-else audioPlayer.play().catch(e => alert("Спочатку клікніть будь-де на сторінці"));
-isPlaying = !isPlaying;
-updatePlayerUI();
-}
-function changeTrack(dir) {
-musicData.currentIndex = (musicData.currentIndex + dir + musicData.tracks.length) % musicData.tracks.length;
-audioPlayer.src = musicData.tracks[musicData.currentIndex].src;
-if(isPlaying) audioPlayer.play();
-updatePlayerUI(); saveMusicData(); renderPlaylist();
-}
-function playTrack(index) {
-musicData.currentIndex = index;
-audioPlayer.src = musicData.tracks[index].src;
-isPlaying = true; audioPlayer.play(); updatePlayerUI(); saveMusicData(); renderPlaylist();
-}
-function setVolume(val) { audioPlayer.volume = val; userSettings.volume = val; updateVolText(val); saveSettings(); }
-function updateVolText(val) { document.getElementById('volValue').textContent = Math.round(val * 100) + '%'; }
-function updatePlayerUI() {
-document.getElementById('playHeaderBtn').textContent = isPlaying ? '⏸' : '▶';
-document.getElementById('headerTrackName').textContent = musicData.tracks[musicData.currentIndex] ? musicData.tracks[musicData.currentIndex].title : "Плейлист порожній";
-}
-function toggleHeaderPlaylist() { document.getElementById('headerPlaylist').classList.toggle('show'); }
-document.addEventListener('click', function(event) {
-const playlist = document.getElementById('headerPlaylist');
-const headerName = document.getElementById('headerTrackName');
-if (!playlist.contains(event.target) && !headerName.contains(event.target)) {
-playlist.classList.remove('show');
-}
-});
-function renderPlaylist(filter = "") {
-const list = document.getElementById('trackList'); list.innerHTML = '';
-musicData.tracks.forEach((track, idx) => {
-if(track.title.toLowerCase().includes(filter.toLowerCase())) {
-const item = document.createElement('div');
-item.className = `track-list-item ${idx === musicData.currentIndex ? 'active' : ''}`;
-item.innerHTML = `<span>${track.title}</span> <span style="font-size:0.7rem; color: #ff4757; margin-left:10px;" onclick="event.stopPropagation(); removeTrack(${idx})">🗑️</span>`;
-item.onclick = (e) => { playTrack(idx); };
-list.appendChild(item);
-}
-});
-}
-function filterMusic(val) { renderPlaylist(val); }
-function addCustomTrack() {
-const url = document.getElementById('customUrl').value.trim();
-if(!url) return;
-const ytMatch = url.match(/(?:youtu\.be\/|youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-if (ytMatch) {
-const videoId = ytMatch[1];
-document.getElementById('yt-container').innerHTML = `<iframe width="10" height="10" src="https://www.youtube.com/embed/${videoId}?autoplay=1&enablejsapi=1" allow="autoplay"></iframe>`;
-logHistory("Увімкнено YouTube відео з плеєра");
-if (typeof isPlaying !== 'undefined' && isPlaying) togglePlay();
-document.getElementById('customUrl').value = '';
-document.getElementById('stopYtBtn').style.display = 'block';
-document.getElementById('headerTrackName').textContent = "▶ YouTube Аудіо";
-return;
-}
-musicData.tracks.push({ title: `Власний трек ${musicData.tracks.length + 1}`, src: url });
-document.getElementById('customUrl').value = '';
-saveMusicData();
-renderPlaylist();
-logHistory("Додано новий MP3 трек");
-}
-function stopYT() {
-document.getElementById('yt-container').innerHTML = '';
-document.getElementById('stopYtBtn').style.display = 'none';
-updatePlayerUI();
-logHistory("YouTube зупинено");
-}
-function removeTrack(index) {
-if(confirm("Видалити трек?")) {
-musicData.tracks.splice(index, 1);
-if(musicData.currentIndex >= index) musicData.currentIndex = Math.max(0, musicData.currentIndex - 1);
-saveMusicData(); renderPlaylist(); updatePlayerUI();
-logHistory("Видалено MP3 трек");
-}
-}
-function saveMusicData() { localStorage.setItem('gh-music', JSON.stringify(musicData)); }
 
 document.addEventListener('keydown', function(event) {
 if (event.key === 'Escape') {
-stopYT();
 const sidebar = document.getElementById('history-sidebar');
 sidebar.classList.remove('open');
 document.getElementById('historyBtn').classList.remove('active');
 const statsSidebar = document.getElementById('stats-sidebar');
 statsSidebar.classList.remove('open');
 document.getElementById('statsBtn').classList.remove('active');
-const burgerSidebar = document.getElementById('burger-sidebar');
-burgerSidebar.classList.remove('open');
-document.getElementById('burgerBtn').classList.remove('active');
 hideMoodPopup();
 }
 });
@@ -1341,8 +1161,8 @@ applySettings();
 if(document.getElementById('bgSelect')) document.getElementById('bgSelect').value = userSettings.bg || 'default';
 checkPermissionStatus();
 render();
-initAudio();
 renderHistory();
+renderStreak();
 setInterval(heartbeat, 1000);
 document.addEventListener("visibilitychange", () => { if (document.visibilityState === 'visible') heartbeat(); });
 heartbeat();
@@ -1379,6 +1199,7 @@ if (justEnded && !completedLessons.includes(activeLessonGlobal.uniqueId)) {
 showMoodPopup(activeLessonGlobal);
 completedLessons.push(activeLessonGlobal.uniqueId);
 localStorage.setItem('gh-completed-lessons', JSON.stringify(completedLessons));
+recordStreakDay();
 updateStatsAfterLesson(activeLessonGlobal);
 }
 }
@@ -1485,10 +1306,10 @@ function exportToFile() {
 const password = prompt("Введіть пароль для файлу (залиште порожнім, якщо не потрібен):");
 const fullData = {
 schedule: schedule,
-music: musicData,
 settings: userSettings,
 moodData: moodData,
 statsData: statsData,
+streakData: streakData,
 locked: !!password,
 password: password || null
 };
@@ -1528,18 +1349,18 @@ if (attempts === 0) { alert("Вичерпано спроби. Доступ за�
 if (!authenticated) return;
 }
 if(json.schedule) { schedule = json.schedule;
-if(json.music) musicData = json.music;
 if(json.settings) userSettings = json.settings;
 if(json.moodData) moodData = json.moodData;
-if(json.statsData) statsData = json.statsData; }
+if(json.statsData) statsData = json.statsData;
+if(json.streakData) streakData = json.streakData; }
 else { schedule = json; }
 migrateDataIfNeeded();
 localStorage.setItem('gh-schedule', JSON.stringify(schedule));
-localStorage.setItem('gh-music', JSON.stringify(musicData));
 localStorage.setItem('gh-settings', JSON.stringify(userSettings));
 localStorage.setItem('gh-mood-data', JSON.stringify(moodData));
 localStorage.setItem('gh-stats-data', JSON.stringify(statsData));
-applySettings(); initAudio(); render(); logHistory("Імпортовано дані з файлу"); alert("Дані успішно завантажено!");
+localStorage.setItem('gh-streak', JSON.stringify(streakData));
+applySettings(); render(); renderStreak(); logHistory("Імпортовано дані з файлу"); alert("Дані успішно завантажено!");
 } catch(err) {
 alert("Помилка файлу. Можливо він пошкоджений.");
 }
